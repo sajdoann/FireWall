@@ -1,6 +1,7 @@
 #include <iostream>
+#include "App.h"
 
 int main() {
-    std::cout << "Hell" << std::endl;
+    App().Run();
     return 0;
 }
