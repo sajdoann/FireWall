@@ -42,8 +42,12 @@ public:
                                         }
 
                                         g.InsertPatch(patchName, coords);
+
+                                        //TODO: CLEAR screen
+                                        i.ClearScreen();
+
                                          i.PrintBoard(g.GameBoard());
-                                         return CommandEndType::DONE;
+                                         return CommandEndType::VALID;
                                         }
                                      );
         commands.insert({"[ ]*[a-zA-Z][ ]*\\([ ]*[0-9]{1,}[ ]*,[ ]*[0-9]{1,}[ ]*\\)[ ]*", placePatch});
@@ -52,7 +56,7 @@ public:
         Command done = Command("Type it when you are done - you think FireWall can survive the next attack.",
                 []( const string& userInput, Game & g, Interface & i){
                     g.GameState(State::ATTACK);
-                    return CommandEndType::DONE;
+                    return CommandEndType::VALID;
                     }
                 );
         commands.insert({"done", done});

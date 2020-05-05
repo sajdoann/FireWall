@@ -39,6 +39,7 @@ int App::Run() {
                         cout << "Check if the names, coordinates are valid and you have enough RAM to support the patch" << endl;
                     }
                     case CommandEndType::DONE:{
+                        game.GameState(State::ATTACK);
                         found = true;
                     }
                 }
@@ -49,6 +50,7 @@ int App::Run() {
         // no command was found, suggest to use help
         if(!found) interface.HelpAdvertiser();
     }
+
 
 
 

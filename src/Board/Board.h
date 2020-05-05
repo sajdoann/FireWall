@@ -75,28 +75,17 @@ public:
         return coords.X() > maxX || coords.X() < 0 || coords.Y() > maxY || coords.Y() < 0;
     }
 
-    bool InsertPatch(Patch *patch, const Coords &coords) {
-        if (OutOfBoard(coords))
-            return false;
+    void  InsertPatch(Patch *patch, const Coords &coords) {
         delete tiles[coords.X()][coords.Y()];
-        tiles[coords.X()][coords.Y()] = patch;
+        //tiles[coords.X()][coords.Y()] = nullptr;
+        tiles[coords.X()][coords.Y()] = new Patch();
+        tiles[coords.X()][coords.Y()] = move(patch);
+        patch = nullptr;
     }
 
-    //TODO vyresit 'const' verzi op ()
     Object * operator ()(int x, int y) const{
         return tiles[x][y];
     }
-
-
-  /*  void Print(ostream &os) const {
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-                os << tiles[i][j];
-            }
-            os << endl;
-        }
-    }*/
-
 
 };
 

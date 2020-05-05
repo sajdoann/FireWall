@@ -26,14 +26,15 @@ public:
     }
 
     template<typename StillObj>
-    std::map<char, StillObj> ReadStillObjects(){
-        std::map<char, StillObj > objects;
-        StillObj object;
-        char name;
-        while(ifs >> name >> object){
-            bool found = objects.find(name) != objects.end();
+    std::map<char, StillObj *> ReadStillObjects(){
+        std::map<char, StillObj *> objects;
+        StillObj * object = new StillObj();
+        while(ifs >> *object){
+            bool found = objects.find(object->Name()) != objects.end();
             if(!found)
-                objects.insert({name, move(object)});
+                objects.insert({object->Name(), move(object)});
+            object = nullptr;
+            object = new StillObj();
         }
         return objects;
     }

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <stdlib.h>
 #include "Objects/Coords.h"
 #include "Board/Board.h"
 
@@ -23,7 +24,7 @@ public:
     string PromptCommand() const {
         string command;
         os << "Enter command: " << endl;
-        while (!(in >> command)) {}
+        getline(in, command);
         return command;
     }
 
@@ -44,8 +45,12 @@ public:
         patchName = toupper(patchName);
     }
 
+    void ClearScreen(){
+        os << string( 100, '\n' );
+    }
+
     /** tells the story of FireWall game */
-    void Greet() const{
+    void Greet() {
         os << "Hello!" << endl;
         os << "There is a very important mission ahead of you." << endl;
         os << "The FireWall has breaches, your goal is to survive next vicious attack from the hackers." << endl;
@@ -55,6 +60,7 @@ public:
         os << "To continue press enter" << endl;
         string s;
         while(!(getline(in,s))){}
+        ClearScreen();
     }
 
     void NumberLine(int max) const{
@@ -63,7 +69,6 @@ public:
             os << setw(3) << i;
         }
         os << endl;
-
     }
 
     void PrintBoard( Board & board) const{
@@ -77,5 +82,8 @@ public:
             os << endl;
         }
     }
+
+
+
 };
 

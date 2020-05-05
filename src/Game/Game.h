@@ -19,14 +19,16 @@ class Game {
     /*GameResult gameResult;
     //ScoreCounter scoreCounter;*/
     Board gameBoard;
-    map< char, Patch > patches;
+    map< char, Patch *> patches;
+    map<char, Virus *> viruses;
 
 public:
     Game() {
         Reader patchReader("../tests/patches.txt");
         patches = patchReader.ReadStillObjects<Patch>();
 
-
+        Reader virusReader("../tests/viruses.txt");
+        viruses = virusReader.ReadStillObjects<Virus>();
 
         Reader boardReader("../tests/board.txt");
         int maxX, maxY;
@@ -44,16 +46,12 @@ public:
 
     void InsertPatch(const char patchType, const Coords & coords){
         auto it = patches.find(patchType);
-        gameBoard.InsertPatch(&(it->second), coords);
+        gameBoard.InsertPatch((it->second), coords);
     }
 
     bool isPatch(char PatchName){
         return patches.find(PatchName) != patches.end();
     }
-
-   /* void PrintObject(){
-        gameBoard.Print(os);
-    }*/
 
 };
 
