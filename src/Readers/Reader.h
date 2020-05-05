@@ -8,7 +8,9 @@
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <map>
 #include "../Objects/Patch.h"
+#include "../Objects/Virus.h"
 
 using namespace std;
 class Reader {
@@ -23,16 +25,27 @@ public:
             throw invalid_argument("filename:" + filename);
     }
 
-    std::map<char, Patch> ReadPatches(){
-        std::map<char, Patch > patches;
-        Patch patch;
+    template<typename StillObj>
+    std::map<char, StillObj> ReadStillObjects(){
+        std::map<char, StillObj > objects;
+        StillObj object;
         char name;
-        while(ifs >> name >> patch){
-            bool found = patches.find(name) != patches.end();
+        while(ifs >> name >> object){
+            bool found = objects.find(name) != objects.end();
             if(!found)
-                patches.insert({name, move(patch)});
+                objects.insert({name, move(object)});
         }
-        return patches;
+        return objects;
+    }
+
+    set<Coords> ReadBoard(int & mx, int & my){
+        set<Coords> coords;
+        ifs >> mx >> my;
+        int x,y;
+        while (ifs >> x >> y){
+            coords.insert(Coords(x,y));
+        }
+        return coords;
     }
 
     virtual ~Reader() = default;

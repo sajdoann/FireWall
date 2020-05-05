@@ -12,10 +12,10 @@ using namespace std;
 
 class Patch : public Object {
 protected:
-    char type = 'D';
-    char name = 'D';
+    char type = 'W';
+    char name = 'W';
     int price = 10;
-    int range = 2;
+    int range = 0;
 public:
     Patch() = default;
     Patch( char name,char type, int price, int range) : Object(),type(type), name(name), price(price), range(range){}
@@ -42,7 +42,7 @@ public:
         return os;
     }
 
-    ostream & PrintBoard(ostream & os) override {
+    ostream & PrintObject(ostream & os) override {
         return os << (*this).name;
     }
 

@@ -18,25 +18,50 @@ class App {
     map< string, Command > commands;
 
 public:
-    App() : game(Game()), interface(cin, cout) {
+    App() : game(), interface(cin, cout) {
         CreateCommands();
-
     }
+
+
     void CreateCommands(){
-        Command exit = Command("exits the game witout saving",[](Game &, Interface &){ return false;} );
+        //exit command
+        Command exit = Command("exits the game witout saving",[](const string& , Game &, Interface &){ return CommandEndType::ENDGAME;} );
         commands.insert( {"exit" , exit});
 
+        //placePatch command, it places the patch and the prints the changed board
         Command placePatch = Command("places patch, syntax: \"( patch type, coord x, coord y )\" "
-                                     "\n for instance: \"( D 2 5)\"",
-                                     []( Game & g, Interface & i){
+                                     "\n for instance: \"D( 2, 5)\"",
+                                     []( const string& userInput, Game & g, Interface & i){
                                         char patchName;
                                         Coords coords;
-                                        i.GetPatchInfo(patchName, coords);
+                                        i.GetPatchInfo(userInput, patchName, coords);
+
+                                        //validates input
+                                        if(!g.isPatch(patchName) || g.OutOfGameBoard(coords)){
+                                            return CommandEndType::INVALID;
+                                        }
+
                                         g.InsertPatch(patchName, coords);
-                                        return true;
+                                         i.PrintBoard(g.GameBoard());
+                                         return CommandEndType::DONE;
                                         }
                                      );
-        commands.insert(make_pair("^[a-zA-Z][ ]*\\([ ]*[0-9 ]*[ ]*,[ ]*[0-9]*[ ]*\\)", placePatch));
+        commands.insert({"[ ]*[a-zA-Z][ ]*\\([ ]*[0-9]{1,}[ ]*,[ ]*[0-9]{1,}[ ]*\\)[ ]*", placePatch});
+
+        //put online (done)
+        Command done = Command("Type it when you are done - you think FireWall can survive the next attack.",
+                []( const string& userInput, Game & g, Interface & i){
+                    g.GameState(State::ATTACK);
+                    return CommandEndType::DONE;
+                    }
+                );
+        commands.insert({"done", done});
+    }
+
+
+    Board & GameBoard(){return game.GameBoard(); }
+    void GameState(State & state){
+        game.GameState(state);
     }
 /**
  * game loop

@@ -10,26 +10,50 @@
 #include "../Board/Board.h"
 #include "../Objects/Patch.h"
 #include "../Readers/Reader.h"
+#include "State.enum"
 
 using namespace std;
 
 class Game {
-    /*GameState gameState;
-    GameResult gameResult;
+    State gameState = State::WELCOME;
+    /*GameResult gameResult;
     //ScoreCounter scoreCounter;*/
-    Board board;
+    Board gameBoard;
     map< char, Patch > patches;
 
 public:
-    Game() : board( Board(5,5)){
-        Reader reader("../tests/towers.txt");
-        patches =  reader.ReadPatches();
+    Game() {
+        Reader patchReader("../tests/patches.txt");
+        patches = patchReader.ReadStillObjects<Patch>();
+
+
+
+        Reader boardReader("../tests/board.txt");
+        int maxX, maxY;
+        set<Coords> coords = boardReader.ReadBoard(maxX, maxY);
+        Board b(maxX, maxY, coords);
+        gameBoard = b;
     }
+
+    State GameState() const {return gameState;}
+    void GameState(State state){ this->gameState = state; }
+
+    Board & GameBoard(){return gameBoard;}
+    bool OutOfGameBoard(const Coords & coords) const {return gameBoard.OutOfBoard(coords);}
+
 
     void InsertPatch(const char patchType, const Coords & coords){
         auto it = patches.find(patchType);
-        board.InsertPatch(&(it->second), coords);
+        gameBoard.InsertPatch(&(it->second), coords);
     }
+
+    bool isPatch(char PatchName){
+        return patches.find(PatchName) != patches.end();
+    }
+
+   /* void PrintObject(){
+        gameBoard.Print(os);
+    }*/
 
 };
 

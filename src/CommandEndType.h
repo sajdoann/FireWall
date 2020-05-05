@@ -1,10 +1,11 @@
 /**
 * @author Anna Sajdokova <sajdoann@fit.cvut.cz>
-* @date 4/30/2020
+* @date 5/5/2020
 */
 
 #pragma once
-enum GameState {
-    SET_UP, PREPARATION, ATTACK
+
+enum CommandEndType {
+    DONE, INVALID, ENDGAME
 };
 

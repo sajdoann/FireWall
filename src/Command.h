@@ -10,23 +10,24 @@
 #include <utility>
 
 #include "Game/Game.h"
+#include "CommandEndType.h"
 #include "Interface.h"
 
 using namespace std;
 
 class Command {
     string help;
-    // std wrapper that can call any callable target ( <=> stores functions )
-    function<bool(Game &, Interface &)> exec;
+    // std wrapper that can call any callable target ( <=> stores functions ) string - userInput
+    function<CommandEndType(string , Game &, Interface &)> exec;
 
 public:
-    Command(string help, function<bool(Game &, Interface &)> exec) : help(std::move(help)), exec(std::move(exec)){}
+    Command(string help, function<CommandEndType(string, Game &, Interface &)> exec) : help(std::move(help)), exec(std::move(exec)){}
 
     string Help() const{ return help; }
 
     /** calls function hidden in variable exec */
-    bool Exec(Game & game, Interface & interface){
-        return exec(game, interface);
+    CommandEndType Exec(string & userInput, Game & game, Interface & interface){
+        return exec(userInput, game, interface);
     }
 
    /* functor that compares commands based on their names ( which are required to ne unique )

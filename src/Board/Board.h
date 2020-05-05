@@ -6,54 +6,96 @@
 #pragma once
 
 #include <vector>
+#include <set>
 #include <iostream>
+
 #include "../Objects/Object.h"
 #include "../Objects/Empty.h"
 #include "../Objects/Patch.h"
+#include "../Readers/Reader.h"
 
 using namespace std;
+
 class Board {
- int max_X;
- int max_Y;
- vector<vector< Object *>> tiles;
+    int maxX;
+    int maxY;
+    vector<vector<Object *>> tiles;
 
 public:
-    Board(int max_X, int max_Y) : max_X(++max_X), max_Y(++max_Y){
-        for (int i = 0; i < max_X; ++i) {
-            vector<Object *> temp;
-            for (int j = 0; j <max_Y ; ++j) {
-                temp.push_back(new Empty());
+    Board(){}
+
+    Board(int maxX, int maxY) : maxX(maxX), maxY(maxY) {
+        for (int i = 0; i < maxX; ++i) {
+            vector<Object *> tmp;
+            for (int j = 0; j < maxY; ++j) {
+                tmp.push_back(new Empty());
             }
-            tiles.push_back(temp);
+            tiles.push_back(tmp);
         }
     }
 
-    ~Board(){
-        for (int i = 0; i < max_X; ++i) {
-            for (int j = 0; j < max_Y; ++j) {
+    Board(int maxX, int maxY, set<Coords> coords) : Board(maxX, maxY){
+       for( auto & coord : coords){
+           Patch * defaultPatch = new Patch();
+           InsertPatch(defaultPatch, coord);
+       }
+    }
+
+    Board & operator = (Board & other){
+        if(this == &other) return *this;
+        maxX = other.maxX;
+        maxY = other.maxY;
+        for (int i = 0; i < maxX; ++i) {
+            vector<Object *> tmp;
+            for (int j = 0; j < maxY; ++j) {
+               tmp.push_back(move(other.tiles[i][j]));
+               other.tiles[i][j] = nullptr;
+            }
+            tiles.push_back(tmp);
+        }
+    }
+
+    Board(Board & other){
+        *this = other;
+    }
+
+    ~Board() {
+        for (int i = 0; i < maxX ; ++i) {
+            for (int j = 0; j < maxY; ++j) {
                 delete tiles[i][j];
             }
         }
     }
 
-    bool OutOfBoard(const Coords & coords ){
-        return coords.X() > max_X || coords.X() < 0 || coords.Y() > max_Y || coords.Y() < 0;
+    int MaxX() const { return maxX; }
+
+    int MaxY() const { return maxY; }
+
+    bool OutOfBoard(const Coords &coords) const {
+        return coords.X() > maxX || coords.X() < 0 || coords.Y() > maxY || coords.Y() < 0;
     }
 
-    bool InsertPatch(Patch * patch, const Coords & coords){
-        if(OutOfBoard(coords)) return false;
+    bool InsertPatch(Patch *patch, const Coords &coords) {
+        if (OutOfBoard(coords))
+            return false;
         delete tiles[coords.X()][coords.Y()];
         tiles[coords.X()][coords.Y()] = patch;
     }
 
-    void Print(){
-        for (int i = 0; i < max_X; ++i) {
-            for (int j = 0; j < max_Y; ++j) {
-                cout << tiles[i][j];
-            }
-            cout << endl;
-        }
+    //TODO vyresit 'const' verzi op ()
+    Object * operator ()(int x, int y) const{
+        return tiles[x][y];
     }
+
+
+  /*  void Print(ostream &os) const {
+        for (int i = 0; i < maxX; ++i) {
+            for (int j = 0; j < maxY; ++j) {
+                os << tiles[i][j];
+            }
+            os << endl;
+        }
+    }*/
 
 
 };

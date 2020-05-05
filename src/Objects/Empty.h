@@ -13,7 +13,7 @@ using namespace std;
 class Empty : public Object{
     ~Empty() = default;
 
-    ostream & PrintBoard(ostream & os) override {
+    ostream & PrintObject(ostream & os) override {
         os << *this;
     }
 

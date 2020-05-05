@@ -15,12 +15,12 @@ public:
 
     virtual ~Object() = default;
 
-    virtual ostream &PrintBoard(ostream &os) = 0;
+    virtual ostream &PrintObject(ostream &os) = 0;
 
     virtual ostream &PrintInfo(ostream &os) = 0;
 
     friend std::ostream &operator<<(std::ostream &os, Object *object) {
-        object->PrintBoard(os);
+        object->PrintObject(os);
         return os;
     }
 };
