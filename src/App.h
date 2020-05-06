@@ -12,6 +12,11 @@
 #include "Command.h"
 using namespace std;
 
+/**
+ * class that
+ *  .
+ *  .   puts the game and interface together
+ */
 class App {
     Game game;
     Interface interface;
@@ -28,7 +33,7 @@ public:
         Command exit = Command("exits the game witout saving",[](const string& , Game &, Interface &){ return CommandEndType::ENDGAME;} );
         commands.insert( {"exit" , exit});
 
-        //placePatch command, it places the patch and the prints the changed board
+        //placePatch command, it places the patch
         Command placePatch = Command("places patch, syntax: \"( patch type, coord x, coord y )\" "
                                      "\n for instance: \"D( 2, 5)\"",
                                      []( const string& userInput, Game & g, Interface & i){
@@ -43,10 +48,7 @@ public:
 
                                         g.InsertPatch(patchName, coords);
 
-                                        //TODO: CLEAR screen
-                                        i.ClearScreen();
 
-                                         i.PrintBoard(g.GameBoard());
                                          return CommandEndType::VALID;
                                         }
                                      );
@@ -56,7 +58,7 @@ public:
         Command done = Command("Type it when you are done - you think FireWall can survive the next attack.",
                 []( const string& userInput, Game & g, Interface & i){
                     g.GameState(State::ATTACK);
-                    return CommandEndType::VALID;
+                    return CommandEndType::DONE;
                     }
                 );
         commands.insert({"done", done});
@@ -64,14 +66,18 @@ public:
 
 
     Board & GameBoard(){return game.GameBoard(); }
-    void GameState(State & state){
-        game.GameState(state);
-    }
-/**
- * game loop
- * @return no errors 0 / app errors nonzero number
- */
-int Run();
+
+    void GameState(State & state){ game.GameState(state); }
+
+    void Greet();
+    int PrepLoop();
+    int AttackLoop();
+    /**
+     * game loop
+     * @return no errors 0 / app errors nonzero number
+     */
+    int Run();
+
 };
 
 

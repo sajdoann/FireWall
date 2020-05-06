@@ -63,6 +63,7 @@ public:
         for (int i = 0; i < maxX ; ++i) {
             for (int j = 0; j < maxY; ++j) {
                 delete tiles[i][j];
+                tiles[i][j] = nullptr;
             }
         }
     }

@@ -7,18 +7,15 @@
 #include <regex>
 #include "App.h"
 
-
-int App::Run() {
-
-    interface.PrintBoard(game.GameBoard());
-
-    if(game.GameState() == State::WELCOME){
+void App::Greet(){
         interface.Greet();
-        game.GameState(State::PREPARATION);
-    }
+        interface.ClearScreen();
+}
 
-
+int App::PrepLoop(){
     while (game.GameState() == State::PREPARATION){
+        interface.PrintBoardPrep(game.GameBoard());
+
         string command = interface.PromptCommand();
         bool found = false;
 
@@ -27,22 +24,19 @@ int App::Run() {
 
             //if command matches with regex key in map of commands
             if(regex_match(command, c)){
-                CommandEndType toDoNext = com.second.Exec(command, game, interface);
+                CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
+                interface.ClearScreen();
                 //executes command and finds out what to do next
-                switch (toDoNext) {
+                switch (typeOfCommand) {
                     case CommandEndType::ENDGAME:{
                         return 0;
                     }
                     case CommandEndType::INVALID:{
-                        //the text matches but its an invalid move
-                        cout << "This move cannot be executed." << endl;
-                        cout << "Check if the names, coordinates are valid and you have enough RAM to support the patch" << endl;
-                    }
-                    case CommandEndType::DONE:{
-                        game.GameState(State::ATTACK);
-                        found = true;
+                        interface.InvalidMove();
+                        break;
                     }
                 }
+                found = true;
                 break;
             }
         }
@@ -50,9 +44,38 @@ int App::Run() {
         // no command was found, suggest to use help
         if(!found) interface.HelpAdvertiser();
     }
+    return 1;
+}
 
+int App::Run() {
+    bool firstPrep = true;
+    while(true) {
+        switch(game.GameState()){
+            case State::WELCOME:{
+                Greet();
+                game.GameState(State::PREPARATION);
+                break;
+            }
+            case State::PREPARATION:{
+                if(firstPrep){
+                    interface.ExplainPrepState();
+                    firstPrep = false;
+                }
+                if (!PrepLoop()) return 0;
+                break;
+            }
+            case State::ATTACK:{
+                interface.ClearScreen();
+                AttackLoop();
+                interface.PrintResult(game.GameResult());
+                game.GameState(State::PREPARATION);
+                break;
+            }
+        }
 
+    }
+}
 
-
-
+int App::AttackLoop() {
+    return 0;
 }

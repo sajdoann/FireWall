@@ -8,19 +8,23 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <stdlib.h>
+#include <cstdlib>
 #include "Objects/Coords.h"
 #include "Board/Board.h"
+#include "Game/Result.enum"
 
 using namespace std;
 
-
+/**
+ * stream interface for user communication with the game
+ */
 class Interface {
     istream &in;
     ostream &os;
 public:
     Interface(istream &in, ostream &os) : in(in), os(os) {}
 
+    /** asks the user to enter command */
     string PromptCommand() const {
         string command;
         os << "Enter command: " << endl;
@@ -30,11 +34,11 @@ public:
 
     /** suggests to use help to print commands and their syntax */
     void HelpAdvertiser() {
-        os << "Your command was invalid. \n To see help type \"help\"" << endl;
+        os << "Unknown command. \n To see help type \"help\"" << endl;
     }
 
-
-    void GetPatchInfo(const string & s, char &patchName, Coords &coords) {
+    /** extracts patch from  InsertPatch command */
+    void GetPatchInfo(const string &s, char &patchName, Coords &coords) {
         istringstream is(s);
         int x, y;
         char p = '(';
@@ -45,8 +49,9 @@ public:
         patchName = toupper(patchName);
     }
 
-    void ClearScreen(){
-        os << string( 100, '\n' );
+    /** clears the screen by printing 100 new lines */
+    void ClearScreen() {
+        os << string(100, '\n');
     }
 
     /** tells the story of FireWall game */
@@ -54,16 +59,20 @@ public:
         os << "Hello!" << endl;
         os << "There is a very important mission ahead of you." << endl;
         os << "The FireWall has breaches, your goal is to survive next vicious attack from the hackers." << endl;
-        os << "Try your best while placing patches, so the dangerous mallware cannot survive through your barrier" << endl;
+        os << "Try your best while placing patches, so the dangerous mallware cannot survive through your barrier"
+           << endl;
         os << "Your entire computer could fall apart if you dont!" << endl;
         os << "I wish you good luck :) " << endl << endl;
         os << "To continue press enter" << endl;
         string s;
-        while(!(getline(in,s))){}
+        while (!(getline(in, s))) {}
         ClearScreen();
     }
 
-    void NumberLine(int max) const{
+    /** prints numbers from 0-max in the same format as PrintBoardPrep
+     * @param max till what number it prints
+     */
+    void NumberLinePrep(int max) const {
         os << " ";
         for (int i = 0; i < max; ++i) {
             os << setw(3) << i;
@@ -71,19 +80,55 @@ public:
         os << endl;
     }
 
-    void PrintBoard( Board & board) const{
-        NumberLine(board.MaxX());
+    /**
+     * prints the board for the preparation mode
+     * @param board - the board it prints
+     */
+    void PrintBoardPrep(Board &board) const {
+        os << "patches:" << endl;
+        NumberLinePrep(board.MaxX());
 
         for (int i = 0; i < board.MaxX(); ++i) {
             for (int j = 0; j < board.MaxY(); ++j) {
-                if(j==0) os << i;
-                os << setw(3) << (board(i,j));
+                if (j == 0) os << i;
+                os << setw(3) << (board(i, j));
             }
             os << endl;
         }
     }
 
+    /** prints the invalid move text to the user */
+    void InvalidMove() const {
+        os << "This move cannot be executed." << endl;
+        os << "Check if the names, coordinates are valid and you have enough RAM to support the patch" << endl;
+    }
+
+    /** explains the preparation state of the game */
+    void ExplainPrepState() {
+        os << "Now your goal is to place patches so no virus could break through your wall." << endl;
+        os << "To do that type in name of patch (coord1, coord2) (fe: \"W(0,0)\" )" << endl;
+        os << "To see:\n"
+              "        .    all possible commands type \"help\"\n"
+              "        .    all possible patches and their info type \"patches\"\n" << endl;
+        os << "This is what the IT departament came with so far:\n" << endl;
+        os << " what the letters mean:\n"
+              "         .   E - empty\n"
+              "         .   W - wall\n"
+              "         .   other letter - some super special patch you can google up (use: \"google\" + name of patch)\n"
+           << endl;
+        os << "After you are done, just type in \"done\" and the hackers might try to breach in.\n" << endl;
+    }
+
+    /** prints the result */
+    void PrintResult(Result gameResult) {
+        if (gameResult == Result::LOSE)
+            os << "You lost!" << endl;
+        else os << "Congrats! You won!" << endl;
+    }
 
 
+    void ClearBuffers() {
+
+    }
 };
 
