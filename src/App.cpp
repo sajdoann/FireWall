@@ -19,7 +19,8 @@ int App::PrepLoop(){
         string command = interface.PromptCommand();
         bool found = false;
 
-        for(auto & com : commands){
+        for(auto & com : commands.CommandsMap()){
+            //makes regex from com name
             regex c(com.first);
 
             //if command matches with regex key in map of commands
@@ -49,6 +50,7 @@ int App::PrepLoop(){
 
 int App::Run() {
     bool firstPrep = true;
+    game.GameState(State::PREPARATION);
     while(true) {
         switch(game.GameState()){
             case State::WELCOME:{

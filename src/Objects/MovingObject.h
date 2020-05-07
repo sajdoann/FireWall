@@ -4,8 +4,10 @@
 */
 
 #pragma once
+#include "MovementType.enum"
+
 
 class MovingObject {
-
+    MovementType movementType;
 };
 

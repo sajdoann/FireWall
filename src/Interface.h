@@ -97,6 +97,10 @@ public:
         }
     }
 
+    void PrintBoardAtt(Board &board) const{
+
+    }
+
     /** prints the invalid move text to the user */
     void InvalidMove() const {
         os << "This move cannot be executed." << endl;

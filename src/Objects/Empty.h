@@ -22,7 +22,7 @@ class Empty : public Object{
     }
 
     friend ostream & operator << (ostream & os, const Empty & empty){
-        os << "E";
+        os << "\u001b[37;1m  "<< "E" << "\u001b[0m";
     }
 
 

@@ -55,7 +55,10 @@ public:
 
     /** prints just the name representation of object */
     ostream & PrintObject(ostream & os) override {
-        return os << (*this).name;
+        //TODO: ansi escape sequence zabira misto
+        // -> setw3 si mysli ze nemusi vypisovat mezery navic <- vyresit nedavat na tvrdo jak ted za ansi escape :D
+        //TODO: predelat do const char *
+        return os << "\u001b[31m  " << (*this).name << "\u001b[0m";
     }
 
     /** prints all available information for patches */
