@@ -28,13 +28,13 @@ class Game {
 
 public:
     Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard)  {
-        Reader patchReader("../Data/patches.txt");
+        Reader patchReader("../sajdoann/Data/patches.txt");
         patches = patchReader.ReadStillObjects<Patch>();
 
-        Reader virusReader("../Data/viruses.txt");
+        Reader virusReader("../sajdoann/Data/viruses.txt");
         viruses = virusReader.ReadStillObjects<Virus>();
 
-        Reader boardReader("../Data/board.txt");
+        Reader boardReader("../sajdoann/Data/board.txt");
         int maxX, maxY;
         set<Coords> coords = boardReader.ReadBoard(maxX, maxY);
         Board b(maxX, maxY, coords);
@@ -64,6 +64,7 @@ public:
         return patches.find(PatchName) != patches.end();
     }
 
+    //TODO: implement
     bool MoveAll(){
         movement.MoveAll();
     }

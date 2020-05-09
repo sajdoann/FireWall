@@ -12,14 +12,14 @@
 using namespace std;
 
 class MovingObject : public Object {
-    MovementType movementType;
+    MovementType movementType = MovementType::STRAIGHT;
 
 public:
     MovingObject() : Object() {};
 
     virtual ~MovingObject() = default;
 
-    MovementType MovementType() const { return movementType; }
+    MovementType MovementTypeObject() const { return movementType; }
 
     //object methods
 
