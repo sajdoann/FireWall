@@ -4,8 +4,10 @@
 */
 
 #pragma once
-
-enum Result {
+/**
+ * enum for result of the game
+ */
+enum ResultEnum {
     IN_PLAY, LOSE, WIN
 };
 

@@ -18,22 +18,33 @@ public:
     }
 
     void CreateCommands(){
+        //TODO place const chars in separate file
         //exit command
         Command exit = Exit();
         commands.insert( {"exit" , exit});
 
         //placePatch command, it places the patch
+        const char * doneRegex = "[ ]*[a-zA-Z][ ]*\\([ ]*[0-9]{1,}[ ]*,[ ]*[0-9]{1,}[ ]*\\)[ ]*";
         Command placePatch = PlacePatch();
-        commands.insert({"[ ]*[a-zA-Z][ ]*\\([ ]*[0-9]{1,}[ ]*,[ ]*[0-9]{1,}[ ]*\\)[ ]*", placePatch});
+        commands.insert({doneRegex, placePatch});
 
         //put online (done)
+        const char * doneName = "done";
         Command done = Done();
-        commands.insert({"done", done});
+        commands.insert({doneName, done});
+
+        //help
+        const char * helpName = "help";
+        Command help = Help();
+        commands.insert({helpName, help});
+
+        //google patch
+
     }
 
     Command PlacePatch(){
-        return Command("places patch, syntax: \"( patch type, coord x, coord y )\" "
-                       "\n for instance: \"D( 2, 5)\"",
+        return Command("type(x,y)","places patch, syntax: \" patch Type (coord x, coord y)\""
+                                     " ... for example \"W(0,0)\"",
                        []( const string& userInput, Game & g, Interface & i){
                            char patchName;
                            Coords coords;
@@ -53,7 +64,7 @@ public:
     }
 
     Command Done(){
-        return Command("Type it when you are done - you think FireWall can survive the next attack.",
+        return Command("done","Type it when you are done - you think FireWall can survive the next attack.",
                        []( const string& userInput, Game & g, Interface & i){
                            g.GameState(State::ATTACK);
                            return CommandEndType::DONE;
@@ -62,11 +73,24 @@ public:
     }
 
     Command Exit(){
-        return Command(
+        return Command("exit",
                 "exits the game witout saving",
                 [](const string& , Game &, Interface &)
                     { return CommandEndType::ENDGAME;}      );
     }
+
+    Command Help(){
+        const char * helpName = "help";
+        return Command(helpName,
+                "lists all the commands",
+                [this](const string& , Game &, Interface & i)
+                {
+                    for(const auto & c : commands){
+                        i.PrintHelp(c.second.Name(), c.second.Help());
+                    }
+                    return CommandEndType::VALID;}      );
+    }
+
 
 };
 

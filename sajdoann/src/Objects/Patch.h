@@ -66,6 +66,9 @@ public:
         return os << (*this);
     }
 
+    bool isMovingObject() override { return false;
+    }
+
     /** gets patch atributes from istream */
     friend istream & operator >> (istream & ifs, Patch & patch) {
         return ifs >> patch.name >> patch.type >> patch.price >> patch.range;

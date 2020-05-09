@@ -4,11 +4,31 @@
 */
 
 #pragma once
+
+#include <functional>
+#include "Object.h"
+#include "MovingObject.h"
+
+using namespace std;
+
 /**
  * moving object that is emited by patches
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes one live away)
  */
-class Hotfix{
+class Hotfix : public MovingObject {
+
+    char name;
+    //function<>//movement
+
+public:
+    Hotfix();
+
+    ~ Hotfix();
+
+    ostream &PrintObject(ostream &os);
+
+    ostream &PrintInfo(ostream &os);
+
 
 };
 

@@ -5,14 +5,16 @@
 
 #pragma once
 
-class Virus : public Object{
+#include "MovingObject.h"
+
+class Virus : public MovingObject{
     char name;
     char type;  //C-clever, L - left (moves just stright left if sees patch/wall goes up then left)
     int lives;
     int radius;
 public:
-    Virus() = default;
-    Virus(char name, char type, int lives, int radius) : name(name), type(type), lives(lives), radius(radius){}
+    Virus() : MovingObject() {};
+    Virus(char name, char type, int lives, int radius) : MovingObject(), name(name), type(type), lives(lives), radius(radius){}
     ~Virus() override = default;
 
     char Name(){ return name; }
@@ -43,6 +45,7 @@ public:
     void Destroy(){
         delete this;
     }
+
 
 };
 

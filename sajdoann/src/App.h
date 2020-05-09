@@ -16,7 +16,7 @@ using namespace std;
 
 /**
  * class that
- *  .
+ *  .   guides the game
  *  .   puts the game and interface together
  */
 class App {

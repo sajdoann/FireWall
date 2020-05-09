@@ -9,22 +9,25 @@
 
 #include "../Board/Board.h"
 #include "../Objects/Patch.h"
-#include "../Readers/Reader.h"
-#include "Result.enum"
+#include "../IOLoaders/Reader.h"
+#include "ResultEnum.h"
 #include "State.enum"
+#include "ScoreCounter.h"
+#include "../Movement/Movement.h"
 
 using namespace std;
 
 class Game {
     State gameState = State::WELCOME;
-    Result gameResult = Result::WIN;
-    /*//ScoreCounter scoreCounter;*/
+    ResultEnum gameResult = ResultEnum::WIN;
+    ScoreCounter scoreCounter;
     Board gameBoard;
-    map< char, Patch *> patches;
+    Movement movement;
+    map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
 public:
-    Game() {
+    Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard)  {
         Reader patchReader("../Data/patches.txt");
         patches = patchReader.ReadStillObjects<Patch>();
 
@@ -38,24 +41,31 @@ public:
         gameBoard = b;
     }
 
-    State GameState() const {return gameState;}
-    void GameState(State state){ this->gameState = state; }
+    State GameState() const { return gameState; }
 
-    Result GameResult()const{return gameResult;}
-    void GameResult(Result result) { this->gameResult = result; }
+    void GameState(State state) { this->gameState = state; }
 
+    ResultEnum GameResult() const { return gameResult; }
 
-    Board & GameBoard(){return gameBoard;}
-    bool OutOfGameBoard(const Coords & coords) const {return gameBoard.OutOfBoard(coords);}
+    void GameResult(ResultEnum result) { this->gameResult = result; }
 
 
-    void InsertPatch(const char patchType, const Coords & coords){
+    Board &GameBoard() { return gameBoard; }
+
+    bool OutOfGameBoard(const Coords &coords) const { return gameBoard.OutOfBoard(coords); }
+
+
+    void InsertPatch(const char patchType, const Coords &coords) {
         auto it = patches.find(patchType);
         gameBoard.InsertPatch((it->second), coords);
     }
 
-    bool isPatch(char PatchName){
+    bool isPatch(char PatchName) {
         return patches.find(PatchName) != patches.end();
+    }
+
+    bool MoveAll(){
+        movement.MoveAll();
     }
 
 };

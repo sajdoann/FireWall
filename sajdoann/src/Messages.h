@@ -4,5 +4,8 @@
 */
 
 #pragma once
-
-char * PROMPT_COMMAND = ""
+/**
+ * has all the messages
+ */
+ //TODO: place messages here
+const char * PROMPT_COMMAND = "";

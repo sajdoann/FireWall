@@ -13,6 +13,10 @@
 #include "../Objects/Virus.h"
 
 using namespace std;
+
+/**
+ * class to read objects and board from files
+ */
 class Reader {
 protected:
     ifstream ifs;
@@ -24,6 +28,8 @@ public:
         if (!ifs)
             throw invalid_argument("filename:" + filename);
     }
+
+    //TODO: exeptions for invalid input
 
     template<typename StillObj>
     std::map<char, StillObj *> ReadStillObjects(){

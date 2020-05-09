@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include "Objects/Coords.h"
 #include "Board/Board.h"
-#include "Game/Result.enum"
+#include "Game/ResultEnum.h"
 
 using namespace std;
 
@@ -51,7 +51,9 @@ public:
 
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
-        os << string(100, '\n');
+        //TODO: in clion term variable not found -> not functioning (on other sys should not be a prob)
+        system("clear");
+        //os << string(100, '\n');
     }
 
     /** tells the story of FireWall game */
@@ -124,15 +126,20 @@ public:
     }
 
     /** prints the result */
-    void PrintResult(Result gameResult) {
-        if (gameResult == Result::LOSE)
+    void PrintResult(ResultEnum gameResult) {
+        if (gameResult == ResultEnum::LOSE)
             os << "You lost!" << endl;
         else os << "Congrats! You won!" << endl;
     }
 
 
     void ClearBuffers() {
-
+        //TODO: IMPLEMENT
     }
+
+    void PrintHelp(const string & name, const string & help){
+        os << setw(12) << left << name << " -   " << help << endl;
+    }
+
 };
 

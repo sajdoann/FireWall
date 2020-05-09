@@ -19,6 +19,8 @@ public:
 
     virtual ostream &PrintInfo(ostream &os) = 0;
 
+    virtual bool isMovingObject() = 0;
+
     friend std::ostream &operator<<(std::ostream &os, Object *object) {
         object->PrintObject(os);
         return os;

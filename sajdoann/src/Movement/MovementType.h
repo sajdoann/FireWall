@@ -1,11 +1,11 @@
 /**
 * @author Anna Sajdokova <sajdoann@fit.cvut.cz>
-* @date 4/30/2020
+* @date 5/9/2020
 */
 
 #pragma once
 
 enum MovementType {
-    UP,DOWN,LEFT,RIGHT
+    STRAIGHT, SEE_FRONT, SHORTEST_ROUTE
 };
 

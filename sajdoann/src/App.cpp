@@ -25,9 +25,11 @@ int App::PrepLoop(){
 
             //if command matches with regex key in map of commands
             if(regex_match(command, c)){
-                CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
                 interface.ClearScreen();
-                //executes command and finds out what to do next
+
+                //ececutes command
+                CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
+                // finds out what to do next
                 switch (typeOfCommand) {
                     case CommandEndType::ENDGAME:{
                         return 0;

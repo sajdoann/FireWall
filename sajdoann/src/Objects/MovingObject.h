@@ -4,10 +4,34 @@
 */
 
 #pragma once
-#include "MovementType.enum"
 
+#include <iosfwd>
+#include "Object.h"
+#include "../Movement/MovementType.h"
 
-class MovingObject {
+using namespace std;
+
+class MovingObject : public Object {
     MovementType movementType;
+
+public:
+    MovingObject() : Object() {};
+
+    virtual ~MovingObject() = default;
+
+    MovementType MovementType() const { return movementType; }
+
+    //object methods
+
+    virtual ostream &PrintObject(ostream &os) override = 0;
+
+    virtual ostream &PrintInfo(ostream &os) override = 0;
+
+    bool isMovingObject() override {
+        return true;
+    }
+
 };
+
+
 

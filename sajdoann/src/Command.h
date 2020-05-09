@@ -16,14 +16,16 @@
 using namespace std;
 
 class Command {
+    string name;
     string help;
     // std wrapper that can call any callable target ( <=> stores functions ) string - userInput
     function<CommandEndType(string , Game &, Interface &)> exec;
 
 public:
-    Command(string help, function<CommandEndType(string, Game &, Interface &)> exec) : help(std::move(help)), exec(std::move(exec)){}
+    Command(string name, string help, function<CommandEndType(string, Game &, Interface &)> exec) : name(std::move(name)), help(std::move(help)), exec(std::move(exec)){}
 
     string Help() const{ return help; }
+    string Name() const{return name;}
 
     /** calls function hidden in variable exec */
     CommandEndType Exec(string & userInput, Game & game, Interface & interface){
