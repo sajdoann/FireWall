@@ -11,9 +11,9 @@
  *
  */
 class MovementFunction {
-    bool StraightMovementHotfix(const Coords & actualCoords, Coords & futureCoords);
-    bool StraightMovementVirus(const Coords & actualCoords, Coords & futureCoords);
-    bool seeFrontMovement(const Coords & actualCoords, Coords & futureCoords);
+    bool StraightMovement(const Coords &actualCoords, Coords &futureCoords);
+
+    bool seeFrontMovement(const Coords &actualCoords, Coords &futureCoords);
     bool shortestRouteMovement(const Coords & actualCoords, Coords & futureCoords);
 };
 

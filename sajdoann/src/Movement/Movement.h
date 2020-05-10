@@ -6,7 +6,9 @@
 #pragma once
 
 #include "../Board/Board.h"
-
+/**
+ * class for movement of the moving objects on the board
+ */
 class Movement {
     Board * board;
 public:

@@ -27,65 +27,33 @@ class Board {
 public:
     Board() {}
 
-    Board(int maxX, int maxY) : maxX(maxX), maxY(maxY) {
-        for (int i = 0; i < maxX; ++i) {
-            vector<Object *> tmp;
-            for (int j = 0; j < maxY; ++j) {
-                tmp.push_back(new Empty());
-            }
-            tiles.push_back(tmp);
-        }
-    }
+    Board(int maxX, int maxY);
 
-    Board(int maxX, int maxY, set<Coords> coords) : Board(maxX, maxY) {
-        for (auto &coord : coords) {
-            Patch *defaultPatch = new Patch();
-            InsertPatch(defaultPatch, coord);
-        }
-    }
+    Board(int maxX, int maxY, set<Coords> coords);
 
-    Board &operator=(Board &other) {
-        if (this == &other) return *this;
-        maxX = other.maxX;
-        maxY = other.maxY;
-        for (int i = 0; i < maxX; ++i) {
-            vector<Object *> tmp;
-            for (int j = 0; j < maxY; ++j) {
-                tmp.push_back(move(other.tiles[i][j]));
-                other.tiles[i][j] = nullptr;
-            }
-            tiles.push_back(tmp);
-        }
-    }
+    Board &operator=(Board &other);
 
-    Board(Board &other) {
-        *this = other;
-    }
+    Board(Board &other);
 
-    ~Board() {
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-                delete tiles[i][j];
-                tiles[i][j] = nullptr;
-            }
-        }
-    }
+    ~Board();
 
-    int MaxX() const { return maxX; }
+    int MaxX() const;
 
-    int MaxY() const { return maxY; }
+    int MaxY() const;
 
-    bool OutOfBoard(const Coords &coords) const {
-        return coords.X() > maxX || coords.X() < 0 || coords.Y() > maxY || coords.Y() < 0;
-    }
+    /**
+     * finds out if coords are still in board
+     * @param coords
+     * @return true - coords are in board, false - not in board
+     */
+    bool OutOfBoard(const Coords &coords) const;
 
-    void InsertPatch(Patch *patch, const Coords &coords) {
-        delete tiles[coords.X()][coords.Y()];
-        //tiles[coords.X()][coords.Y()] = nullptr;
-        tiles[coords.X()][coords.Y()] = new Patch();
-        tiles[coords.X()][coords.Y()] = move(patch);
-        patch = nullptr;
-    }
+    /**
+     * inserts patch to the coords on board
+     * @param patch
+     * @param coords
+     */
+    void InsertPatch(Patch *patch, const Coords &coords);
 
     /**
      * overload of () operator it returns the object on x,y
@@ -93,9 +61,7 @@ public:
      * @param y
      * @return object on coords x,y
      */
-    Object *operator()(int x, int y) const {
-        return tiles[x][y];
-    }
+    Object *operator()(int x, int y) const;
 
 };
 

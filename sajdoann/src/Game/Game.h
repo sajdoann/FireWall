@@ -19,15 +19,17 @@ using namespace std;
 
 class Game {
     State gameState = State::WELCOME;
-    ResultEnum gameResult = ResultEnum::WIN;
+    ResultEnum gameResult = ResultEnum::UNKNOWN;
     ScoreCounter scoreCounter;
     Board gameBoard;
     Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
+    int ram = 0;        //TODO: zapojit do třídy
 
 public:
-    Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard)  {
+    Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard) {
+        //TODO: invalid inputs
         Reader patchReader("../sajdoann/Data/patches.txt");
         patches = patchReader.ReadStillObjects<Patch>();
 

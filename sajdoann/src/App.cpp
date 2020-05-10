@@ -68,16 +68,20 @@ int App::Run() {
                 if (!PrepLoop()) return 0;
                 break;
             }
-            case State::ATTACK:{
+            case State::ATTACK: {
                 interface.ClearScreen();
                 AttackLoop();
                 interface.PrintResult(game.GameResult());
                 game.GameState(State::PREPARATION);
                 break;
             }
+            case State::END: {
+                return 0;
+            }
         }
 
     }
+
 }
 
 int App::AttackLoop() {

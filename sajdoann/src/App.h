@@ -30,14 +30,27 @@ public:
     }
 
 
+    Board &GameBoard() { return game.GameBoard(); }
 
-    Board & GameBoard(){return game.GameBoard(); }
+    void GameState(State &state) { game.GameState(state); }
 
-    void GameState(State & state){ game.GameState(state); }
-
+    /**
+     * welcomes the user
+     */
     void Greet();
+
+    /**
+     * loop for prep state
+     * @return
+     */
     int PrepLoop();
+
+    /**
+     * loop for attack
+     * @return
+     */
     int AttackLoop();
+
     /**
      * game loop
      * @return no errors 0 / app errors nonzero number

@@ -13,15 +13,16 @@ using namespace std;
 
 /**
  * moving object that is emited by patches
- * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes one live away)
+ * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
 
     char name;
-    //function<>//movement
 
 public:
     Hotfix();
+
+    Hotfix(MovementType movementType, MovementDirection movementDirection);
 
     ~ Hotfix();
 

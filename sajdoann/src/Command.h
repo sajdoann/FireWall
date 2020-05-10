@@ -14,7 +14,9 @@
 #include "Interface.h"
 
 using namespace std;
-
+/**
+ * class for command - remembers name, help and function what to do if this command is called
+ */
 class Command {
     string name;
     string help;

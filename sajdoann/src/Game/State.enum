@@ -5,6 +5,6 @@
 
 #pragma once
 enum State {
-    WELCOME, PREPARATION, ATTACK
+    WELCOME, PREPARATION, ATTACK, END
 };
 

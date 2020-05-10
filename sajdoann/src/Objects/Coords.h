@@ -6,24 +6,29 @@
 #pragma once
 
 class Coords {
-    int x=0;
-    int y=0;
+    int x = 0;
+    int y = 0;
 public:
     Coords() = default;
-    Coords(int x, int y) : x(x), y(y){}
+
+    Coords(int x, int y) : x(x), y(y) {}
+
     ~Coords() = default;
-    int X() const {return x;}
-    int Y() const {return y;}
-    void setCoords(int x, int y){
+
+    int X() const { return x; }
+
+    int Y() const { return y; }
+
+    void setCoords(int x, int y) {
         this->x = x;
         this->y = y;
     }
 
-    friend int operator == (const Coords & a, const Coords & b){
+    friend int operator==(const Coords &a, const Coords &b) {
         return a.x == b.x && a.y == b.y;
     }
 
-    int operator < ( const Coords & b) const {
+    int operator<(const Coords &b) const {
         if (*this == b) return 0;
 
         if (x != b.x)
@@ -31,10 +36,10 @@ public:
         else return (y < b.y) ? 1 : -1;
     }
 
-    struct cmp{
-      int operator ()(const Coords & a, const Coords & b){
-          return  a < b;
-      }
+    struct cmp {
+        int operator()(const Coords &a, const Coords &b) {
+            return a < b;
+        }
     };
 };
 

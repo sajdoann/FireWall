@@ -8,6 +8,6 @@
  * enum for result of the game
  */
 enum ResultEnum {
-    IN_PLAY, LOSE, WIN
+    IN_PLAY, LOSE, WIN, UNKNOWN
 };
 

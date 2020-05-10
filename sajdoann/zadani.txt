@@ -45,10 +45,3 @@ Ukázky:
 https://en.wikipedia.org/wiki/Tower_defense
 https://en.wikipedia.org/wiki/GemCraft
 http://plantsvszombies.wikia.com/wiki/Main_Page
-Tato úloha je hodnocena automatem a následně vyučujícím.
-Nejprve úlohu odevzdejte a odlaďte na automatu,
-pak jedno Vámi vybrané řešení předejte k ohodnocení vyučujícím.
-Předání úlohy k hodnocení učitelem se provede tlačítkem "Předat vyučujícímu" u zvoleného řešení.
-Vyučující bude hodnotit pouze jedno Vaše řešení, vyučující nezačně hodnotit dokud mu úlohu nepčředáte.
-Dokud není úloha ohodnocena jak automatem tak i učitelem, nejsou přidělené žádné body
-(jsou zobrazována pouze dílčí hodnocení v procentech).

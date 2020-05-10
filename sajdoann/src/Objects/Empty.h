@@ -10,20 +10,21 @@
 
 using namespace std;
 
-class Empty : public Object{
+class Empty : public Object {
 
 public:
     Empty() = default;
+
     ~Empty() = default;
 
-    ostream & PrintObject(ostream & os) override { os << *this; }
+    ostream &PrintObject(ostream &os) override { os << *this; }
 
-    ostream & PrintInfo(ostream & os){ os << "empty"; }
+    ostream &PrintInfo(ostream &os) { os << "empty"; }
 
-    bool isMovingObject() override { return false;}
+    bool isMovingObject() override { return false; }
 
-    friend ostream & operator << (ostream & os, const Empty & empty){
-        os << "\u001b[37;1m  "<< "-" << "\u001b[0m";
+    friend ostream &operator<<(ostream &os, const Empty &empty) {
+        os << "\u001b[37;1m  " << "-" << "\u001b[0m";
     }
 
 };
