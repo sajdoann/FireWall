@@ -43,6 +43,15 @@ public:
         gameBoard = b;
     }
 
+    ~Game() {
+        /* for(auto p : patches){
+             delete p.second;
+         }
+         for(auto v : viruses){
+             delete v.second;
+         }*/
+    }
+
     State GameState() const { return gameState; }
 
     void GameState(State state) { this->gameState = state; }

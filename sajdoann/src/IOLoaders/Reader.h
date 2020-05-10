@@ -34,14 +34,21 @@ public:
     template<typename StillObj>
     std::map<char, StillObj *> ReadStillObjects(){
         std::map<char, StillObj *> objects;
+
         StillObj * object = new StillObj();
-        while(ifs >> *object){
+        while (ifs >> *object) {
             bool found = objects.find(object->Name()) != objects.end();
-            if(!found)
+            if (!found)
                 objects.insert({object->Name(), move(object)});
+            else
+                delete object;
+
             object = nullptr;
             object = new StillObj();
         }
+
+        delete object;
+
         return objects;
     }
 

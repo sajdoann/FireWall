@@ -29,6 +29,8 @@ public:
         commands.CreateCommands();
     }
 
+    ~App() = default;
+
 
     Board &GameBoard() { return game.GameBoard(); }
 

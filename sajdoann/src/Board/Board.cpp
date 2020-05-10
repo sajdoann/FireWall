@@ -19,6 +19,7 @@ Board::Board(int maxX, int maxY, set<Coords> coords) : Board(maxX, maxY) {
     for (auto &coord : coords) {
         Patch *defaultPatch = new Patch();
         InsertPatch(defaultPatch, coord);
+        //defaultPatch = nullptr;
     }
 }
 
@@ -47,6 +48,7 @@ Board::~Board() {
             tiles[i][j] = nullptr;
         }
     }
+
 }
 
 int Board::MaxX() const { return maxX; }
@@ -58,9 +60,9 @@ bool Board::OutOfBoard(const Coords &coords) const {
 }
 
 void Board::InsertPatch(Patch *patch, const Coords &coords) {
-    delete tiles[coords.X()][coords.Y()];
+    delete (tiles[coords.X()][coords.Y()]);
     //tiles[coords.X()][coords.Y()] = nullptr;
-    tiles[coords.X()][coords.Y()] = new Patch();
+//    tiles[coords.X()][coords.Y()] = new Patch();
     tiles[coords.X()][coords.Y()] = move(patch);
     patch = nullptr;
 }
