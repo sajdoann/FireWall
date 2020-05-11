@@ -20,31 +20,40 @@ using namespace std;
 class Reader {
 protected:
     ifstream ifs;
+    const string filename;
 
 public:
 
-    explicit Reader(const string &filename) {
+    explicit Reader(const string &filename) : filename(filename) {
         ifs.open(filename);
         if (!ifs)
-            throw invalid_argument("filename:" + filename);
+            throw runtime_error("filename:" + filename + "not found");
     }
 
     //TODO: exeptions for invalid input
 
     template<typename StillObj>
-    std::map<char, StillObj *> ReadStillObjects(){
+    std::map<char, StillObj *> ReadStillObjects() {
+        string s;
+        getline(ifs, s);
+
         std::map<char, StillObj *> objects;
 
-        StillObj * object = new StillObj();
-        while (ifs >> *object) {
+        StillObj *object = new StillObj();
+        while (ifs >> (*object)) {
             bool found = objects.find(object->Name()) != objects.end();
             if (!found)
-                objects.insert({object->Name(), move(object)});
+                objects.insert({object->Name(), object});
             else
                 delete object;
 
             object = nullptr;
             object = new StillObj();
+
+        }
+
+        if (!ifs.eof()) {
+            throw runtime_error(filename + " - Error loading input from this file.");
         }
 
         delete object;
@@ -52,12 +61,13 @@ public:
         return objects;
     }
 
-    set<Coords> ReadBoard(int & mx, int & my){
-        set<Coords> coords;
+    map<Coords, char> ReadBoard(int &mx, int &my) {
+        map<Coords, char> coords;
         ifs >> mx >> my;
-        int x,y;
-        while (ifs >> x >> y){
-            coords.insert(Coords(x,y));
+        int x, y;
+        char c;
+        while (ifs >> x >> y >> c) {
+            coords.insert({Coords(x, y), c});
         }
         return coords;
     }

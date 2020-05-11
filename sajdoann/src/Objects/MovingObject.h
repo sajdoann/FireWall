@@ -15,14 +15,17 @@ using namespace std;
 /**
  * class that roofs moving objects, it remembers movement type and direction
  */
-class MovingObject : public Object {
-    MovementType movementType = MovementType::STRAIGHT;
-    MovementDirection movementDirection = MovementDirection::RIGHT;
+class MovingObject : public ObjectWithMoveAttributes {
 
 public:
-    MovingObject() : Object() {};
+    MovingObject() = default;
+
+    MovingObject(MovementType movementType, MovementDirection movementDirection)
+            : ObjectWithMoveAttributes(movementType, movementDirection) {};
 
     virtual ~MovingObject() = default;
+
+    bool isEmpty() const { return false; }
 
     MovementType MovementTypeObject() const { return movementType; }
 
@@ -33,10 +36,11 @@ public:
 
     virtual ostream &PrintObject(ostream &os) override = 0;
 
-    virtual ostream &PrintInfo(ostream &os) override = 0;
+    virtual ostream &PrintInfo(ostream &os) const override = 0;
 
-    bool isMovingObject() override { return true; }
+    bool isMovingObject() const override { return true; }
 
+    virtual bool isVirus() const = 0;
 };
 
 

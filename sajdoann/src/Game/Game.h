@@ -25,6 +25,9 @@ class Game {
     Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
+    vector<char> keysPatches;
+    vector<char> keysViruses;
+
     int ram = 0;        //TODO: zapojit do třídy
 
 public:
@@ -38,18 +41,21 @@ public:
 
         Reader boardReader("../sajdoann/Data/board.txt");
         int maxX, maxY;
-        set<Coords> coords = boardReader.ReadBoard(maxX, maxY);
-        Board b(maxX, maxY, coords);
+
+        getObjectsKeys();
+
+        map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
+        Board b(maxX, maxY, coords,);
         gameBoard = b;
     }
 
     ~Game() {
-        /* for(auto p : patches){
-             delete p.second;
-         }
-         for(auto v : viruses){
-             delete v.second;
-         }*/
+        for (auto p : patches) {
+            delete p.second;
+        }
+        for (auto v : viruses) {
+            delete v.second;
+        }
     }
 
     State GameState() const { return gameState; }
@@ -68,16 +74,29 @@ public:
 
     void InsertPatch(const char patchType, const Coords &coords) {
         auto it = patches.find(patchType);
-        gameBoard.InsertPatch((it->second), coords);
+        gameBoard.InsertPatch(*(it->second), coords);
     }
 
     bool isPatch(char PatchName) {
         return patches.find(PatchName) != patches.end();
     }
 
+    Patch getPatch(const char c) const { return *patches.at(c); }
+
     //TODO: implement
-    bool MoveAll(){
+    bool MoveLoop() {
+
         movement.MoveAll();
+    }
+
+    void getObjectsKeys() {
+        for (const auto &p : patches) {
+            keysPatches.push_back(p.first);
+        }
+
+        for (const auto &v : viruses) {
+            keyViruses.push_back(v.first);
+        }
     }
 
 };

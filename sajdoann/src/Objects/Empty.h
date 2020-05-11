@@ -11,6 +11,7 @@
 using namespace std;
 
 class Empty : public Object {
+    char name = '-';
 
 public:
     Empty() = default;
@@ -19,12 +20,22 @@ public:
 
     ostream &PrintObject(ostream &os) override { os << *this; }
 
-    ostream &PrintInfo(ostream &os) { os << "empty"; }
+    ostream &PrintInfo(ostream &os) const { os << "empty"; }
 
-    bool isMovingObject() override { return false; }
+    bool isMovingObject() const override { return false; }
+
+    bool isEmpty() const override { return true; }
+
+    bool isVirus() const { return false; }
+
 
     friend ostream &operator<<(ostream &os, const Empty &empty) {
-        os << "\u001b[37;1m  " << "-" << "\u001b[0m";
+        //os << "\u001b[37;1m  " << "-" << "\u001b[0m";
+        os << "-";
+    }
+
+    istream &LoadObject(istream &is) {
+        is >> name;
     }
 
 };

@@ -1,4 +1,6 @@
-& C 7 5
-@ L 5 1
-% C 3 3
-= L 3 1
+name    lives   movTyp      MovementDirection
+&       5       SHORTEST       LEFT
+@       4       SHORTEST       LEFT
+%       4       SHORTEST       LEFT
+=       4       SHORTEST       LEFT
+

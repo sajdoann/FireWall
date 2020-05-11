@@ -17,12 +17,25 @@ public:
 
     virtual ostream &PrintObject(ostream &os) = 0;
 
-    virtual ostream &PrintInfo(ostream &os) = 0;
+    virtual istream &LoadObject(istream &is) = 0;
 
-    virtual bool isMovingObject() = 0;
+
+    virtual ostream &PrintInfo(ostream &os) const = 0;
+
+    virtual bool isMovingObject() const = 0;
+
+    virtual bool isEmpty() const = 0;
+
+    virtual bool isVirus() const = 0;
+
 
     friend std::ostream &operator<<(std::ostream &os, Object *object) {
         object->PrintObject(os);
         return os;
+    }
+
+    friend std::istream &operator<<(std::istream &is, Object *object) {
+        object->LoadObject(is);
+        return is;
     }
 };

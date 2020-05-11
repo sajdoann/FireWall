@@ -25,7 +25,9 @@ class App {
     Commands commands;
 
 public:
-    App() : game(), interface(cin, cout) {
+    App() :
+            game(),
+            interface(cin, cout) {
         commands.CreateCommands();
     }
 

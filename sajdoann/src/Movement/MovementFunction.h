@@ -14,6 +14,7 @@ class MovementFunction {
     bool StraightMovement(const Coords &actualCoords, Coords &futureCoords);
 
     bool seeFrontMovement(const Coords &actualCoords, Coords &futureCoords);
-    bool shortestRouteMovement(const Coords & actualCoords, Coords & futureCoords);
+
+    bool shortestRouteMovement(const Coords &actualCoords, Coords &futureCoords);
 };
 

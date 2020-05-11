@@ -12,6 +12,7 @@
 #include "Objects/Coords.h"
 #include "Board/Board.h"
 #include "Game/ResultEnum.h"
+#include "Color.h"
 
 using namespace std;
 
@@ -21,8 +22,11 @@ using namespace std;
 class Interface {
     istream &in;
     ostream &os;
+    ColorClass colorClass;
+    mutable const char *clr = colorClass.Color(ColorClass::RESET);
+
 public:
-    Interface(istream &in, ostream &os) : in(in), os(os) {}
+    Interface(istream &in, ostream &os) : in(in), os(os), colorClass() {}
 
     /** asks the user to enter command */
     string PromptCommand() const {
@@ -82,7 +86,19 @@ public:
         os << endl;
     }
 
-    /**
+    void getColorOfObject(Object *o) const {
+        if (o->isEmpty()) {
+            clr = colorClass.Color(ColorClass::CYAN);
+        }
+        if (!o->isMovingObject() && !o->isEmpty()) {
+            if (((Patch *) o)->CanShoot())
+                clr = colorClass.Color(ColorClass::BLUE);
+            else
+                clr = colorClass.Color(ColorClass::RED);
+        }
+    }
+
+/**
      * prints the board for the preparation mode
      * @param board - the board it prints
      */
@@ -93,15 +109,24 @@ public:
         for (int i = 0; i < board.MaxX(); ++i) {
             for (int j = 0; j < board.MaxY(); ++j) {
                 if (j == 0) os << i;
-                os << setw(3) << (board(i, j));
+                Object *o = board(i, j);
+
+                getColorOfObject(o);
+
+
+                os << clr << setw(3) << (board(i, j));
+                resetClr();
             }
             os << endl;
         }
     }
 
-    void PrintBoardAtt(Board &board) const{
+    void resetClr() const {
+        clr = colorClass.Color(ColorClass::RESET);
+        os << clr;
 
     }
+
 
     /** prints the invalid move text to the user */
     void InvalidMove() const {
@@ -137,8 +162,12 @@ public:
         //TODO: IMPLEMENT
     }
 
-    void PrintHelp(const string & name, const string & help){
+    void PrintHelp(const string &name, const string &help) {
         os << setw(12) << left << name << " -   " << help << endl;
+    }
+
+    void PrintPatchInfo(const Patch &p) const {
+        p.PrintInfo(os);
     }
 
 };

@@ -6,17 +6,19 @@
 #pragma once
 
 #include "../Board/Board.h"
+
 /**
  * class for movement of the moving objects on the board
  */
 class Movement {
-    Board * board;
+    Board *board;
 public:
-    Movement(Board * board) : board(board){};
-    ~Movement(){};
+    Movement(Board *board) : board(board) {};
+
+    ~Movement() {};
 
     //game gives order and the entire board moves
-    void MoveAll(){};
+    void MoveAll() {};
 
 };
 

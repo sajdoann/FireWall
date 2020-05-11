@@ -8,6 +8,7 @@
 #include <functional>
 #include "Object.h"
 #include "MovingObject.h"
+#include "MovingInterface.h"
 
 using namespace std;
 
@@ -16,19 +17,35 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
-
     char name;
 
 public:
-    Hotfix();
 
-    Hotfix(MovementType movementType, MovementDirection movementDirection);
+    Hotfix(MovementType movementType, MovementDirection movementDirection) : MovingObject(movementType,
+                                                                                          movementDirection) {}
 
-    ~ Hotfix();
+    ~ Hotfix() = default;
 
-    ostream &PrintObject(ostream &os);
+    bool isVirus() const { return false; };
 
-    ostream &PrintInfo(ostream &os);
+    ostream &PrintObject(ostream &os) {
+        os << name;
+    }
+
+    istream &LoadObject(istream &is) {
+        is >> name;
+        if (is.eof()) return is;
+        MovementFromIn(is, movementType);
+        DirectionFromIn(is, movementDirection);
+
+    }
+
+    ostream &PrintInfo(ostream &os) const override {
+        os << name << " ";
+        MovementToOut(os, movementType);
+        DirectionsToOut(os, movementDirection);
+        //<< " "  << movementDirection;
+    }
 
 
 };

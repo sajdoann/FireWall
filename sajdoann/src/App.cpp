@@ -7,34 +7,34 @@
 #include <regex>
 #include "App.h"
 
-void App::Greet(){
-        interface.Greet();
-        interface.ClearScreen();
+void App::Greet() {
+    interface.Greet();
+    interface.ClearScreen();
 }
 
-int App::PrepLoop(){
-    while (game.GameState() == State::PREPARATION){
+int App::PrepLoop() {
+    while (game.GameState() == State::PREPARATION) {
         interface.PrintBoardPrep(game.GameBoard());
 
         string command = interface.PromptCommand();
         bool found = false;
 
-        for(auto & com : commands.CommandsMap()){
+        for (auto &com : commands.CommandsMap()) {
             //makes regex from com name
             regex c(com.first);
 
             //if command matches with regex key in map of commands
-            if(regex_match(command, c)){
+            if (regex_match(command, c)) {
                 interface.ClearScreen();
 
                 //ececutes command
                 CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
                 // finds out what to do next
                 switch (typeOfCommand) {
-                    case CommandEndType::ENDGAME:{
+                    case CommandEndType::ENDGAME: {
                         return 0;
                     }
-                    case CommandEndType::INVALID:{
+                    case CommandEndType::INVALID: {
                         interface.InvalidMove();
                         break;
                     }
@@ -45,7 +45,7 @@ int App::PrepLoop(){
         }
 
         // no command was found, suggest to use help
-        if(!found) interface.HelpAdvertiser();
+        if (!found) interface.HelpAdvertiser();
     }
     return 1;
 }
@@ -53,15 +53,15 @@ int App::PrepLoop(){
 int App::Run() {
     bool firstPrep = true;
     game.GameState(State::PREPARATION);
-    while(true) {
-        switch(game.GameState()){
-            case State::WELCOME:{
+    while (true) {
+        switch (game.GameState()) {
+            case State::WELCOME: {
                 Greet();
                 game.GameState(State::PREPARATION);
                 break;
             }
-            case State::PREPARATION:{
-                if(firstPrep){
+            case State::PREPARATION: {
+                if (firstPrep) {
                     interface.ExplainPrepState();
                     firstPrep = false;
                 }
@@ -85,5 +85,6 @@ int App::Run() {
 }
 
 int App::AttackLoop() {
+    game.MoveLoop();
     return 0;
 }

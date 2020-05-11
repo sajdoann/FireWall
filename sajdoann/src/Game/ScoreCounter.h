@@ -6,6 +6,7 @@
 #pragma once
 
 #include "ResultEnum.h"
+
 /**
  * counts score based on how many viruses survive through the wall
  */
@@ -16,16 +17,16 @@ class ScoreCounter {
 
 public:
     //TODO: implement this
-    ScoreCounter(){};
+    ScoreCounter() {};
 
     /**sets the number of viruses*/
-    void setNumberOfViruses(const int & numberOfViruses){ this->numberOfViruses = numberOfViruses;}
+    void setNumberOfViruses(const int &numberOfViruses) { this->numberOfViruses = numberOfViruses; }
 
     /**returns number of viruses */
-    int NumberOfViruses()const { return numberOfViruses; }
+    int NumberOfViruses() const { return numberOfViruses; }
 
     /**returns how many viruses can get through wall and its still a win*/
-    int AcceptableLosses() const {return acceptableLosses;}
+    int AcceptableLosses() const { return acceptableLosses; }
 
     /**counts the result */
     ResultEnum GetResult() const;

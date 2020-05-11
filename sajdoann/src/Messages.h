@@ -7,5 +7,5 @@
 /**
  * has all the messages
  */
- //TODO: place messages here
-const char * PROMPT_COMMAND = "";
+//TODO: place messages here
+const char *PROMPT_COMMAND = "";

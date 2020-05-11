@@ -45,6 +45,10 @@ public:
 
         //google patch
         //TODO: implement google
+        const char *googleName = "[ ]*google[ ]*[a-zA-Z]{1}";
+        Command google = Google();
+        commands.insert({googleName, google});
+
 
     }
 
@@ -94,6 +98,28 @@ public:
                            }
                            return CommandEndType::VALID;
                        });
+    }
+
+    Command Google() {
+        return Command("google", "You dont know what the leters on board mean? Type google and the name"
+                                 "ot the patch",
+                       [](const string &userInput, Game &g, Interface &i) {
+                           stringstream s(userInput);
+                           string google;
+                           s >> google;
+                           char c;
+                           s >> c;
+                           c = toupper(c);
+
+                           if (!g.isPatch(c)) {
+                               return CommandEndType::INVALID;
+                           } else {
+                               i.PrintPatchInfo(g.getPatch(c));
+                               return CommandEndType::VALID;
+                           }
+
+                       }
+        );
     }
 
 

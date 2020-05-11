@@ -1,4 +1,7 @@
-W W 0 0
-D D 12 5
-Z Z 15 8
-R R 5  3
+name    price   movTyp      MovementDirection
+W       12      NONE        UP
+L       0       FRONT       DOWN
+D       12      FRONT       RIGHT
+A       15      FRONT       RIGHT
+Z       5       FRONT       RIGHT
+
