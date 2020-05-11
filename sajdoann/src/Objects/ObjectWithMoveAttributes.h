@@ -8,7 +8,6 @@ using namespace std;
 
 #include "../Movement/MovementType.h"
 #include "../Movement/MovementDirection.h"
-#include "MovingInterface.h"
 
 class ObjectWithMoveAttributes : public Object {
 protected:

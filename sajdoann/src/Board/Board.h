@@ -37,12 +37,11 @@ public:
         }
     }
 
-    Board(int maxX, int maxY, map<Coords, Patch> coords) : Board(maxX, maxY) {
+    Board(int maxX, int maxY, map<Coords, Patch *> coords) : Board(maxX, maxY) {
         auto c = coords.begin();
-        for (auto c = coords.begin(), c != coords.end();
-        ++coords) {
-            Patch *defaultPatch = new Patch(coord.second);
-            InsertPatch(*defaultPatch, coord.first);
+        for (; c != coords.end(); ++c) {
+            Patch *defaultPatch = (c->second);
+            InsertPatch(*defaultPatch, c->first);
             delete defaultPatch;
             //defaultPatch = nullptr;
         }

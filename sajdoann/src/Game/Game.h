@@ -25,8 +25,6 @@ class Game {
     Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
-    vector<char> keysPatches;
-    vector<char> keysViruses;
 
     int ram = 0;        //TODO: zapojit do třídy
 
@@ -42,10 +40,16 @@ public:
         Reader boardReader("../sajdoann/Data/board.txt");
         int maxX, maxY;
 
-        getObjectsKeys();
-
         map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
-        Board b(maxX, maxY, coords,);
+        map<Coords, Patch *> patchesMap;
+        for (auto c : coords) {
+            Patch *p = nullptr;
+            if (isPatch(c.second))
+                p = new Patch(getPatch(c.second));
+            else throw runtime_error("No such patch exixts. Patch name: " + c.second);
+            patchesMap.insert({c.first, p});
+        }
+        Board b(maxX, maxY, patchesMap);
         gameBoard = b;
     }
 
@@ -81,7 +85,7 @@ public:
         return patches.find(PatchName) != patches.end();
     }
 
-    Patch getPatch(const char c) const { return *patches.at(c); }
+    Patch &getPatch(const char c) const { return *patches.at(c); }
 
     //TODO: implement
     bool MoveLoop() {
@@ -89,15 +93,7 @@ public:
         movement.MoveAll();
     }
 
-    void getObjectsKeys() {
-        for (const auto &p : patches) {
-            keysPatches.push_back(p.first);
-        }
 
-        for (const auto &v : viruses) {
-            keyViruses.push_back(v.first);
-        }
-    }
 
 };
 

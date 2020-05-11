@@ -8,7 +8,6 @@
 #include <functional>
 #include "Object.h"
 #include "MovingObject.h"
-#include "MovingInterface.h"
 
 using namespace std;
 
