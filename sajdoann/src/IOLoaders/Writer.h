@@ -25,9 +25,22 @@ public:
     }
 
     //writes the data to file
-    bool writeToFile() {
-
+    template<typename O>
+    void writeToFile(O object) {
+        for (const auto &p :object) {
+            auto single = *p.second;
+            single.SaveObject(out);
+            out << endl;
+        }
     }
 
+    template<typename T>
+    void getHeading(T t) {
+        T::Heading(out);
+    }
+
+    void Close() {
+        out.close();
+    }
 };
 

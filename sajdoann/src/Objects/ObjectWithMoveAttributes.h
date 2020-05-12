@@ -60,12 +60,16 @@ public:
         switch (value) {
             case MovementType::STRAIGHT:
                 s = "STRAIGHT";
+                break;
             case MovementType::SEE_FRONT:
                 s = "FRONT";
+                break;
             case MovementType::SHORTEST_ROUTE:
                 s = "SHORTEST";
+                break;
             case MovementType::NONE:
                 s = "NONE";
+                break;
         }
         return out << s;
     }
@@ -92,10 +96,13 @@ public:
         switch (value) {
             case MovementDirection::RIGHT:
                 s = "RIGHT";
+                break;
             case MovementDirection::UP:
                 s = "UP";
+                break;
             case MovementDirection::DOWN:
                 s = "DOWN";
+                break;
             case MovementDirection::LEFT:
                 s = "LEFT";
                 break;

@@ -35,9 +35,9 @@ public:
     bool isVirus() const { return true; };
 
     ostream &SaveObject(ostream &out) override {
-        out << name << " " << lives << " ";
+        out << name << setw(10) << lives << setw(10);
         MovementToOut(out, movementType);
-        out << " ";
+        out << setw(10);
         DirectionsToOut(out, movementDirection);
         return out;
     }
@@ -93,6 +93,10 @@ public:
         }
     };
 
+    static ostream &Heading(ostream &os) {
+        return os << "NAME" << setw(10) << "LIVES" << setw(10) << "MOVEMENT"
+                  << setw(10) << "DIRECTION" << endl;
+    }
 
 };
 

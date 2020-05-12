@@ -7,6 +7,7 @@
 
 #include <string>
 #include "Command.h"
+#include "IOLoaders/Writer.h"
 
 using namespace std;
 
@@ -49,8 +50,9 @@ public:
         commands.insert({googleName, google});
 
         //save game
-        const char *quitName = "quit";
-        Command quit = Quit();
+        const char *saveName = "save";
+        Command save = Save();
+        commands.insert({saveName, save});
 
 
     }
@@ -130,10 +132,14 @@ public:
                        "saves the game into files.",
                        [](const string &, Game &g, Interface &i) {
 
-                           Writer = new Writer();
-                           for (const auto &p : g.Patches()) {
+                           Writer patchWriter("../sajdoann/saves/ahoj.txt");
+                           patchWriter.getHeading(*(g.Patches().begin()->second));
+                           patchWriter.writeToFile(g.Patches());
 
-                           }
+                           Writer VirusWriter("../sajdoann/saves/jak.txt");
+                           VirusWriter.getHeading(*(g.Viruses().begin()->second));
+                           VirusWriter.writeToFile(g.Viruses());
+
                            return CommandEndType::VALID;
 
 

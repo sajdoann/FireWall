@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include <iomanip>
 #include "ObjectWithMoveAttributes.h"
 #include "Hotfix.h"
 
@@ -118,13 +119,18 @@ public:
 
 
     /** prints just the name representation of object */
-    virtual ostream &SaveObject(ostream &os) override {
-        return os << name << " " << price << " ";
+    ostream &SaveObject(ostream &os) override {
+        os << name << setw(10) << price << setw(10);
         MovementToOut(os, movementType);
-        os << " ";
+        os << setw(10);
         DirectionsToOut(os, movementDirection);
+        return os;
     }
 
+    static ostream &Heading(ostream &os) {
+        return os << "NAME" << setw(10) << "PRICE" << setw(10) << "MOVEMENT" << setw(10)
+                  << "DIRECTION" << endl;
+    }
 
 
 };

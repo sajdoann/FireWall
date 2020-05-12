@@ -1,7 +1,7 @@
-name    price   movTyp      MovementDirection
-W       12      NONE        UP
-L       0       FRONT       DOWN
-D       12      FRONT       RIGHT
-A       15      FRONT       RIGHT
-Z       5       FRONT       RIGHT
+NAME     PRICE  MOVEMENT DIRECTION
+A        15     FRONT     RIGHT
+D        12     FRONT     RIGHT
+L         0     FRONT      DOWN
+W        12      NONE        UP
+Z         5     FRONT     RIGHT
 
