@@ -20,17 +20,20 @@ Hra má 3 části:
 
 ###Dědičnost a polymorfismus:
 Třídy:
-- Object (PrintObject, PrintInfo)
-    - moving object
-        - hotfix
-        - virus
-    - patch
+- Object (SaveObject, PrintInfo, LoadObject, isEmpty, isMovingObj, isVirus)
     - empty
+    - ObjectWithMoveAttributes
+        - patch
+        - moving object
+            - hotfix
+            - virus
+        
+    
     
 jiné třídy nic nedědí. S těmito třídami jsou ještě spjaté třídy z Movement složky, kde jsou všechny možné
 pohyby po board pro moving objects. Classa moving object si pamatuje movement type a movement direction.
 
-Polymorfismus využívám pro metody PrintObject a PrintInfo v objektu, ty jsou implementovány v 
+Polymorfismus využívám pro metody SaveObject a PrintInfo v objektu, ty jsou implementovány v 
 hotfixu, virusu, patchi a empty. 
  
  (stačí to?)
@@ -43,11 +46,10 @@ Asi by nebyl problém si poslat nějaký otisk board, typu každému typu object
 nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
  že mám třídu mimo (movement, includuju ji v game a beru si patche z pointru 
  na board co  si třída pamatuje.) Je to ok? 
- Plánuju si ještě hrát s barvičkami u printů.
 
 ###Třídy a reprezentace
  Krom výše zmíněných tříd zde je: 
-  - `Interface` (uživatelské rozhraní)
+  - `Interface` - uživatelské rozhraní
   - `Command` - třída na příkazy, pamatuje si stringy jméno a help + co se má provést (function z functional většinou lambdu)
   - `Commands` - třída která si pamatuje všechny commandy
   - `Game` - instance hry, pamatuje si patche, virusy, board a skóre
@@ -58,15 +60,17 @@ nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
     
 ###Příkazy
 (P ... zkratka patch)
-help:
+
+`help:`
 - `type P (x,y)` -   places patch, syntax: " patch Type (coord x, coord y)" ... for example "W(0,0)"
 - `done`         -   Type it when you are done - you think FireWall can survive the next attack.
 - `exit`         -   exits the game witout saving
 - `help`         -   lists all the commands
 - `google P`     -   prints all the available information about the patch
-
+- `save`         -   saves the game
+- `quit`         -   saves the game and exits
 ###Ukázka 
-stav preparation - náhled ( bohužel markdown nemá rád barvičky, ale bude to barevně :D)
+stav preparation - náhled 
 ```
 patches:
    0  1  2  3  4  5  6  7  8  9

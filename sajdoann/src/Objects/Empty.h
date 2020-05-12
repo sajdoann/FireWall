@@ -14,11 +14,11 @@ class Empty : public Object {
     char name = '-';
 
 public:
-    Empty() = default;
+    Empty() : Object('-') {};
 
     ~Empty() = default;
 
-    ostream &PrintObject(ostream &os) override { os << *this; }
+    ostream &SaveObject(ostream &os) override { os << *this; }
 
     ostream &PrintInfo(ostream &os) const { os << "empty"; }
 
@@ -30,7 +30,6 @@ public:
 
 
     friend ostream &operator<<(ostream &os, const Empty &empty) {
-        //os << "\u001b[37;1m  " << "-" << "\u001b[0m";
         os << "-";
     }
 

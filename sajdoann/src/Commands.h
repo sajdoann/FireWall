@@ -44,10 +44,13 @@ public:
         commands.insert({helpName, help});
 
         //google patch
-        //TODO: implement google
         const char *googleName = "[ ]*google[ ]*[a-zA-Z]{1}";
         Command google = Google();
         commands.insert({googleName, google});
+
+        //save game
+        const char *quitName = "quit";
+        Command quit = Quit();
 
 
     }
@@ -122,6 +125,20 @@ public:
         );
     }
 
+    Command Save() {
+        return Command("save",
+                       "saves the game into files.",
+                       [](const string &, Game &g, Interface &i) {
+
+                           Writer = new Writer();
+                           for (const auto &p : g.Patches()) {
+
+                           }
+                           return CommandEndType::VALID;
+
+
+                       });
+    }
 
 };
 

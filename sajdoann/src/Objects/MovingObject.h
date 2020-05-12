@@ -20,8 +20,8 @@ class MovingObject : public ObjectWithMoveAttributes {
 public:
     MovingObject() = default;
 
-    MovingObject(MovementType movementType, MovementDirection movementDirection)
-            : ObjectWithMoveAttributes(movementType, movementDirection) {};
+    MovingObject(char name, MovementType movementType, MovementDirection movementDirection)
+            : ObjectWithMoveAttributes(name, movementType, movementDirection) {};
 
     virtual ~MovingObject() = default;
 
@@ -34,9 +34,10 @@ public:
 
     //object methods
 
-    virtual ostream &PrintObject(ostream &os) override = 0;
+    virtual ostream &SaveObject(ostream &out) override = 0;
 
-    virtual ostream &PrintInfo(ostream &os) const override = 0;
+    virtual ostream &PrintInfo(ostream &out) const override = 0;
+
 
     bool isMovingObject() const override { return true; }
 

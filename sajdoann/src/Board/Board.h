@@ -86,7 +86,7 @@ public:
      * @return true - coords are in board, false - not in board
      */
     bool OutOfBoard(const Coords &coords) const {
-        return coords.X() > maxX || coords.X() < 0 || coords.Y() > maxY || coords.Y() < 0;
+        return coords.X() >= maxX || coords.X() < 0 || coords.Y() >= maxY || coords.Y() < 0;
     }
 
     /**

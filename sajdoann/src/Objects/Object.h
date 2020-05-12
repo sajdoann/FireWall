@@ -10,17 +10,28 @@
 using namespace std;
 
 class Object {
+protected:
+    char name;
 public:
+    Object(char name) : name(name) {}
+
     Object() = default;
 
     virtual ~Object() = default;
 
-    virtual ostream &PrintObject(ostream &os) = 0;
+    //saves object into stream for storing
+    virtual ostream &SaveObject(ostream &out) = 0;
 
-    virtual istream &LoadObject(istream &is) = 0;
+    //loads objects in save object format
+    virtual istream &LoadObject(istream &in) = 0;
+
+    //print object in game
+    //virtual ostream &Print(ostream &out) = 0;
 
 
-    virtual ostream &PrintInfo(ostream &os) const = 0;
+    //prints object for user
+    virtual ostream &PrintInfo(ostream &out) const = 0;
+
 
     virtual bool isMovingObject() const = 0;
 
@@ -29,13 +40,13 @@ public:
     virtual bool isVirus() const = 0;
 
 
-    friend std::ostream &operator<<(std::ostream &os, Object *object) {
-        object->PrintObject(os);
-        return os;
+    friend std::ostream &operator<<(std::ostream &out, Object *object) {
+        out << object->name;
+        return out;
     }
 
-    friend std::istream &operator<<(std::istream &is, Object *object) {
-        object->LoadObject(is);
-        return is;
+    friend std::istream &operator>>(std::istream &in, Object *object) {
+        object->LoadObject(in);
+        return in;
     }
 };

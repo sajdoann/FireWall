@@ -8,7 +8,6 @@
 #include "MovingObject.h"
 
 class Virus : public MovingObject {
-    char name;
     int lives;
     int difficulty = 0;
 
@@ -18,10 +17,10 @@ class Virus : public MovingObject {
     }
 
 public:
-    Virus() : MovingObject() {};
+    Virus() noexcept = default;
 
     Virus(char name, int lives, MovementType movementType, MovementDirection movementDirection)
-            : MovingObject(movementType, movementDirection), name(name), lives(lives) {
+            : MovingObject(name, movementType, movementDirection), lives(lives) {
 
         setDifficulty();
     }
@@ -35,16 +34,20 @@ public:
 
     bool isVirus() const { return true; };
 
-    ostream &PrintObject(ostream &os) override {
-        return os << name;
+    ostream &SaveObject(ostream &out) override {
+        out << name << " " << lives << " ";
+        MovementToOut(out, movementType);
+        out << " ";
+        DirectionsToOut(out, movementDirection);
+        return out;
     }
 
     istream &LoadObject(istream &in) {
         in >> *this;
     }
 
-    ostream &PrintInfo(ostream &os) const override {
-        return os << *this;
+    ostream &PrintInfo(ostream &out) const override {
+        return out << *this;
     }
 
 

@@ -6,16 +6,28 @@
 #pragma once
 
 #include <iomanip>
+#include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
 class Writer {
 protected:
-    ostream os;
+    const string filename;
+    ofstream out;
 
 public:
+    Writer(const string filename) : filename(filename) {
+        out.open(filename);
+        if (!out)
+            throw runtime_error("filename:" + filename + "not found");
+    }
+
     //writes the data to file
-    bool writeToFile(ostringstream input);
+    bool writeToFile() {
+
+    }
 
 };
 

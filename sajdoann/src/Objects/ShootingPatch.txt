@@ -35,7 +35,7 @@ public:
     bool CanShoot() const{return true;}
 
 
-    ostream &PrintObject(ostream &os) override {
+    ostream &SaveObject(ostream &os) override {
         return os << (*this).name;
     }
 

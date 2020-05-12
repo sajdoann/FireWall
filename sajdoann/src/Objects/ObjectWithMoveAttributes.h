@@ -17,19 +17,21 @@ protected:
 public:
     ObjectWithMoveAttributes() = default;
 
-    ObjectWithMoveAttributes(MovementType movementType, MovementDirection movementDirection) :
-            movementType(movementType), movementDirection(movementDirection) {}
+    ObjectWithMoveAttributes(char name, MovementType movementType, MovementDirection movementDirection) :
+            Object(name), movementType(movementType), movementDirection(movementDirection) {}
 
-    ObjectWithMoveAttributes(ObjectWithMoveAttributes &o) {
+    ObjectWithMoveAttributes(char name, ObjectWithMoveAttributes &o) : Object(name) {
+        name = o.name;
         movementType = o.movementType;
         movementDirection = o.movementDirection;
     }
 
-    virtual ostream &PrintObject(ostream &os) = 0;
+    virtual ostream &SaveObject(ostream &out) = 0;
 
-    virtual istream &LoadObject(istream &is) = 0;
+    virtual istream &LoadObject(istream &in) = 0;
 
-    virtual ostream &PrintInfo(ostream &os) const = 0;
+    virtual ostream &PrintInfo(ostream &out) const = 0;
+
 
     virtual bool isMovingObject() const = 0;
 

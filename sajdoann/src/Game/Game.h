@@ -43,7 +43,7 @@ public:
         map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
         map<Coords, Patch *> patchesMap;
         for (auto c : coords) {
-            Patch *p = nullptr;
+            Patch *p;
             if (isPatch(c.second))
                 p = new Patch(getPatch(c.second));
             else throw runtime_error("No such patch exixts. Patch name: " + c.second);
@@ -75,6 +75,9 @@ public:
 
     bool OutOfGameBoard(const Coords &coords) const { return gameBoard.OutOfBoard(coords); }
 
+    map<char, Virus *> Viruses() const { return viruses; }
+
+    map<char, Patch *> Patches() const { return patches; }
 
     void InsertPatch(const char patchType, const Coords &coords) {
         auto it = patches.find(patchType);
@@ -87,13 +90,12 @@ public:
 
     Patch &getPatch(const char c) const { return *patches.at(c); }
 
+
     //TODO: implement
     bool MoveLoop() {
 
         movement.MoveAll();
     }
-
-
 
 };
 

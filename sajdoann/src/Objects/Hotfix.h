@@ -16,19 +16,21 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
-    char name;
 
 public:
 
-    Hotfix(MovementType movementType, MovementDirection movementDirection) : MovingObject(movementType,
-                                                                                          movementDirection) {}
+    Hotfix(char name, MovementType movementType, MovementDirection movementDirection) : MovingObject(name, movementType,
+                                                                                                     movementDirection) {}
 
     ~ Hotfix() = default;
 
     bool isVirus() const { return false; };
 
-    ostream &PrintObject(ostream &os) {
-        os << name;
+    ostream &SaveObject(ostream &out) override {
+        out << name << " ";
+        MovementToOut(out, movementType);
+        out << " ";
+        DirectionsToOut(out, movementDirection);
     }
 
     istream &LoadObject(istream &is) {
@@ -40,8 +42,9 @@ public:
     }
 
     ostream &PrintInfo(ostream &os) const override {
-        os << name << " ";
+        os << "name :" << name << "movement: ";
         MovementToOut(os, movementType);
+        os << " direction: ";
         DirectionsToOut(os, movementDirection);
         //<< " "  << movementDirection;
     }

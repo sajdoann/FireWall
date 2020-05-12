@@ -18,7 +18,7 @@ using namespace std;
  */
 class Patch : public ObjectWithMoveAttributes {
 protected:
-    char name = 'W';
+    //char name = 'W';
     int price = 10;
 
     //FOR THEIR HOTFIXES
@@ -28,7 +28,7 @@ public:
     Patch() noexcept = default;
 
     Patch(char name, int price, MovementType movementType, MovementDirection movementDirection) noexcept
-            : ObjectWithMoveAttributes(movementType, movementDirection), name(name), price(price) {}
+            : ObjectWithMoveAttributes(name, movementType, movementDirection), price(price) {}
 
     ~Patch() override = default;
 
@@ -109,7 +109,6 @@ public:
         MovementToOut(os, movementType);
         os << " direction: ";
         DirectionsToOut(os, movementDirection);
-        os << endl;
         return os;
     }
 
@@ -119,11 +118,11 @@ public:
 
 
     /** prints just the name representation of object */
-    virtual ostream &PrintObject(ostream &os) override {
-        //TODO: ansi escape sequence zabira misto
-        // -> setw3 si mysli ze nemusi vypisovat mezery navic <- vyresit nedavat na tvrdo jak ted za ansi escape :D
-        //TODO: predelat do const char *
-        return os << "\u001b[31m  " << (*this).name << "\u001b[0m";
+    virtual ostream &SaveObject(ostream &os) override {
+        return os << name << " " << price << " ";
+        MovementToOut(os, movementType);
+        os << " ";
+        DirectionsToOut(os, movementDirection);
     }
 
 
