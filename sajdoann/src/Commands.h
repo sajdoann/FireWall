@@ -8,6 +8,7 @@
 #include <string>
 #include "Command.h"
 #include "IOLoaders/Writer.h"
+#include "constants.h"
 
 using namespace std;
 
@@ -27,39 +28,32 @@ public:
         //TODO place const chars in separate file
         //exit command
         Command exit = Exit();
-        commands.insert({"exit", exit});
+        commands.insert({EXIT_NAME, exit});
 
         //placePatch command, it places the patch
-        const char *doneRegex = "[ ]*[a-zA-Z][ ]*\\([ ]*[0-9]{1,}[ ]*,[ ]*[0-9]{1,}[ ]*\\)[ ]*";
         Command placePatch = PlacePatch();
-        commands.insert({doneRegex, placePatch});
+        commands.insert({PATCH_REGEX, placePatch});
 
         //put online (done)
-        const char *doneName = "done";
         Command done = Done();
-        commands.insert({doneName, done});
+        commands.insert({DONE_NAME, done});
 
         //help
-        const char *helpName = "help";
         Command help = Help();
-        commands.insert({helpName, help});
+        commands.insert({HELP_NAME, help});
 
         //google patch
-        const char *googleName = "[ ]*google[ ]*[a-zA-Z]{1}";
         Command google = Google();
-        commands.insert({googleName, google});
+        commands.insert({GOOGLE_REGEX, google});
 
         //save game
-        const char *saveName = "save";
         Command save = Save();
-        commands.insert({saveName, save});
-
+        commands.insert({SAVE_NAME, save});
 
     }
 
     Command PlacePatch() {
-        return Command("type(x,y)", "places patch, syntax: \" patch Type (coord x, coord y)\""
-                                    " ... for example \"W(0,0)\"",
+        return Command(PATCH_NAME, PATCH_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
                            char patchName;
                            Coords coords;
@@ -79,7 +73,7 @@ public:
     }
 
     Command Done() {
-        return Command("done", "Type it when you are done - you think FireWall can survive the next attack.",
+        return Command(DONE_NAME, DONE_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
                            g.GameState(State::ATTACK);
                            return CommandEndType::DONE;
@@ -88,15 +82,14 @@ public:
     }
 
     Command Exit() {
-        return Command("exit",
-                       "exits the game witout saving",
+        return Command(EXIT_NAME,
+                       EXIT_HELP,
                        [](const string &, Game &, Interface &) { return CommandEndType::ENDGAME; });
     }
 
     Command Help() {
-        const char *helpName = "help";
-        return Command(helpName,
-                       "lists all the commands",
+        return Command(HELP_NAME,
+                       HELP_HELP,
                        [this](const string &, Game &, Interface &i) {
                            for (const auto &c : commands) {
                                i.PrintHelp(c.second.Name(), c.second.Help());
@@ -106,8 +99,7 @@ public:
     }
 
     Command Google() {
-        return Command("google", "You dont know what the leters on board mean? Type google and the name"
-                                 "ot the patch",
+        return Command(GOOGLE_NAME, GOOGLE_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
                            stringstream s(userInput);
                            string google;
@@ -127,24 +119,30 @@ public:
         );
     }
 
+
     Command Save() {
-        return Command("save",
-                       "saves the game into files.",
-                       [](const string &, Game &g, Interface &i) {
-
-                           Writer patchWriter("../sajdoann/saves/ahoj.txt");
-                           patchWriter.getHeading(*(g.Patches().begin()->second));
-                           patchWriter.writeToFile(g.Patches());
-
-                           Writer VirusWriter("../sajdoann/saves/jak.txt");
-                           VirusWriter.getHeading(*(g.Viruses().begin()->second));
-                           VirusWriter.writeToFile(g.Viruses());
-
-                           return CommandEndType::VALID;
-
-
-                       });
+        return Command(SAVE_NAME,
+                       SAVE_HELP,
+                       saveFunction());
     }
+
+    function<CommandEndType(string, Game &, Interface &)> saveFunction() {
+        return [](const string &, Game &g, Interface &i) {
+
+            Writer patchWriter("../sajdoann/saves/ahoj.txt");
+            patchWriter.getHeading(*(g.Patches().begin()->second));
+            patchWriter.writeToFile(g.Patches());
+
+            Writer VirusWriter("../sajdoann/saves/jak.txt");
+            VirusWriter.getHeading(*(g.Viruses().begin()->second));
+            VirusWriter.writeToFile(g.Viruses());
+
+
+            return CommandEndType::VALID;
+
+        };
+    }
+
 
 };
 

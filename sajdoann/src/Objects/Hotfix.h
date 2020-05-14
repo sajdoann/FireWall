@@ -24,6 +24,9 @@ public:
 
     ~ Hotfix() = default;
 
+    Object * Clone() const override{return new Hotfix(name, movementType, movementDirection );}
+
+
     bool isVirus() const { return false; };
 
     ostream &SaveObject(ostream &out) override {

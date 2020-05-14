@@ -93,10 +93,11 @@ public:
 
     //TODO: implement
     bool MoveLoop() {
+        for (int i = 0; i < 5; ++i) {
+            movement.MoveAll();
+        }
 
-        movement.MoveAll();
     }
-
 };
 
 

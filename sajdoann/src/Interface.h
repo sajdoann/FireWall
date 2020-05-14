@@ -170,5 +170,19 @@ public:
         p.PrintInfo(os);
     }
 
+    void PrintBoardAttack(Board & board){
+        for (int i = 0; i < board.MaxX(); ++i) {
+            for (int j = 0; j < board.MaxY(); ++j) {
+                Object *o = board(i, j);
+                getColorOfObject(o);
+                os << clr << setw(3) << (o);
+                resetClr();
+            }
+            os << endl;
+        }
+
+        os << endl << endl;
+    }
+
 };
 

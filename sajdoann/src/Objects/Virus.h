@@ -28,6 +28,10 @@ public:
 
     ~Virus() override = default;
 
+    virtual  Object * Clone() const {
+        return new Virus(name,lives,movementType,movementDirection);
+    }
+
     char Name() { return name; }
 
     int Lives() { return lives; }

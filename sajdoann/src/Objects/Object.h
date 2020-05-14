@@ -19,6 +19,9 @@ public:
 
     virtual ~Object() = default;
 
+    virtual  Object * Clone() const = 0;
+
+
     //saves object into stream for storing
     virtual ostream &SaveObject(ostream &out) = 0;
 

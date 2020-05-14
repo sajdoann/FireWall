@@ -18,6 +18,16 @@ public:
 
     ~Empty() = default;
 
+    Empty(Empty & e){ *this = e; }
+
+    Empty & operator = (Empty & empty){
+        if(this == &empty) return *this;
+        name = empty.name;
+    }
+
+    Object * Clone() const override{return new Empty();}
+
+
     ostream &SaveObject(ostream &os) override { os << *this; }
 
     ostream &PrintInfo(ostream &os) const { os << "empty"; }

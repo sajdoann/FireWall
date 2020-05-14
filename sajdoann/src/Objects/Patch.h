@@ -31,7 +31,10 @@ public:
     Patch(char name, int price, MovementType movementType, MovementDirection movementDirection) noexcept
             : ObjectWithMoveAttributes(name, movementType, movementDirection), price(price) {}
 
-    ~Patch() override = default;
+    ~Patch() = default;
+
+    virtual  Object * Clone() const {return new Patch(name, price, movementType, movementDirection);}
+
 
     Patch(Patch &patch) {
         *this = patch;
@@ -110,6 +113,7 @@ public:
         MovementToOut(os, movementType);
         os << " direction: ";
         DirectionsToOut(os, movementDirection);
+        os << endl;
         return os;
     }
 

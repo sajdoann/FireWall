@@ -25,6 +25,9 @@ public:
 
     virtual ~MovingObject() = default;
 
+    virtual Object * Clone() const override = 0;
+
+
     bool isEmpty() const { return false; }
 
     MovementType MovementTypeObject() const { return movementType; }

@@ -20,12 +20,12 @@ using namespace std;
  * grid for objects, it stores the placement of Objects in the playing area
  */
 class Board {
-    int maxX;
-    int maxY;
+    int maxX = 0;
+    int maxY = 0;
     vector<vector<Object *>> tiles;
 
 public:
-    Board() {}
+    Board() = default;
 
     Board(int maxX, int maxY) : maxX(maxX), maxY(maxY) {
         for (int i = 0; i < maxX; ++i) {
@@ -47,23 +47,36 @@ public:
         }
     }
 
-//destructs other board
+    Board(Board &other) {
+        *this = other;
+    }
+
     Board &operator=(Board &other) {
         if (this == &other) return *this;
+
+        for (int i = 0; i < maxX; ++i) {
+            for (int j = 0; j < maxY; ++j) {
+                delete tiles[i][j];
+                tiles[i][j] = nullptr;
+            }
+        }
+
+        //because I use push back
+        // -> needs to free the row to so the rows dont get to be placed after previous rows
+        for (int k = 0; k < maxX; ++k) {
+            tiles.pop_back();
+        }
+
         maxX = other.maxX;
         maxY = other.maxY;
         for (int i = 0; i < maxX; ++i) {
             vector<Object *> tmp;
             for (int j = 0; j < maxY; ++j) {
-                tmp.push_back(move(other.tiles[i][j]));
-                other.tiles[i][j] = nullptr;
+                tmp.push_back(other.tiles[i][j]->Clone());
             }
             tiles.push_back(tmp);
         }
-    }
-
-    Board(Board &other) {
-        *this = other;
+        return *this;
     }
 
     ~Board() {
@@ -99,6 +112,14 @@ public:
         tiles[coords.X()][coords.Y()] = new Patch();
         *((Patch *) tiles[coords.X()][coords.Y()]) = patch;
     }
+
+    void setEmpty(const Coords &coords){
+        Object * object = tiles[coords.X()][coords.Y()];
+        if(object->isEmpty()) return;
+        delete object;
+        tiles[coords.X()][coords.Y()] = new Empty();
+    }
+
 
     /**
         * overload of () operator it returns the object on x,y
