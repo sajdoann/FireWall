@@ -9,7 +9,7 @@
 #include <iomanip>
 #include "ObjectWithMoveAttributes.h"
 #include "Hotfix.h"
-//class Board;
+class Board;
 
 using namespace std;
 
@@ -72,13 +72,13 @@ public:
 
     virtual bool isVirus() const { return false; };
 
-    /** returns true if patch can shoot, here it cannot -> false */
-    virtual bool CanShoot() const { return movementType != MovementType::NONE; }
+    /** returns true if patch can shoot, if movement none -> false */
+    virtual bool canShoot() const { return movementType != MovementType::NONE; }
 
-    // void Attack(Board *board, Coords coords);
+    void Attack(Board *board, Coords startCoords);
 
-    Hotfix *ShootHotfix() {
-        return new Hotfix('*', movementType, movementDirection);
+    Hotfix ShootHotfix() {
+        return Hotfix('*', movementType, movementDirection);
     }
 
     /** less comparator for patch by its name*/

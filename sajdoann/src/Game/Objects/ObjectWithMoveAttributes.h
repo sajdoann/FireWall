@@ -12,8 +12,8 @@ using namespace std;
 
 class ObjectWithMoveAttributes : public Object {
 protected:
-    MovementType movementType;
-    MovementDirection movementDirection;
+    MovementType movementType = MovementType::STRAIGHT;
+    MovementDirection movementDirection = MovementDirection::LEFT;
 
 public:
     ObjectWithMoveAttributes() = default;
@@ -26,6 +26,8 @@ public:
         movementType = o.movementType;
         movementDirection = o.movementDirection;
     }
+
+    virtual ~ObjectWithMoveAttributes() = default;
 
     virtual ostream &SaveObject(ostream &out) = 0;
 
@@ -46,9 +48,9 @@ public:
         if (a == "STRAIGHT")
             value = MovementType::STRAIGHT;
         else if (a == "FRONT")
-            value = MovementType::SEE_FRONT;
+            value = MovementType::FRONT;
         else if (a == "SHORTEST")
-            value = MovementType::SHORTEST_ROUTE;
+            value = MovementType::SHORTEST;
         else if (a == "NONE")
             value = MovementType::NONE;
         else
@@ -62,10 +64,10 @@ public:
             case MovementType::STRAIGHT:
                 s = "STRAIGHT";
                 break;
-            case MovementType::SEE_FRONT:
+            case MovementType::FRONT:
                 s = "FRONT";
                 break;
-            case MovementType::SHORTEST_ROUTE:
+            case MovementType::SHORTEST:
                 s = "SHORTEST";
                 break;
             case MovementType::NONE:

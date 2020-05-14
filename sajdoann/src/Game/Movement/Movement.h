@@ -38,19 +38,25 @@ public:
                     continue;
 
                 //patch condition
-                if(!object->isMovingObject() && !object->isEmpty()){
-                    if(board->OutOfBoard(Coords{i+1,j})){ continue;}
+                if (!object->isMovingObject()) {
+                    if (board->OutOfBoard(Coords{i + 1, j})) { continue; }
 
-                    Object * nextObject = (*board)(i +1,j);
+                    Object *nextObject = (*board)(i + 1, j);
                     //if next tile is empty and on board
-                    if(nextObject->isEmpty() && !board->OutOfBoard(Coords({i+1,j}))){
-                        Patch * patch = (Patch *)(*board)(i ,j);
-                        //Hotfix * hotfix = patch->ShootHotfix();
-                        Patch p(*patch);
-                        newBoard.InsertPatch(p,Coords({i+1,j}));
-                        newBoard.setEmpty(Coords(i,j));
+                    if (nextObject->isEmpty() && !board->OutOfBoard(Coords({i + 1, j}))) {
+                        Patch *patch = (Patch *) (*board)(i, j);
+                        //Patch p(*patch);
+                        patch->Attack(&newBoard, coords);
+                        /*newBoard.InsertPatch(p,Coords({i+1,j}));
+                        newBoard.setEmpty(Coords(i,j));*/
                         //swap(object, nextObject);*/
+                        continue;
                     }
+                }
+
+                if (object->isMovingObject()) {
+                    Hotfix *h = (Hotfix *) object;
+                    h->Attack(&newBoard, coords);
                 }
 
             }

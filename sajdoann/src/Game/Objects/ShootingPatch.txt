@@ -32,7 +32,7 @@ public:
    // MovementDirection movementDirectionPatch()const{return movementDirection;}
 
     /** returns true if patch can shoot, this one can -> true */
-    bool CanShoot() const{return true;}
+    bool canShoot() const{return true;}
 
 
     ostream &SaveObject(ostream &os) override {

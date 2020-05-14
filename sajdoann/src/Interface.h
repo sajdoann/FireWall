@@ -91,7 +91,7 @@ public:
             clr = colorClass.Color(ColorClass::CYAN);
         }
         if (!o->isMovingObject() && !o->isEmpty()) {
-            if (((Patch *) o)->CanShoot())
+            if (((Patch *) o)->canShoot())
                 clr = colorClass.Color(ColorClass::BLUE);
             else
                 clr = colorClass.Color(ColorClass::RED);

@@ -5,10 +5,12 @@
 
 #pragma once
 
-#include <ostream>
+#include <iomanip>
 #include "Object.h"
 
 using namespace std;
+
+class Board;
 
 class Empty : public Object {
     char name = '-';
@@ -18,17 +20,20 @@ public:
 
     ~Empty() = default;
 
-    Empty(Empty & e){ *this = e; }
+    Empty(Empty &e) { *this = e; }
 
-    Empty & operator = (Empty & empty){
-        if(this == &empty) return *this;
+    Empty &operator=(Empty &empty) {
+        if (this == &empty) return *this;
         name = empty.name;
     }
 
-    Object * Clone() const override{return new Empty();}
+    void Attack(Board *board, Coords startCoords);
 
 
-    ostream &SaveObject(ostream &os) override { os << *this; }
+    Object *Clone() const override { return new Empty(); }
+
+
+    ostream &SaveObject(ostream &os) override;
 
     ostream &PrintInfo(ostream &os) const { os << "empty"; }
 

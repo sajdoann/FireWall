@@ -91,6 +91,8 @@ public:
 
     int MaxY() const { return maxY; }
 
+    Object *At(const Coords &coords) { return tiles[coords.X()][coords.Y()]; }
+
     /**
      * finds out if coords are still in board
      * @param coords
@@ -111,9 +113,23 @@ public:
         *((Patch *) tiles[coords.X()][coords.Y()]) = patch;
     }
 
-    void setEmpty(const Coords &coords){
-        Object * object = tiles[coords.X()][coords.Y()];
-        if(object->isEmpty()) return;
+    /**
+     * template to insert object on board to coords
+     * @tparam O type of Object
+     * @param o name of object
+     * @param coords  where o should be placed
+     */
+    template<typename O>
+    void InsertObject(O &o, const Coords &coords) {
+        // dynamic alocation of space in board, but O(type) o(name) is on stack -> out of scope (no need to free it)
+        delete tiles[coords.X()][coords.Y()];
+        tiles[coords.X()][coords.Y()] = new O();
+        *((O *) tiles[coords.X()][coords.Y()]) = o;
+    }
+
+    void setEmpty(const Coords &coords) {
+        Object *object = tiles[coords.X()][coords.Y()];
+        if (object->isEmpty()) return;
         delete object;
         tiles[coords.X()][coords.Y()] = new Empty();
     }

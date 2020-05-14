@@ -6,8 +6,11 @@
 #pragma once
 
 #include <functional>
+#include <iomanip>
 #include "Object.h"
 #include "MovingObject.h"
+#include "../Strategics/Strategy.h"
+#include "../Strategics/StraightStrategy.h"
 
 using namespace std;
 
@@ -16,25 +19,45 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
+    Strategy *strategy = new StraightStrategy();
 
 public:
+    Hotfix() = default;
 
-    Hotfix(char name, MovementType movementType, MovementDirection movementDirection) : MovingObject(name, movementType,
-                                                                                                     movementDirection) {}
+    Hotfix(char name, MovementType movementType, MovementDirection movementDirection)
+            : MovingObject(name, movementType, movementDirection) {
+        if (movementType == MovementType::STRAIGHT) {
+            strategy = new StraightStrategy(movementDirection);
+        }
 
-    ~ Hotfix() = default;
+    }
 
-    Object * Clone() const override{return new Hotfix(name, movementType, movementDirection );}
+    ~ Hotfix() {
+        delete strategy;
+    }
+
+    Hotfix(const Hotfix &other) {
+        *this = other;
+    }
+
+    Hotfix &operator=(const Hotfix &other) {
+        if (this == &other) return *this;
+        name = other.name;
+        movementType = other.movementType;
+        movementDirection = other.movementDirection;
+        return *this;
+    }
+
+
+    Object *Clone() const override { return new Hotfix(name, movementType, movementDirection); }
 
 
     bool isVirus() const { return false; };
 
-    ostream &SaveObject(ostream &out) override {
-        out << name << " ";
-        MovementToOut(out, movementType);
-        out << " ";
-        DirectionsToOut(out, movementDirection);
-    }
+    void Attack(Board *board, Coords startCoords);
+
+
+    ostream &SaveObject(ostream &out) override;
 
     istream &LoadObject(istream &is) {
         is >> name;
