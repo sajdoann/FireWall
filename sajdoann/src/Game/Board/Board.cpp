@@ -4,3 +4,7 @@
 */
 
 #include "Board.h"
+
+Board::Board(Board &other) {
+    *this = other;
+}

@@ -13,7 +13,7 @@ void App::Greet() {
 }
 
 int App::PrepLoop() {
-    while (game.GameState() == State::PREPARATION) {
+    while (game.GameState() == State::ATTACK) {
         interface.PrintBoardPrep(game.GameBoard());
 
         string command = interface.PromptCommand();

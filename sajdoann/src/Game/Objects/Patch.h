@@ -9,6 +9,7 @@
 #include <iomanip>
 #include "ObjectWithMoveAttributes.h"
 #include "Hotfix.h"
+//class Board;
 
 using namespace std;
 
@@ -33,12 +34,11 @@ public:
 
     ~Patch() = default;
 
-    virtual  Object * Clone() const {return new Patch(name, price, movementType, movementDirection);}
+    virtual Object *Clone() const { return new Patch(name, price, movementType, movementDirection); }
 
 
-    Patch(Patch &patch) {
-        *this = patch;
-    }
+    Patch(Patch &patch);
+
 
     Patch &operator=(Patch &patch) {
         if (this == &patch) return *this;
@@ -75,6 +75,11 @@ public:
     /** returns true if patch can shoot, here it cannot -> false */
     virtual bool CanShoot() const { return movementType != MovementType::NONE; }
 
+    // void Attack(Board *board, Coords coords);
+
+    Hotfix *ShootHotfix() {
+        return new Hotfix('*', movementType, movementDirection);
+    }
 
     /** less comparator for patch by its name*/
     int operator<(const Patch &patch) const {
@@ -117,10 +122,6 @@ public:
         return os;
     }
 
-    Hotfix *ShootHotfix() {
-        //return new Hotfix(movementType, movementDirection);
-    }
-
 
     /** prints just the name representation of object */
     ostream &SaveObject(ostream &os) override {
@@ -138,5 +139,6 @@ public:
 
 
 };
+
 
 

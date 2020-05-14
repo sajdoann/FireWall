@@ -47,9 +47,7 @@ public:
         }
     }
 
-    Board(Board &other) {
-        *this = other;
-    }
+    Board(Board &other);
 
     Board &operator=(Board &other) {
         if (this == &other) return *this;
