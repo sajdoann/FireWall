@@ -7,6 +7,7 @@
 
 #include <iosfwd>
 #include "Object.h"
+#include "ObjectWithMoveAttributes.h"
 #include "../Movement/MovementType.h"
 #include "../Movement/MovementDirection.h"
 

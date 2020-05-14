@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <iomanip>
 #include "MovingObject.h"
 
 class Virus : public MovingObject {
@@ -38,13 +39,7 @@ public:
 
     bool isVirus() const { return true; };
 
-    ostream &SaveObject(ostream &out) override {
-        out << name << setw(10) << lives << setw(10);
-        MovementToOut(out, movementType);
-        out << setw(10);
-        DirectionsToOut(out, movementDirection);
-        return out;
-    }
+    ostream &SaveObject(ostream &out) override;
 
     istream &LoadObject(istream &in) {
         in >> *this;

@@ -45,7 +45,7 @@ public:
                     //if next tile is empty and on board
                     if(nextObject->isEmpty() && !board->OutOfBoard(Coords({i+1,j}))){
                         Patch * patch = (Patch *)(*board)(i ,j);
-                        Hotfix * hotfix = patch->ShootHotfix();
+                        //Hotfix * hotfix = patch->ShootHotfix();
                         Patch p(*patch);
                         newBoard.InsertPatch(p,Coords({i+1,j}));
                         newBoard.setEmpty(Coords(i,j));

@@ -13,7 +13,7 @@ void App::Greet() {
 }
 
 int App::PrepLoop() {
-    while (game.GameState() == State::ATTACK) {
+    while (game.GameState() == State::PREPARATION) {
         interface.PrintBoardPrep(game.GameBoard());
 
         string command = interface.PromptCommand();
@@ -52,7 +52,7 @@ int App::PrepLoop() {
 
 int App::Run() {
     bool firstPrep = true;
-    game.GameState(State::PREPARATION);
+    game.GameState(State::ATTACK);
     while (true) {
         switch (game.GameState()) {
             case State::WELCOME: {
