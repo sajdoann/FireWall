@@ -6,7 +6,7 @@
 #pragma once
 
 #include "../Board/Board.h"
-#include "../Interface.h"
+#include "../../Interface.h"
 
 /**
  * class for movement of the moving objects on the board

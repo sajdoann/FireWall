@@ -9,8 +9,8 @@
 #include <sstream>
 #include <iomanip>
 #include <cstdlib>
-#include "Objects/Coords.h"
-#include "Board/Board.h"
+#include "Game/Objects/Coords.h"
+#include "Game/Board/Board.h"
 #include "Game/ResultEnum.h"
 #include "Color.h"
 

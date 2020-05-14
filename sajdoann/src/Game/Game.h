@@ -7,13 +7,13 @@
 
 #include <map>
 
-#include "../Board/Board.h"
-#include "../Objects/Patch.h"
-#include "../IOLoaders/Reader.h"
+#include "Board/Board.h"
+#include "Objects/Patch.h"
+#include "IOLoaders/Reader.h"
 #include "ResultEnum.h"
 #include "State.enum"
 #include "ScoreCounter.h"
-#include "../Movement/Movement.h"
+#include "Movement/Movement.h"
 
 using namespace std;
 
