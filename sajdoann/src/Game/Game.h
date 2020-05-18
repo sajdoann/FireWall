@@ -30,6 +30,7 @@ class Game {
 
 public:
     Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard) {
+
         //TODO: invalid inputs
         Reader patchReader("../sajdoann/Data/patches.txt");
         patches = patchReader.ReadStillObjects<Patch>();
@@ -42,14 +43,22 @@ public:
 
         map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
         map<Coords, Patch *> patchesMap;
+        int cou = 0;
         for (auto c : coords) {
             Patch *p;
-            if (isPatch(c.second))
-                p = new Patch(getPatch(c.second));
-            else throw runtime_error("No such patch exixts. Patch name: " + c.second);
+            if (isPatch(c.second)) {
+                Patch cp(getPatch(c.second));
+                p = new Patch(cp);
+                cou++;
+            } else throw runtime_error("No such patch exists. Patch name: " + c.second);
             patchesMap.insert({c.first, p});
         }
         Board b(maxX, maxY, patchesMap);
+
+        for (auto &a : patchesMap) {
+            delete a.second;
+            a.second = nullptr;
+        }
         gameBoard = b;
     }
 

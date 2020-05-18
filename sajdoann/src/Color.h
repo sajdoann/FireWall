@@ -11,9 +11,6 @@
 using namespace std;
 
 
-using namespace std;
-
-
 class ColorClass {
 public:
     enum Color {

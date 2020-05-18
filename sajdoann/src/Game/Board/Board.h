@@ -40,9 +40,9 @@ public:
     Board(int maxX, int maxY, map<Coords, Patch *> coords) : Board(maxX, maxY) {
         auto c = coords.begin();
         for (; c != coords.end(); ++c) {
-            Patch *defaultPatch = (c->second);
-            InsertPatch(*defaultPatch, c->first);
-            delete defaultPatch;
+            Patch defaultPatch((*(c->second)));
+            InsertPatch(defaultPatch, c->first);
+            //delete defaultPatch;
             //defaultPatch = nullptr;
         }
     }
@@ -109,8 +109,9 @@ public:
      */
     void InsertPatch(Patch &patch, const Coords &coords) {
         delete tiles[coords.X()][coords.Y()];
-        tiles[coords.X()][coords.Y()] = new Patch();
-        *((Patch *) tiles[coords.X()][coords.Y()]) = patch;
+        tiles[coords.X()][coords.Y()] = nullptr;
+        tiles[coords.X()][coords.Y()] = new Patch(patch);
+        //*((Patch *) tiles[coords.X()][coords.Y()]) = patch;
     }
 
     /**

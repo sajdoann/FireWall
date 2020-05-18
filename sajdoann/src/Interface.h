@@ -28,6 +28,8 @@ class Interface {
 public:
     Interface(istream &in, ostream &os) : in(in), os(os), colorClass() {}
 
+    ~Interface() = default;
+
     /** asks the user to enter command */
     string PromptCommand() const {
         string command;
@@ -79,7 +81,7 @@ public:
      * @param max till what number it prints
      */
     void NumberLinePrep(int max) const {
-        os << " ";
+        os << setw(3) << " ";
         for (int i = 0; i < max; ++i) {
             os << setw(3) << i;
         }
@@ -104,11 +106,11 @@ public:
      */
     void PrintBoardPrep(Board &board) const {
         os << "patches:" << endl;
-        NumberLinePrep(board.MaxX());
+        NumberLinePrep(board.MaxY());
 
         for (int i = 0; i < board.MaxX(); ++i) {
             for (int j = 0; j < board.MaxY(); ++j) {
-                if (j == 0) os << i;
+                if (j == 0) os << setw(3) << i;
                 Object *o = board(i, j);
 
                 getColorOfObject(o);

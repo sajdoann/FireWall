@@ -67,7 +67,12 @@ public:
         int x, y;
         char c;
         while (ifs >> x >> y >> c) {
-            coords.insert({Coords(x, y), c});
+            Coords coord(x, y);
+            if (coords.find(coord) == coords.end()) {
+                coords.insert({coord, c});
+                continue;
+            }
+            throw invalid_argument("coordinations " + coord.toStr() + " in board already exists");
         }
         return coords;
     }

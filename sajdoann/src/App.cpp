@@ -52,7 +52,7 @@ int App::PrepLoop() {
 
 int App::Run() {
     bool firstPrep = true;
-    game.GameState(State::ATTACK);
+    game.GameState(State::PREPARATION);
     while (true) {
         switch (game.GameState()) {
             case State::WELCOME: {

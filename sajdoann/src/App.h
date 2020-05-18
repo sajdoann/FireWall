@@ -28,6 +28,7 @@ public:
     App() :
             game(),
             interface(cin, cout) {
+
         commands.CreateCommands();
     }
 
