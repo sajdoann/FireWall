@@ -44,8 +44,11 @@ public:
             bool found = objects.find(object->Name()) != objects.end();
             if (!found)
                 objects.insert({object->Name(), object});
-            else
+            else {
+                char name = object->Name();
                 delete object;
+                throw invalid_argument("Object already exists. Name: " + name);
+            }
 
             object = nullptr;
             object = new StillObj();

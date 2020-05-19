@@ -11,6 +11,6 @@ ostream &Hotfix::SaveObject(ostream &out) {
     DirectionsToOut(out, movementDirection);
 }
 
-void Hotfix::Attack(Board *board, Coords startCoords) {
-    strategy->Move(board, startCoords);
+void Hotfix::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
+    strategy->Move(oldBoard, newBoard, startCoords);
 }

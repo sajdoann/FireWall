@@ -26,7 +26,9 @@ public:
 
     virtual ~MovingObject() = default;
 
-    virtual Object * Clone() const override = 0;
+    virtual Object *Clone() const override = 0;
+
+    virtual void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) = 0;
 
 
     bool isEmpty() const { return false; }

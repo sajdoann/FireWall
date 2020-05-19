@@ -122,7 +122,7 @@ public:
      */
     template<typename O>
     void InsertObject(O &o, const Coords &coords) {
-        // dynamic alocation of space in board, but O(type) o(name) is on stack -> out of scope (no need to free it)
+        // dynamic alocation of space in board, but O(type) o(name) is on stack -> gets out of scope (no need to free it)
         delete tiles[coords.X()][coords.Y()];
         tiles[coords.X()][coords.Y()] = new O();
         *((O *) tiles[coords.X()][coords.Y()]) = o;
@@ -146,6 +146,32 @@ public:
         return tiles[x][y];
     }
 
+    void AddAllPatches(Board *board) {
+        //if measurement are not the same throw errror
+        if (board->maxX != maxX || board->maxY != maxY) {
+            throw logic_error("Boards dont have the same size.");
+        }
+
+        //for all tiles, if tile is a patch insert it to this board
+        for (int i = 0; i < maxX; ++i) {
+            for (int j = 0; j < maxY; ++j) {
+                Object *o = (Object *) (board->At(Coords(i, j)));
+                if (!o->isEmpty() && !o->isMovingObject()) {
+                    Patch *p = (Patch *) o;
+                    InsertObject(*p, Coords(i, j));
+                }
+            }
+        }
+        /*cout << "add all p" << endl;
+        for (int i = 0; i < maxX; ++i) {
+            for (int j = 0; j < maxY; ++j) {
+            cout <<  At(Coords(i,j));
+            }
+            cout << endl;
+        }
+        cout <<endl << endl;
+        */
+    }
 
 };
 

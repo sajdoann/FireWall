@@ -30,36 +30,6 @@ class Game {
 
 public:
     Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard) {
-
-        //TODO: invalid inputs
-        Reader patchReader("../sajdoann/Data/patches.txt");
-        patches = patchReader.ReadStillObjects<Patch>();
-
-        Reader virusReader("../sajdoann/Data/viruses.txt");
-        viruses = virusReader.ReadStillObjects<Virus>();
-
-        Reader boardReader("../sajdoann/Data/board.txt");
-        int maxX, maxY;
-
-        map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
-        map<Coords, Patch *> patchesMap;
-        int cou = 0;
-        for (auto c : coords) {
-            Patch *p;
-            if (isPatch(c.second)) {
-                Patch cp(getPatch(c.second));
-                p = new Patch(cp);
-                cou++;
-            } else throw runtime_error("No such patch exists. Patch name: " + c.second);
-            patchesMap.insert({c.first, p});
-        }
-        Board b(maxX, maxY, patchesMap);
-
-        for (auto &a : patchesMap) {
-            delete a.second;
-            a.second = nullptr;
-        }
-        gameBoard = b;
     }
 
     ~Game() {
@@ -87,6 +57,39 @@ public:
     map<char, Virus *> Viruses() const { return viruses; }
 
     map<char, Patch *> Patches() const { return patches; }
+
+
+    void LoadGame() {
+        //TODO: invalid inputs
+        Reader patchReader("../sajdoann/Data/patches.txt");
+        patches = patchReader.ReadStillObjects<Patch>();
+
+        Reader virusReader("../sajdoann/Data/viruses.txt");
+        viruses = virusReader.ReadStillObjects<Virus>();
+
+        Reader boardReader("../sajdoann/Data/board.txt");
+        int maxX, maxY;
+
+        map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
+        map<Coords, Patch *> patchesMap;
+        int cou = 0;
+        for (auto c : coords) {
+            Patch *p;
+            if (isPatch(c.second)) {
+                Patch cp(getPatch(c.second));
+                p = new Patch(cp);
+                cou++;
+            } else throw invalid_argument("No such patch exists. Patch name: " + c.second);
+            patchesMap.insert({c.first, p});
+        }
+        Board b(maxX, maxY, patchesMap);
+
+        for (auto &a : patchesMap) {
+            delete a.second;
+            a.second = nullptr;
+        }
+        gameBoard = b;
+    }
 
     void InsertPatch(const char patchType, const Coords &coords) {
         auto it = patches.find(patchType);

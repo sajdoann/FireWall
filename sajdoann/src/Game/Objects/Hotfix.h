@@ -19,7 +19,8 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
-    Strategy *strategy = new StraightStrategy();
+    Strategy *strategy = new StraightStrategy(movementDirection);
+    mutable bool just_inserted = true;
 
 public:
     Hotfix() = default;
@@ -54,8 +55,15 @@ public:
 
     bool isVirus() const { return false; };
 
-    void Attack(Board *board, Coords startCoords);
+    void setInsertedFalse() {
+        just_inserted = false;
+    }
 
+    void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
+
+    Strategy *getStrategy() {
+        return strategy;
+    }
 
     ostream &SaveObject(ostream &out) override;
 

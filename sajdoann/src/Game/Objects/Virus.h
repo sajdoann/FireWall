@@ -29,9 +29,12 @@ public:
 
     ~Virus() override = default;
 
-    virtual  Object * Clone() const {
-        return new Virus(name,lives,movementType,movementDirection);
+    virtual Object *Clone() const {
+        return new Virus(name, lives, movementType, movementDirection);
     }
+
+    virtual void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
+
 
     char Name() { return name; }
 

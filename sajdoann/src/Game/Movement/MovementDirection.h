@@ -9,7 +9,7 @@
  * classic direction + other - for inteligent
  */
 enum MovementDirection {
-    RIGHT, UP, DOWN, LEFT
+    RIGHT, UP, DOWN, LEFT, DIAGONAL_U, DIAGONAL_D
 };
 //if updated interface needs to be also updated
 

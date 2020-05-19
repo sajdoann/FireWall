@@ -1,0 +1,2 @@
+BOARD
+- the coordinates and names must be unique

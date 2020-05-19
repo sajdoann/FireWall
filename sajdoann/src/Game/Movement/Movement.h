@@ -21,46 +21,20 @@ public:
     ~Movement() {}
 
     //game gives order and the entire board moves
+    // first vawe are moving objects then patches
     void MoveAll() {
-        Board newBoard(*board);
+        Board newBoard(board->MaxX(), board->MaxY());
+        newBoard.AddAllPatches(board);
 
-
-        //!!!!!!!! TODO: do it with attack from object emit hotfixes
-        for (int i = 0; i < board->MaxX(); ++i) {
-            for (int j = 0; j < board->MaxY(); ++j) {
-                Object * object = (*board)(i,j);
-                Coords coords(i,j);
-
-                //object->Attack(board, coords);
-
-                //empty object is not moving
-                if(object->isEmpty())
-                    continue;
-
-                //patch condition
-                if (!object->isMovingObject()) {
-                    if (board->OutOfBoard(Coords{i + 1, j})) { continue; }
-
-                    Object *nextObject = (*board)(i + 1, j);
-                    //if next tile is empty and on board
-                    if (nextObject->isEmpty() && !board->OutOfBoard(Coords({i + 1, j}))) {
-                        Patch *patch = (Patch *) (*board)(i, j);
-                        //Patch p(*patch);
-                        patch->Attack(&newBoard, coords);
-                        /*newBoard.InsertPatch(p,Coords({i+1,j}));
-                        newBoard.setEmpty(Coords(i,j));*/
-                        //swap(object, nextObject);*/
-                        continue;
-                    }
-                }
-
-                if (object->isMovingObject()) {
-                    Hotfix *h = (Hotfix *) object;
-                    h->Attack(&newBoard, coords);
-                }
-
+        //moving objects loop
+        for (int i = board->MaxX() - 1; i >= 0; --i) {
+            for (int j = board->MaxY() - 1; j >= 0; --j) {
+                Object *object = (*board)(i, j);
+                Coords coords(i, j);
+                object->Attack(board, newBoard, coords);
             }
         }
+
         *board = newBoard;
         interface.PrintBoardAttack(*board);
         //this_thread::sleep_for(1s);

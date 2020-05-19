@@ -1,7 +1,8 @@
 NAME     PRICE  MOVEMENT DIRECTION
-A        15     FRONT     RIGHT
+A        15     FRONT     DOWN
 D        12     FRONT     RIGHT
-L         0     FRONT      DOWN
-W        12      NONE        UP
+Y         0     FRONT     DIAGONAL_U
+X        12      FRONT    DIAGONAL_D
 Z         5     FRONT     RIGHT
+W         15    NONE      UP
 

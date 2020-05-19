@@ -10,13 +10,23 @@ Patch::Patch(Patch &patch) {
     *this = patch;
 }
 
-void Patch::Attack(Board *board, Coords startCoords) {
+void Patch::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
     if (!canShoot()) return;
 
-    Object *o = (*board)(startCoords.X(), startCoords.Y());
+    Object *o = (*oldBoard)(startCoords.X(), startCoords.Y());
     Patch *patch = (Patch *) o;
     Hotfix h = patch->ShootHotfix();
-    board->InsertObject(h, Coords({startCoords.X(), startCoords.Y() + 1}));
+    Coords targetCoords = h.getStrategy()->getMovedCoords(startCoords);
 
-    //StraightStrategy().Move(board, startCoords);
+    //stepping out of board or stepping on patch
+    if (!targetCoords.canStep(&newBoard) ||
+        (!newBoard.At(targetCoords)->isEmpty() && !newBoard.At(targetCoords)->isMovingObject()))
+        return;
+
+    //place is not empty -> is a moving object
+    if (!newBoard.At(targetCoords)->isEmpty()) {
+        //TODO: take lives away
+    }
+
+    newBoard.InsertObject(h, targetCoords);
 }

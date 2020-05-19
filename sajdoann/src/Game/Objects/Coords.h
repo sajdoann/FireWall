@@ -5,6 +5,7 @@
 
 #pragma once
 #include <string>
+class Board;
 
 class Coords {
     int x = 0;
@@ -44,5 +45,9 @@ public:
             return a < b;
         }
     };
+
+
+    bool canStep(Board *b);
+
 };
 

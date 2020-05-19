@@ -51,8 +51,15 @@ int App::PrepLoop() {
 }
 
 int App::Run() {
+
+    /*try{*/
+    game.LoadGame();
+    /*}catch(invalid_argument invalid_argument){
+         invalid_argument.what();
+     }*/
+
     bool firstPrep = true;
-    game.GameState(State::PREPARATION);
+    game.GameState(State::ATTACK);
     while (true) {
         switch (game.GameState()) {
             case State::WELCOME: {

@@ -6,12 +6,31 @@
 #include "StraightStrategy.h"
 #include "../Board/Board.h"
 
-bool StraightStrategy::Move(Board *board, const Coords &startCoords) {
-      Coords targetCoords(startCoords.X(), startCoords.Y() + 1);
+bool StraightStrategy::Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) {
+    //Coords targetCoords(startCoords.X(), startCoords.Y() + 1);
+    Coords targetCoords = getMovedCoords(startCoords);
+    if (!targetCoords.canStep(&newBoard)) {
+        newBoard.setEmpty(startCoords);
+        return true;
+    }
 
-      Object * o = board->At(targetCoords);
-      if(o->isEmpty()){
-          board->InsertObject(*((Hotfix *) board->At(startCoords)), targetCoords);
-          board->setEmpty(startCoords);
-      }
+    Object *o = newBoard.At(targetCoords);
+
+    //hotfix condition -> if just inserted dont move
+    if (!o->isVirus() && o->isMovingObject()) {
+        Hotfix *hotfix = (Hotfix *) o;
+        hotfix->setInsertedFalse();
+        return true;
+    }
+
+    //there is someting on target position
+    if (!o->isEmpty()) {
+        newBoard.setEmpty(startCoords);
+        return true;
+    }
+
+    newBoard.InsertObject(*((Hotfix *) oldBoard->At(startCoords)), targetCoords);
+    newBoard.setEmpty(startCoords);
+
+    return true;
 }

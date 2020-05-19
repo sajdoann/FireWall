@@ -29,12 +29,13 @@ public:
 
     virtual ~ObjectWithMoveAttributes() = default;
 
+    virtual void Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
+
     virtual ostream &SaveObject(ostream &out) = 0;
 
     virtual istream &LoadObject(istream &in) = 0;
 
     virtual ostream &PrintInfo(ostream &out) const = 0;
-
 
     virtual bool isMovingObject() const = 0;
 
@@ -89,6 +90,10 @@ public:
             value = MovementDirection::DOWN;
         else if (a == "LEFT")
             value = MovementDirection::LEFT;
+        else if (a == "DIAGONAL_U")
+            value = MovementDirection::DIAGONAL_U;
+        else if (a == "DIAGONAL_D")
+            value = MovementDirection::DIAGONAL_D;
         else
             in.setstate(std::ios_base::failbit);
         return in;
@@ -108,6 +113,12 @@ public:
                 break;
             case MovementDirection::LEFT:
                 s = "LEFT";
+                break;
+            case MovementDirection::DIAGONAL_U:
+                s = "DIAGONAL_U";
+                break;
+            case MovementDirection::DIAGONAL_D:
+                s = "DIAGONAL_D";
                 break;
         }
         return out << s;

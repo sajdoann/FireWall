@@ -75,7 +75,7 @@ public:
     /** returns true if patch can shoot, if movement none -> false */
     virtual bool canShoot() const { return movementType != MovementType::NONE; }
 
-    void Attack(Board *board, Coords startCoords);
+    void Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override;
 
     Hotfix ShootHotfix() {
         return Hotfix('*', movementType, movementDirection);

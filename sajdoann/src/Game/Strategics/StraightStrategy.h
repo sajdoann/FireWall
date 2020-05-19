@@ -14,7 +14,7 @@ public:
 
     StraightStrategy(MovementDirection movementDirection) : Strategy(movementDirection) {}
 
-    bool Move(Board *board, const Coords &startCoords);
+    bool Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) override;
 
 };
 
