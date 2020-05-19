@@ -11,6 +11,7 @@
 #include "MovingObject.h"
 #include "../Strategics/Strategy.h"
 #include "../Strategics/StraightStrategy.h"
+#include "../Strategics/RandomStrategy.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
-    Strategy *strategy = new StraightStrategy(movementDirection);
+    Strategy *strategy = nullptr;
     mutable bool just_inserted = true;
 
 public:
@@ -27,8 +28,10 @@ public:
 
     Hotfix(char name, MovementType movementType, MovementDirection movementDirection)
             : MovingObject(name, movementType, movementDirection) {
-        if (movementType == MovementType::STRAIGHT) {
+        if (movementType == MovementType::FRONT) {
             strategy = new StraightStrategy(movementDirection);
+        } else if (movementType == MovementType::STRAIGHT) {
+            //strategy = new RandomStrategy(movementDirection);
         }
 
     }
@@ -44,6 +47,7 @@ public:
     Hotfix &operator=(const Hotfix &other) {
         if (this == &other) return *this;
         name = other.name;
+        strategy = other.strategy->Clone();
         movementType = other.movementType;
         movementDirection = other.movementDirection;
         return *this;
@@ -55,8 +59,10 @@ public:
 
     bool isVirus() const { return false; };
 
-    void setInsertedFalse() {
-        just_inserted = false;
+    bool JustInserted() { return just_inserted; }
+
+    void setInserted(bool w) {
+        just_inserted = w;
     }
 
     void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;

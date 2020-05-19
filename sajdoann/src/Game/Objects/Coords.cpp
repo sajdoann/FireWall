@@ -7,6 +7,6 @@
 #include "../Board/Board.h"
 
 
-bool Coords::canStep(Board *b) {
+bool Coords::canStep(Board *b) const {
     return b->MaxX() > x && x >= 0 && b->MaxY() > y && y >= 0;
 }

@@ -10,6 +10,8 @@
 
 class Board;
 
+class Object;
+
 class Strategy {
 protected:
     MovementDirection movementDirection = MovementDirection::RIGHT;
@@ -20,27 +22,45 @@ public:
 
     virtual ~Strategy() = default;
 
-    virtual bool Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) = 0;
+    virtual Strategy *Clone() const = 0;
 
-    Coords getMovedCoords(const Coords &startCoords) {
+    /**
+     * gets where object on start position should be moved (target position)
+     * @param oldBoard - board from which we take objects
+     * @param newBoard  - board to which we insert objects
+     * @param startCoords - start position of object we will be moving
+     * @return target coords
+     */
+    virtual Coords *Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) = 0;
+
+    /**
+     * executes move, places object to target coords if all conditions are met
+     * @param object - what will we move
+     * @param newBoard - the board it is inserted to
+     * @param targetCoords - the position object is inserted to
+     */
+    void execMove(Object *object, Board &newBoard, const Coords &targetCoords);
+
+    Coords *getMovedCoords(const Coords &startCoords) {
         if (movementDirection == MovementDirection::RIGHT) {
-            return Coords(startCoords.X(), startCoords.Y() + 1);
+            return new Coords(startCoords.X(), startCoords.Y() + 1);
         }
         if (movementDirection == MovementDirection::LEFT) {
-            return Coords(startCoords.X(), startCoords.Y() - 1);
+            return new Coords(startCoords.X(), startCoords.Y() - 1);
         }
         if (movementDirection == MovementDirection::DOWN) {
-            return Coords(startCoords.X() + 1, startCoords.Y());
+            return new Coords(startCoords.X() + 1, startCoords.Y());
         }
         if (movementDirection == MovementDirection::UP) {
-            return Coords(startCoords.X() - 1, startCoords.Y());
+            return new Coords(startCoords.X() - 1, startCoords.Y());
         }
         if (movementDirection == MovementDirection::DIAGONAL_U) {
-            return Coords(startCoords.X() - 1, startCoords.Y() + 1);
+            return new Coords(startCoords.X() - 1, startCoords.Y() + 1);
         }
         if (movementDirection == MovementDirection::DIAGONAL_D) {
-            return Coords(startCoords.X() + 1, startCoords.Y() + 1);
+            return new Coords(startCoords.X() + 1, startCoords.Y() + 1);
         }
+        return nullptr;
     }
 
 

@@ -15,7 +15,18 @@ public:
 
     Coords(int x, int y) : x(x), y(y) {}
 
+    Coords(const Coords &other) {
+        *this = other;
+    }
+
     ~Coords() = default;
+
+    Coords &operator=(const Coords &other) {
+        if (this == &other) return *this;
+        x = other.x;
+        y = other.y;
+        return *this;
+    }
 
     int X() const { return x; }
 
@@ -47,7 +58,7 @@ public:
     };
 
 
-    bool canStep(Board *b);
+    bool canStep(Board *b) const;
 
 };
 
