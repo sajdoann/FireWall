@@ -23,14 +23,14 @@ bool StraightStrategy::Move(Board *oldBoard, Board &newBoard, const Coords &star
         return true;
     }
 
-    //there is someting on target position
-    if (!o->isEmpty()) {
-        newBoard.setEmpty(startCoords);
+    //there is patch on target position
+    if (!o->isEmpty() && !o->isMovingObject()) {
+        //newBoard.setEmpty(startCoords);
         return true;
     }
 
     newBoard.InsertObject(*((Hotfix *) oldBoard->At(startCoords)), targetCoords);
-    newBoard.setEmpty(startCoords);
+    //newBoard.setEmpty(startCoords);
 
     return true;
 }

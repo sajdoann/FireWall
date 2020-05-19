@@ -19,13 +19,15 @@ void Patch::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
     Coords targetCoords = h.getStrategy()->getMovedCoords(startCoords);
 
     //stepping out of board or stepping on patch
-    if (!targetCoords.canStep(&newBoard) ||
+    if (!targetCoords.canStep(oldBoard) ||
         (!newBoard.At(targetCoords)->isEmpty() && !newBoard.At(targetCoords)->isMovingObject()))
         return;
 
     //place is not empty -> is a moving object
     if (!newBoard.At(targetCoords)->isEmpty()) {
         //TODO: take lives away
+        cout << "not empty" << targetCoords.X() << " " << targetCoords.Y() << " " << endl;
+        return;
     }
 
     newBoard.InsertObject(h, targetCoords);
