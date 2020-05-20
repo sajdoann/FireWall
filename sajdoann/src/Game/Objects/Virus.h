@@ -18,19 +18,37 @@ class Virus : public MovingObject {
     }
 
 public:
-    Virus() noexcept = default;
+    Virus() {
+
+    }
 
     Virus(char name, int lives, MovementType movementType, MovementDirection movementDirection)
             : MovingObject(name, movementType, movementDirection), lives(lives) {
-
         setDifficulty();
     }
 
 
-    ~Virus() override = default;
+    ~Virus() override {
+        delete strategy;
+    }
 
     virtual Object *Clone() const {
         return new Virus(name, lives, movementType, movementDirection);
+    }
+
+    Virus(const Virus &other) {
+        *this = other;
+    }
+
+    Virus &operator=(const Virus &other) {
+        if (this == &other) return *this;
+        if (strategy != nullptr) delete strategy;
+        name = other.name;
+        lives = other.lives;
+        movementType = other.movementType;
+        movementDirection = other.movementDirection;
+        strategy = other.strategy->Clone();
+        return *this;
     }
 
     virtual void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
@@ -68,6 +86,7 @@ public:
         in >> v.lives;
         v.MovementFromIn(in, v.movementType);
         v.DirectionFromIn(in, v.movementDirection);
+        v.setStrategy();
         return in;
 
     }

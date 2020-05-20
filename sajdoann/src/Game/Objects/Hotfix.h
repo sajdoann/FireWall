@@ -10,7 +10,7 @@
 #include "Object.h"
 #include "MovingObject.h"
 #include "../Strategics/Strategy.h"
-#include "../Strategics/StraightStrategy.h"
+#include "../Strategics/FrontStrategy.h"
 #include "../Strategics/RandomStrategy.h"
 
 using namespace std;
@@ -20,7 +20,7 @@ using namespace std;
  * it travels on board till it encounters other object, then its destroyed (if encounters virus it takes its one live away)
  */
 class Hotfix : public MovingObject {
-    Strategy *strategy = nullptr;
+
     mutable bool just_inserted = true;
 
 public:
@@ -28,11 +28,6 @@ public:
 
     Hotfix(char name, MovementType movementType, MovementDirection movementDirection)
             : MovingObject(name, movementType, movementDirection) {
-        if (movementType == MovementType::FRONT) {
-            strategy = new StraightStrategy(movementDirection);
-        } else if (movementType == MovementType::STRAIGHT) {
-            //strategy = new RandomStrategy(movementDirection);
-        }
 
     }
 
@@ -78,6 +73,7 @@ public:
         if (is.eof()) return is;
         MovementFromIn(is, movementType);
         DirectionFromIn(is, movementDirection);
+        setStrategy();
 
     }
 

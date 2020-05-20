@@ -1,6 +1,6 @@
 NAME     LIVES  MOVEMENT DIRECTION
-%         4  STRAIGHT      LEFT
-&         5     FRONT      LEFT
+%         4     FRONT      LEFT
+&         5     RAND      LEFT
 =         4  SHORTEST      LEFT
 @         4  SHORTEST      LEFT
 

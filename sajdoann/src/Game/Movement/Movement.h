@@ -26,22 +26,13 @@ public:
         Board newBoard(board->MaxX(), board->MaxY());
         newBoard.AddAllPatches(board);
 
-        //moving objects loop
-        /* for (int i = board->MaxX() - 1; i >= 0; --i) {
-             for (int j = board->MaxY() - 1; j >= 0; --j) {
-                 Object *object = (*board)(i, j);
-                 Coords coords(i, j);
-                 object->Attack(board, newBoard, coords);
-             }
-         }*/
-
-        for (int i = 0; i < board->MaxX(); ++i) {
-            for (int j = 0; j < board->MaxY(); ++j) {
-                Object *object = (*board)(i, j);
-                Coords coords(i, j);
-                object->Attack(board, newBoard, coords);
-            }
-        }
+       for (int i = 0; i < board->MaxX(); ++i) {
+           for (int j = 0; j < board->MaxY(); ++j) {
+               Object *object = (*board)(i, j);
+               Coords coords(i, j);
+               object->Attack(board, newBoard, coords);
+           }
+       }
 
         *board = newBoard;
         interface.PrintBoardAttack(*board);
@@ -49,4 +40,3 @@ public:
     }
 
 };
-

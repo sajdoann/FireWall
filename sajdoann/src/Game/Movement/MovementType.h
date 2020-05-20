@@ -10,7 +10,7 @@
 using namespace std;
 
 enum MovementType {
-    STRAIGHT, FRONT, SHORTEST, NONE
+    STRAIGHT, FRONT, SHORTEST, NONE, RAND
 };
 //if updated interface needs to be also updated
 

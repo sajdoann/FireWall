@@ -52,6 +52,8 @@ public:
             value = MovementType::FRONT;
         else if (a == "SHORTEST")
             value = MovementType::SHORTEST;
+        else if (a == "RAND")
+            value = MovementType::RAND;
         else if (a == "NONE")
             value = MovementType::NONE;
         else
@@ -70,6 +72,9 @@ public:
                 break;
             case MovementType::SHORTEST:
                 s = "SHORTEST";
+                break;
+            case MovementType::RAND:
+                s = "RAND";
                 break;
             case MovementType::NONE:
                 s = "NONE";

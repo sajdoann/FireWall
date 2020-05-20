@@ -4,7 +4,7 @@
 */
 
 #pragma once
-/*
+
 
 #include "Strategy.h"
 class Board;
@@ -17,11 +17,14 @@ public:
     ~RandomStrategy() = default;
 
 
-    virtual Coords & Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) override ;
+    virtual Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords) override;
 
     RandomStrategy(MovementDirection movementDirection) : Strategy(movementDirection) {}
+
+    Strategy *Clone() const {
+        return new RandomStrategy(movementDirection);
+    }
 };
 
 
 
-*/

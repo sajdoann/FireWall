@@ -14,6 +14,8 @@
 #include "State.enum"
 #include "ScoreCounter.h"
 #include "Movement/Movement.h"
+#include "VirusWave.h"
+#include "GameConstants.h"
 
 using namespace std;
 
@@ -105,10 +107,20 @@ public:
 
     //TODO: implement
     bool MoveLoop() {
-        for (int i = 0; i < 5; ++i) {
+        createVirusWave();
+
+        for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
             movement.MoveAll();
         }
 
+    }
+
+    void createVirusWave() {
+
+        VirusWave virusWave;
+
+        Virus virus = Virus(*viruses.begin()->second);
+        virusWave.Insert(virus);
     }
 };
 

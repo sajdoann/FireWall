@@ -20,11 +20,7 @@ using namespace std;
  */
 class Patch : public ObjectWithMoveAttributes {
 protected:
-    //char name = 'W';
     int price = 10;
-
-    //FOR THEIR HOTFIXES
-
 
 public:
     Patch() noexcept = default;

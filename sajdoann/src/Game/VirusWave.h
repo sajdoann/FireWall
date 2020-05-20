@@ -5,28 +5,29 @@
 
 #pragma once
 
-#include <deque>
+#include <queue>
 #include <vector>
 #include <algorithm>
-#include "../Objects/Virus.h"
+#include "Objects/Virus.h"
 
 using namespace std;
 
 class VirusWave {
 private:
-    int count;
-    int difficulty;
-    deque<Virus *> queue;
+    int count = 0;
+    queue<Virus> virusQueue;
 
 public:
-    VirusWave(int count, int difficulty, vector<Virus *> viruses) : count(count), difficulty(difficulty) {
-        sort(viruses.begin(), viruses.end(), [](Virus *a, Virus *b) {
-            if (a->)
-        })
+    VirusWave(std::queue<Virus> viruses) : count(viruses.size()), virusQueue(viruses) {
+    }
+
+    void Insert(Virus &virus) {
+        virusQueue.push(move(virus));
     }
 
     //no free of viruses it destructs in Game viruses map
     ~VirusWave() = default;
 
+    VirusWave() = default;
 };
 

@@ -31,7 +31,7 @@ public:
      * @param startCoords - start position of object we will be moving
      * @return target coords
      */
-    virtual Coords *Move(Board *oldBoard, Board &newBoard, const Coords &startCoords) = 0;
+    virtual Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords) = 0;
 
     /**
      * executes move, places object to target coords if all conditions are met
