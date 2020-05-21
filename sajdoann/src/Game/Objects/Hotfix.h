@@ -82,7 +82,7 @@ public:
         MovementToOut(os, movementType);
         os << " direction: ";
         DirectionsToOut(os, movementDirection);
-        //<< " "  << movementDirection;
+        //os << " "  << movementDirection;
     }
 
 
