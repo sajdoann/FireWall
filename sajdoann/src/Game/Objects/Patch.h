@@ -78,18 +78,18 @@ public:
     }
 
     /** less comparator for patch by its name*/
-    int operator<(const Patch &patch) const {
-        if (name != patch.name)
-            return (name < patch.name) ? -1 : 1;
-        return 0;
-    }
+    /* int operator<(const Patch &patch) const {
+         if (name != patch.name)
+             return (name < patch.name) ? -1 : 1;
+         return 0;
+     }*/
 
     /** compare function by name */
-    struct cmp {
+    /*struct cmp {
         int operator()(const Patch &a, const Patch &b) {
             return a < b;
         }
-    };
+    };*/
 
     /** gets patch atributes from istream */
     friend istream &operator>>(istream &in, Patch &patch) {

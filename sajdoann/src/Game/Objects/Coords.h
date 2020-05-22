@@ -5,6 +5,7 @@
 
 #pragma once
 #include <string>
+#include <vector>
 class Board;
 
 class Coords {
@@ -43,20 +44,21 @@ public:
         return a.x == b.x && a.y == b.y;
     }
 
-    int operator<(const Coords &b) const {
-        if (*this == b) return 0;
+    friend int operator!=(const Coords &a, const Coords &b) {
+        return !(a == b);
+    }
 
-        if (x != b.x)
-            return (x < b.x) ? 1 : -1;
-        else return (y < b.y) ? 1 : -1;
+    bool operator<(const Coords &b) const {
+        return (x < b.x) || ((x == b.x) && (y < b.y));
     }
 
     struct cmp {
-        int operator()(const Coords &a, const Coords &b) {
+        bool operator()(const Coords &a, const Coords &b) {
             return a < b;
         }
     };
 
+    std::vector<Coords> getNeighbours(Board *board);
 
     bool canStep(Board *b) const;
 
