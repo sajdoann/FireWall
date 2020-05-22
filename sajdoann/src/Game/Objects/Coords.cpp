@@ -19,10 +19,13 @@ std::vector<Coords> Coords::getNeighbours(Board *board) {
     for (int i = 0; i < 4; ++i) {
         int neibX = xC[i] + x;
         int neibY = yC[i] + y;
-        if (canStep(board)) continue;
+        Coords neibCoords = Coords(neibX, neibY);
+        if (!neibCoords.canStep(board))
+            continue;
         //is a patch -> cannot step
-        if (!board->At(Coords(neibX, neibY))->isEmpty() && !board->At(Coords(neibX, neibY))->isMovingObject()) continue;
-        c.push_back(Coords(neibX, neibY));
+        auto a = board->At(neibCoords);
+        if (!a->isEmpty() && !a->isMovingObject()) continue;
+        c.push_back(neibCoords);
     }
     return c;
 }

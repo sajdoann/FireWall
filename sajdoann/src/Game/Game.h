@@ -107,20 +107,27 @@ public:
 
     //TODO: implement
     bool MoveLoop() {
-        createVirusWave();
+       // VirusWave vw = createVirusWave();
 
         for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
+            if (i == 0) {
+                Virus virus = Virus(*viruses.begin()->second);
+                gameBoard.InsertObject(virus, Coords(gameBoard.MaxX() - 1, gameBoard.MaxY() - 1));
+                gameBoard.Print();
+
+            }
             movement.MoveAll();
         }
 
     }
 
-    void createVirusWave() {
+    VirusWave *createVirusWave() {
 
-        VirusWave virusWave;
+        VirusWave *virusWave = new VirusWave();
 
         Virus virus = Virus(*viruses.begin()->second);
-        virusWave.Insert(virus);
+        virusWave->Insert(virus);
+        return virusWave;
     }
 };
 

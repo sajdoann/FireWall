@@ -14,6 +14,7 @@
 #include "../Strategics/Strategy.h"
 #include "../Strategics/FrontStrategy.h"
 #include "../Strategics/RandomStrategy.h"
+#include "../Strategics/BfsStrategy.h"
 
 using namespace std;
 
@@ -54,8 +55,7 @@ public:
         } else if (movementType == MovementType::RAND) {
             strategy = new RandomStrategy(movementDirection);
         } else if (movementType == MovementType::SHORTEST) {
-            //todo alter!!! nope front
-            strategy = new FrontStrategy(movementDirection);
+            strategy = new BfsStrategy(movementDirection);
         } else cout << "fck moving object" << endl;
 
     }

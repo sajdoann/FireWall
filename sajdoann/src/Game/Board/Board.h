@@ -173,5 +173,6 @@ public:
         */
     }
 
+    void Print();
 };
 

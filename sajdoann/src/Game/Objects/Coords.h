@@ -23,7 +23,7 @@ public:
     ~Coords() = default;
 
     Coords &operator=(const Coords &other) {
-        if (this == &other) return *this;
+        if (*this == other) return *this;
         x = other.x;
         y = other.y;
         return *this;

@@ -15,8 +15,10 @@ ostream &Virus::SaveObject(ostream &out) {
 
 void Virus::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
     Coords *targetCoords = strategy->getTargetCoords(oldBoard, newBoard, startCoords);
-    if (targetCoords == nullptr)
+    //no next coord was found
+    if (targetCoords == nullptr) {
         return;
+    }
     strategy->execMove(oldBoard->At(startCoords), newBoard, *targetCoords);
     delete targetCoords;
 }
