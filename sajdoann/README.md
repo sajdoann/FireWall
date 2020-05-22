@@ -1,5 +1,5 @@
-##FireWall
-###Informace:
+## FireWall
+### Informace:
  FireWall je tower defense hra. 
  
  Počítači se rozbil firewall, a tak je úkolem hráče udělat **patche**, tak aby skrz firewall proniklo co nejméně zákeřných virů.
@@ -12,13 +12,13 @@ pohybují různým stylem (zleva-doprava, nejkratší možná cesta, inteligentn
 
 Některé patche mají schopnost střílet na viry **hotfixy**. Hotfixy se pak pohybují dál po hracím poli.
 
-###Fáze hry:
+### Fáze hry:
 Hra má 3 části:
 1. `welcome` je hráč uveden do děje.
 2. `preparation` hráč rozmusťuje patche
 3. `attack` viry se snaží proniknout přes patche
 
-###Dědičnost a polymorfismus:
+### Dědičnost a polymorfismus:
 Třídy:
 - Object (SaveObject, PrintInfo, LoadObject, isEmpty, isMovingObj, isVirus)
     - empty
@@ -47,7 +47,7 @@ nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
  že mám třídu mimo (movement, includuju ji v game a beru si patche z pointru 
  na board co  si třída pamatuje.) Je to ok? 
 
-###Třídy a reprezentace
+### Třídy a reprezentace
  Krom výše zmíněných tříd zde je: 
   - `Interface` - uživatelské rozhraní
   - `Command` - třída na příkazy, pamatuje si stringy jméno a help + co se má provést (function z functional většinou lambdu)
@@ -58,7 +58,7 @@ nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
   - `Movement složka` - třídy s pohybem, seznamem funkcí pohybu objektu, typu pohybu objektu
   - `enumy` na stavy hry, typu vráceného z commandu...
     
-###Příkazy
+### Příkazy
 (P ... zkratka patch)
 
 `help:`
@@ -69,7 +69,7 @@ nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
 - `google P`     -   prints all the available information about the patch
 - `save`         -   saves the game
 - `quit`         -   saves the game and exits
-###Ukázka 
+### Ukázka 
 stav preparation - náhled 
 ```
 patches:
