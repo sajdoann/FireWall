@@ -33,7 +33,7 @@ public:
     }
 
     virtual Object *Clone() const {
-        return new Virus(name, lives, movementType, movementDirection);
+        return new Virus(*this);
     }
 
     Virus(const Virus &other) {
@@ -53,6 +53,9 @@ public:
 
     virtual void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
+    /* bool Interact(Object * objectTarget){
+         if(objectTarget->isVirus())
+     }*/
 
     char Name() { return name; }
 
@@ -91,13 +94,17 @@ public:
 
     }
 
-    void Hitted() {
-        if (lives) --lives;
-        else Destroy();
+    bool Hitted() {
+        if (lives) {
+            --lives;
+            return true;
+        }
+        return false;
     }
 
     void Destroy() {
         delete this;
+
     }
 
     /** less comparator for virus by its name*/

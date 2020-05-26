@@ -60,6 +60,8 @@ public:
 
     }
 
+    //virtual bool Interact(Object * objectTarget) = 0;
+
 
     //object methods
 
