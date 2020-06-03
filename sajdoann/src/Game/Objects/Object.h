@@ -32,7 +32,7 @@ public:
     //print object in game
     //virtual ostream &Print(ostream &out) = 0;
 
-    virtual void Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
+    virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
 
 
     //prints object for user

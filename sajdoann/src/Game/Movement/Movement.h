@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <thread>
 #include "../Board/Board.h"
 #include "../../Interface.h"
 
@@ -22,21 +23,23 @@ public:
 
     //game gives order and the entire board moves
     // first vawe are moving objects then patches
-    void MoveAll() {
+    int MoveAll() {
         Board newBoard(board->MaxX(), board->MaxY());
         newBoard.AddAllPatches(board);
 
-       for (int i = 0; i < board->MaxX(); ++i) {
-           for (int j = 0; j < board->MaxY(); ++j) {
-               Object *object = (*board)(i, j);
-               Coords coords(i, j);
-               object->Attack(board, newBoard, coords);
-           }
+        int virusPoints = 0;
+        for (int i = 0; i < board->MaxX(); ++i) {
+            for (int j = 0; j < board->MaxY(); ++j) {
+                Object *object = (*board)(i, j);
+                Coords coords(i, j);
+                virusPoints += object->Attack(board, newBoard, coords);
+            }
        }
 
         *board = newBoard;
         interface.PrintBoardAttack(*board);
         //this_thread::sleep_for(1s);
+        return virusPoints;
     }
 
 };

@@ -8,6 +8,6 @@
 
 ostream &Empty::SaveObject(ostream &os) { os << *this; }
 
-void Empty::Attack(Board *newBoard, Board &oldBoard, Coords startCoords) {
-    return;
+int Empty::Attack(Board *newBoard, Board &oldBoard, Coords startCoords) {
+    return 0;
 }

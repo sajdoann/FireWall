@@ -7,7 +7,7 @@
 #include "../Board/Board.h"
 
 
-bool Coords::canStep(Board *b) const {
+bool Coords::isOnBoard(Board *b) const {
     return b->MaxX() > x && x >= 0 && b->MaxY() > y && y >= 0;
 }
 
@@ -20,7 +20,7 @@ std::vector<Coords> Coords::getNeighbours(Board *board) {
         int neibX = xC[i] + x;
         int neibY = yC[i] + y;
         Coords neibCoords = Coords(neibX, neibY);
-        if (!neibCoords.canStep(board))
+        if (!neibCoords.isOnBoard(board))
             continue;
         //is a patch -> cannot step
         auto a = board->At(neibCoords);

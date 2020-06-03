@@ -6,5 +6,5 @@ X        12     FRONT     DIAGONAL_D
 Z         5     FRONT     LEFT
 W         15    NONE      UP
 
-R           50  RAND      LEFT
+R         50    RAND      LEFT
 

@@ -1,3 +1,20 @@
+CXX=g++
+CXXFLAGS = -Wall -pedantic -g -Og -std=c++14
+LD=g++
+LDFLAGS =-fsanitize=address
+${EXECUTABLE}: Interface.o main.o
+	${LD} ${LDFLAGS} $^ -o ${EXECUTABLE}
+
+
+
+
+
+
+
+
+
+
+
 
 -- ME POZNAMKY
 budou smazany :)

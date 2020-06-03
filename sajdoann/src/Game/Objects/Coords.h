@@ -60,7 +60,7 @@ public:
 
     std::vector<Coords> getNeighbours(Board *board);
 
-    bool canStep(Board *b) const;
+    bool isOnBoard(Board *b) const;
 
 };
 

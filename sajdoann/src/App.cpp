@@ -79,10 +79,19 @@ int App::Run() {
                 interface.ClearScreen();
                 AttackLoop();
                 interface.PrintResult(game.GameResult());
+
+                //if user looses then go to end
+                if (game.GameResult() == LOSE) {
+                    game.GameState(State::END);
+                    break;
+                }
                 game.GameState(State::PREPARATION);
                 break;
             }
             case State::END: {
+                //todo: end/new logic
+                //play new game/ exit
+                // interface.EndAsker();
                 return 0;
             }
         }

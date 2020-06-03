@@ -51,7 +51,7 @@ public:
         return *this;
     }
 
-    virtual void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
+    virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
     /* bool Interact(Object * objectTarget){
          if(objectTarget->isVirus())

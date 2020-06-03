@@ -27,7 +27,7 @@ public:
         name = empty.name;
     }
 
-    void Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override;
+    int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override;
 
 
     Object *Clone() const override { return new Empty(); }

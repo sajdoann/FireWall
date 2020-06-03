@@ -66,24 +66,33 @@ Coords *BfsStrategy::getTargetCoords(Board *oldBoard, Board &newBoard, const Coo
             pathExists = Bfs(&newBoard, startCoords, destination, pred);
             setPath(pred);
 
-            cout << "\n @ route: \n";
-            for (int i = 0; i < newBoard.MaxX(); ++i) {
-                for (int j = 0; j < newBoard.MaxY(); ++j) {
-                    if (find(path.begin(), path.end(), Coords(i, j)) == path.end())
-                        cout << "-";
-                    else cout << "@";
-                }
-                cout << endl;
-            }
-            cout << endl;
+            printRoute(newBoard);
 
         }
 
         //no next coord was found
-        if (path.empty()) return nullptr;
+        if (path.empty()) {
+            if (!pathExists)
+                return nullptr;
+            else return new Coords(-1, -1);
+        }
+
 
         Coords *c = new Coords(path[path.size() - 1]);
         path.erase(path.end());
         return c;
     }
+}
+
+void BfsStrategy::printRoute(Board &newBoard) {
+    cout << "\n @ route: \n";
+    for (int i = 0; i < newBoard.MaxX(); ++i) {
+        for (int j = 0; j < newBoard.MaxY(); ++j) {
+            if (find(path.begin(), path.end(), Coords(i, j)) == path.end())
+                cout << "-";
+            else cout << "@";
+        }
+        cout << endl;
+    }
+    cout << endl;
 }

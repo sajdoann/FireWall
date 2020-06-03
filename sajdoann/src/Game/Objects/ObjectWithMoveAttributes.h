@@ -29,7 +29,7 @@ public:
 
     virtual ~ObjectWithMoveAttributes() = default;
 
-    virtual void Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
+    virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
 
     virtual ostream &SaveObject(ostream &out) = 0;
 

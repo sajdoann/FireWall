@@ -36,6 +36,8 @@ public:
     }
 
     Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords);
+
+    void printRoute(Board &newBoard);
 };
 
 

@@ -146,31 +146,26 @@ public:
         return tiles[x][y];
     }
 
-    void AddAllPatches(Board *board) {
+    /**
+     * adds all patches to the other board
+     * @param other
+     */
+    void AddAllPatches(Board *other) {
         //if measurement are not the same throw errror
-        if (board->maxX != maxX || board->maxY != maxY) {
+        if (other->maxX != maxX || other->maxY != maxY) {
             throw logic_error("Boards dont have the same size.");
         }
 
         //for all tiles, if tile is a patch insert it to this board
         for (int i = 0; i < maxX; ++i) {
             for (int j = 0; j < maxY; ++j) {
-                Object *o = (Object *) (board->At(Coords(i, j)));
+                Object *o = (Object *) (other->At(Coords(i, j)));
                 if (!o->isEmpty() && !o->isMovingObject()) {
                     Patch *p = (Patch *) o;
                     InsertObject(*p, Coords(i, j));
                 }
             }
         }
-        /*cout << "add all p" << endl;
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-            cout <<  At(Coords(i,j));
-            }
-            cout << endl;
-        }
-        cout <<endl << endl;
-        */
     }
 
     void Print();

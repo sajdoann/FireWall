@@ -39,7 +39,8 @@ public:
      * @param newBoard - the board it is inserted to
      * @param targetCoords - the position object is inserted to
      */
-    void execMove(Object *object, Board &newBoard, const Coords &targetCoords);
+    int
+    execMove(Object *object, Board &newBoard, Board *oldBoard, const Coords &startCoords, const Coords &targetCoords);
 
     Coords *getMovedCoords(const Coords &startCoords) {
         if (movementDirection == MovementDirection::RIGHT) {

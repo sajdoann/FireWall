@@ -6,29 +6,53 @@
 #include "Strategy.h"
 #include "../Board/Board.h"
 
-void Strategy::execMove(Object *object, Board &newBoard, const Coords &targetCoords) {
-    if (!targetCoords.canStep(&newBoard)) {
-        return;
+int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const Coords &startCoords,
+                       const Coords &targetCoords) {
+    if (!targetCoords.isOnBoard(&newBoard)) {
+        if (!object->isVirus()) return 0;
+        //virus sucessfully gone
+        if (object->isVirus() && startCoords.Y() == 0) {
+            //todo
+            return 1;
+        }
+        return 0;
+
     }
 
     Object *objectTarget = newBoard.At(targetCoords);
 
     //there is patch on target position
-    // it should never happen that virus encounters patch
+    // todo: it should never happen that virus encounters patch
     if (!objectTarget->isEmpty() && !objectTarget->isMovingObject()) {
-        return;
+        return 0;
     }
 
 
     //target position is not empty -> deal with collisions
     if (!objectTarget->isEmpty()) {
-        // cout << "interaction should be there\n";
-        //virus steps on hotfix
+
+        //virus steps on hotfix -> if not virus alive after hitted destroy
         if (object->isVirus() && !objectTarget->isVirus()) {
-            ((Virus *) object)->Hitted();
+            bool isAlive = ((Virus *) object)->Hitted();
+            if (!isAlive) {
+                oldBoard->setEmpty(startCoords);
+                return 0;
+            }
         }
-        //interaction with objects
-        //  object->Interact(objectTarget);
+
+        //todo: pokud chci vic jak jeden zivot pro patche zmenit
+
+        // hotfix steps on virus
+        if (!object->isVirus() && objectTarget->isVirus()) {
+            bool isAlive = ((Virus *) objectTarget)->Hitted();
+            if (!isAlive) {
+                oldBoard->setEmpty(targetCoords);
+                return 0;
+            }
+            return 0;
+        }
+
+
     }
 
     //abstract method needs exact type
@@ -36,5 +60,7 @@ void Strategy::execMove(Object *object, Board &newBoard, const Coords &targetCoo
         newBoard.InsertObject(*((Hotfix *) object), targetCoords);
     else if (object->isMovingObject() && object->isVirus())
         newBoard.InsertObject(*((Virus *) object), targetCoords);
+
+    return 0;
 
 }

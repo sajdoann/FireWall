@@ -28,20 +28,12 @@ class Game {
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
-    int ram = 0;        //TODO: zapojit do třídy
+    int ram = 5;        //TODO: zapojit do třídy
 
 public:
-    Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard) {
-    }
+    Game();
 
-    ~Game() {
-        for (auto p : patches) {
-            delete p.second;
-        }
-        for (auto v : viruses) {
-            delete v.second;
-        }
-    }
+    ~Game();
 
     State GameState() const { return gameState; }
 
@@ -61,65 +53,17 @@ public:
     map<char, Patch *> Patches() const { return patches; }
 
 
-    void LoadGame() {
-        //TODO: invalid inputs
-        Reader patchReader("../sajdoann/Data/patches.txt");
-        patches = patchReader.ReadStillObjects<Patch>();
+    void LoadGame();
 
-        Reader virusReader("../sajdoann/Data/viruses.txt");
-        viruses = virusReader.ReadStillObjects<Virus>();
+    void InsertPatch(const char patchType, const Coords &coords);
 
-        Reader boardReader("../sajdoann/Data/board.txt");
-        int maxX, maxY;
+    bool isPatch(char PatchName);
 
-        map<Coords, char> coords = boardReader.ReadBoard(maxX, maxY);
-        map<Coords, Patch *> patchesMap;
-        int cou = 0;
-        for (auto c : coords) {
-            Patch *p;
-            if (isPatch(c.second)) {
-                Patch cp(getPatch(c.second));
-                p = new Patch(cp);
-                cou++;
-            } else throw invalid_argument("No such patch exists. Patch name: " + c.second);
-            patchesMap.insert({c.first, p});
-        }
-        Board b(maxX, maxY, patchesMap);
-
-        for (auto &a : patchesMap) {
-            delete a.second;
-            a.second = nullptr;
-        }
-        gameBoard = b;
-    }
-
-    void InsertPatch(const char patchType, const Coords &coords) {
-        auto it = patches.find(patchType);
-        gameBoard.InsertPatch(*(it->second), coords);
-    }
-
-    bool isPatch(char PatchName) {
-        return patches.find(PatchName) != patches.end();
-    }
-
-    Patch &getPatch(const char c) const { return *patches.at(c); }
+    Patch &getPatch(const char c) const;
 
 
     //TODO: implement
-    bool MoveLoop() {
-       // VirusWave vw = createVirusWave();
-
-        for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
-            if (i == 0) {
-                Virus virus = Virus(*viruses.begin()->second);
-                gameBoard.InsertObject(virus, Coords(gameBoard.MaxX() - 1, gameBoard.MaxY() - 1));
-                gameBoard.Print();
-
-            }
-            movement.MoveAll();
-        }
-
-    }
+    bool MoveLoop();
 
     VirusWave *createVirusWave() {
 

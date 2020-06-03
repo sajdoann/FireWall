@@ -21,7 +21,7 @@ using namespace std;
  */
 class Hotfix : public MovingObject {
 
-    mutable bool just_inserted = true;
+    mutable bool just_inserted = false;
 
 public:
     Hotfix() = default;
@@ -60,7 +60,7 @@ public:
         just_inserted = w;
     }
 
-    void Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
+    int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
     Strategy *getStrategy() {
         return strategy;
@@ -82,7 +82,6 @@ public:
         MovementToOut(os, movementType);
         os << " direction: ";
         DirectionsToOut(os, movementDirection);
-        //os << " "  << movementDirection;
     }
 
 

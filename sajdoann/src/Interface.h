@@ -25,35 +25,39 @@ class Interface {
     ColorClass colorClass;
     mutable const char *clr = colorClass.Color(ColorClass::RESET);
 
+private:
+    /** prints numbers from 0-max in the same format as PrintBoardPrep
+    * @param max till what number it prints
+    */
+    void NumberLinePrep(int max) const;
+
+    /**
+     * gets the right color for object o
+     * @param o - object that we want the color of
+     */
+    void getColorOfObject(Object *o) const;
+
+    /**
+     * resets the stream color
+     */
+    void resetClr() const;
+
 public:
     Interface(istream &in, ostream &os) : in(in), os(os), colorClass() {}
 
     ~Interface() = default;
 
     /** asks the user to enter command */
-    string PromptCommand() const {
-        string command;
-        os << "Enter command: " << endl;
-        getline(in, command);
-        return command;
-    }
+    string PromptCommand() const;
 
     /** suggests to use help to print commands and their syntax */
-    void HelpAdvertiser() {
-        os << "Unknown command. \n To see help type \"help\"" << endl;
-    }
+    void HelpAdvertiser();
+
+    /** prints help for the user */
+    void PrintHelp(const string &name, const string &help);
 
     /** extracts patch from  InsertPatch command */
-    void GetPatchInfo(const string &s, char &patchName, Coords &coords) {
-        istringstream is(s);
-        int x, y;
-        char p = '(';
-        char c = ')';
-        char sep = ',';
-        is >> patchName >> p >> x >> sep >> y >> c;
-        coords.setCoords(x, y);
-        patchName = toupper(patchName);
-    }
+    void GetPatchInfo(const string &s, char &patchName, Coords &coords);
 
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
@@ -63,128 +67,35 @@ public:
     }
 
     /** tells the story of FireWall game */
-    void Greet() {
-        os << "Hello!" << endl;
-        os << "There is a very important mission ahead of you." << endl;
-        os << "The FireWall has breaches, your goal is to survive next vicious attack from the hackers." << endl;
-        os << "Try your best while placing patches, so the dangerous mallware cannot survive through your barrier"
-           << endl;
-        os << "Your entire computer could fall apart if you dont!" << endl;
-        os << "I wish you good luck :) " << endl << endl;
-        os << "To continue press enter" << endl;
-        string s;
-        while (!(getline(in, s))) {}
-        ClearScreen();
-    }
+    void Greet();
 
-    /** prints numbers from 0-max in the same format as PrintBoardPrep
-     * @param max till what number it prints
-     */
-    void NumberLinePrep(int max) const {
-        os << setw(3) << " ";
-        for (int i = 0; i < max; ++i) {
-            os << setw(3) << i;
-        }
-        os << endl;
-    }
-
-    void getColorOfObject(Object *o) const {
-        if (o->isEmpty()) {
-            clr = colorClass.Color(ColorClass::CYAN);
-        }
-        if (!o->isMovingObject() && !o->isEmpty()) {
-            if (((Patch *) o)->canShoot())
-                clr = colorClass.Color(ColorClass::BLUE);
-            else
-                clr = colorClass.Color(ColorClass::RED);
-        }
-    }
-
-/**
+    /**
      * prints the board for the preparation mode
      * @param board - the board it prints
      */
-    void PrintBoardPrep(Board &board) const {
-        os << "patches:" << endl;
-        NumberLinePrep(board.MaxY());
-
-        for (int i = 0; i < board.MaxX(); ++i) {
-            for (int j = 0; j < board.MaxY(); ++j) {
-                if (j == 0) os << setw(3) << i;
-                Object *o = board(i, j);
-
-                getColorOfObject(o);
-
-
-                os << clr << setw(3) << (board(i, j));
-                resetClr();
-            }
-            os << endl;
-        }
-    }
-
-    void resetClr() const {
-        clr = colorClass.Color(ColorClass::RESET);
-        os << clr;
-
-    }
+    void PrintBoardPrep(Board &board) const;
 
 
     /** prints the invalid move text to the user */
-    void InvalidMove() const {
-        os << "This move cannot be executed." << endl;
-        os << "Check if the names, coordinates are valid and you have enough RAM to support the patch" << endl;
-    }
+    void InvalidMove() const;
 
     /** explains the preparation state of the game */
-    void ExplainPrepState() {
-        os << "Now your goal is to place patches so no virus could break through your wall." << endl;
-        os << "To do that type in name of patch (coord1, coord2) (fe: \"W(0,0)\" )" << endl;
-        os << "To see:\n"
-              "        .    all possible commands type \"help\"\n"
-              "        .    all possible patches and their info type \"patches\"\n" << endl;
-        os << "This is what the IT departament came with so far:\n" << endl;
-        os << " what the letters mean:\n"
-              "         .   E - empty\n"
-              "         .   W - wall\n"
-              "         .   other letter - some super special patch you can google up (use: \"google\" + name of patch)\n"
-           << endl;
-        os << "After you are done, just type in \"done\" and the hackers might try to breach in.\n" << endl;
-    }
+    void ExplainPrepState();
 
     /** prints the result */
-    void PrintResult(ResultEnum gameResult) {
-        if (gameResult == ResultEnum::LOSE)
-            os << "You lost!" << endl;
-        else os << "Congrats! You won!" << endl;
-    }
+    void PrintResult(ResultEnum gameResult);
 
 
     void ClearBuffers() {
         //TODO: IMPLEMENT
     }
 
-    void PrintHelp(const string &name, const string &help) {
-        os << setw(12) << left << name << " -   " << help << endl;
-    }
 
     void PrintPatchInfo(const Patch &p) const {
         p.PrintInfo(os);
     }
 
-    void PrintBoardAttack(Board & board){
-        for (int i = 0; i < board.MaxX(); ++i) {
-            for (int j = 0; j < board.MaxY(); ++j) {
-                Object *o = board(i, j);
-                getColorOfObject(o);
-                os << clr << setw(3) << (o);
-                resetClr();
-            }
-            os << endl;
-        }
-
-        os << endl << endl;
-    }
+    void PrintBoardAttack(Board &board);
 
 };
 

@@ -12,9 +12,10 @@ ostream &Hotfix::SaveObject(ostream &out) {
     DirectionsToOut(out, movementDirection);
 }
 
-void Hotfix::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
+int Hotfix::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
     Coords *targetCoords = strategy->getTargetCoords(oldBoard, newBoard, startCoords);
-    if (targetCoords == nullptr) return;
-    strategy->execMove(oldBoard->At(startCoords), newBoard, *targetCoords);
+    if (targetCoords == nullptr) return 0;
+    strategy->execMove(oldBoard->At(startCoords), newBoard, oldBoard, startCoords, *targetCoords);
     delete targetCoords;
+    return 0;
 }
