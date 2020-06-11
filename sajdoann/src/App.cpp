@@ -15,7 +15,6 @@ void App::Greet() {
 int App::PrepLoop() {
     while (game.GameState() == State::PREPARATION) {
         interface.PrintBoardPrep(game.GameBoard());
-
         string command = interface.PromptCommand();
         bool found = false;
 
@@ -101,6 +100,6 @@ int App::Run() {
 }
 
 int App::AttackLoop() {
-    game.MoveLoop();
+    game.MoveLoop(interface);
     return 0;
 }

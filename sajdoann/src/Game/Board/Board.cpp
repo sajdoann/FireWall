@@ -18,3 +18,14 @@ void Board::Print() {
         cout << endl;
     }
 }
+
+void Board::ClearButPatches() {
+    for (int i = 0; i < MaxX(); ++i) {
+        for (int j = 0; j < MaxY(); ++j) {
+            Coords c(i, j);
+            if (!At(c)->isPatch())
+                setEmpty(c);
+
+        }
+    }
+}

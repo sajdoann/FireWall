@@ -43,6 +43,8 @@ public:
 
     bool isVirus() const { return false; }
 
+    virtual bool isPatch() const { return false; }
+
 
     friend ostream &operator<<(ostream &os, const Empty &empty) {
         os << "-";

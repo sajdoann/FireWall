@@ -17,20 +17,21 @@ class ScoreCounter {
 
 public:
     //TODO: implement this
-    ScoreCounter() {};
+    ScoreCounter() = default;
 
     /**sets the number of viruses*/
-    void setNumberOfViruses(const int &numberOfViruses) { this->numberOfViruses = numberOfViruses; }
+    void setNumberOfViruses(const int &numberOfViruses);
 
     /**returns number of viruses */
-    int NumberOfViruses() const { return numberOfViruses; }
+    int NumberOfViruses() const;
 
     /**returns how many viruses can get through wall and its still a win*/
-    int AcceptableLosses() const { return acceptableLosses; }
+    int AcceptableLosses() const;
 
     /**counts the result */
     ResultEnum GetResult() const;
 
 
 };
+
 

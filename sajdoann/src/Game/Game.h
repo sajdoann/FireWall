@@ -16,6 +16,7 @@
 #include "Movement/Movement.h"
 #include "VirusWave.h"
 #include "GameConstants.h"
+class Interface;
 
 using namespace std;
 
@@ -29,6 +30,7 @@ class Game {
     map<char, Virus *> viruses;
 
     int ram = 5;        //TODO: zapojit do třídy
+    int level = 0;
 
 public:
     Game();
@@ -63,16 +65,9 @@ public:
 
 
     //TODO: implement
-    bool MoveLoop();
+    bool MoveLoop(Interface anInterface);
 
-    VirusWave *createVirusWave() {
-
-        VirusWave *virusWave = new VirusWave();
-
-        Virus virus = Virus(*viruses.begin()->second);
-        virusWave->Insert(virus);
-        return virusWave;
-    }
+    VirusWave *createVirusWave();
 };
 
 

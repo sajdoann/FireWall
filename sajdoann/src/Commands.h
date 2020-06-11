@@ -129,11 +129,11 @@ public:
     function<CommandEndType(string, Game &, Interface &)> saveFunction() {
         return [](const string &, Game &g, Interface &i) {
 
-            Writer patchWriter("../sajdoann/saves/ahoj.txt");
+            Writer patchWriter("../sajdoann/Data/Saves/ahoj.txt");
             patchWriter.getHeading(*(g.Patches().begin()->second));
             patchWriter.writeToFile(g.Patches());
 
-            Writer VirusWriter("../sajdoann/saves/jak.txt");
+            Writer VirusWriter("../sajdoann/Data/Saves/jak.txt");
             VirusWriter.getHeading(*(g.Viruses().begin()->second));
             VirusWriter.writeToFile(g.Viruses());
 

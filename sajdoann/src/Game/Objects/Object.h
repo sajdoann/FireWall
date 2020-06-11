@@ -45,6 +45,8 @@ public:
 
     virtual bool isVirus() const = 0;
 
+    virtual bool isPatch() const = 0;
+
 
     friend std::ostream &operator<<(std::ostream &out, Object *object) {
         out << object->name;

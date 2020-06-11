@@ -34,11 +34,11 @@ public:
                 Coords coords(i, j);
                 virusPoints += object->Attack(board, newBoard, coords);
             }
-       }
+        }
 
         *board = newBoard;
-        interface.PrintBoardAttack(*board);
-        //this_thread::sleep_for(1s);
+        //interface.PrintBoardAttack(*board);
+        // interface.PrintBoardPrep(*board);
         return virusPoints;
     }
 

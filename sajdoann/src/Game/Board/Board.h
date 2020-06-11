@@ -42,8 +42,6 @@ public:
         for (; c != coords.end(); ++c) {
             Patch defaultPatch((*(c->second)));
             InsertPatch(defaultPatch, c->first);
-            //delete defaultPatch;
-            //defaultPatch = nullptr;
         }
     }
 
@@ -111,7 +109,6 @@ public:
         delete tiles[coords.X()][coords.Y()];
         tiles[coords.X()][coords.Y()] = nullptr;
         tiles[coords.X()][coords.Y()] = new Patch(patch);
-        //*((Patch *) tiles[coords.X()][coords.Y()]) = patch;
     }
 
     /**
@@ -167,6 +164,11 @@ public:
             }
         }
     }
+
+    /**
+     * clears all objects but patches
+     */
+    void ClearButPatches();
 
     void Print();
 };

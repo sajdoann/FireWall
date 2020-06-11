@@ -5,7 +5,7 @@
 
 #pragma once
 
-const int MOVEMENT_LOOP_MAX = 5;
+const int MOVEMENT_LOOP_MAX = 15;
 const int BOARD_MAX_Y = 150;
 const int BOARD_MAX_X = 150;
 

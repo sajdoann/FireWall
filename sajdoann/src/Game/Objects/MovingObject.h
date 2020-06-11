@@ -42,6 +42,8 @@ public:
 
     bool isEmpty() const { return false; }
 
+    virtual bool isPatch() const { return false; };
+
     MovementType MovementTypeObject() const { return movementType; }
 
     MovementDirection MovementDirectionObject() const { return movementDirection; }

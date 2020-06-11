@@ -7,27 +7,83 @@
 
 #include <queue>
 #include <vector>
-#include <algorithm>
+//#include <algorithm>
 #include "Objects/Virus.h"
+#include <cmath>
+#include <random>
 
 using namespace std;
 
 class VirusWave {
 private:
-    int count = 0;
-    queue<Virus> virusQueue;
+    int level = 0;
+    vector<Virus *> virusQueue;
+    default_random_engine e1 = CreateDevice();
+
+
+    int MyRand(int min, int max) {
+        std::uniform_int_distribution<int> dist(min, max);
+        return dist(e1);
+    }
+
+    int CountMax() {
+        //todo: alter
+        if (level < 3) return 1;
+        return 1;
+    }
+
+    default_random_engine CreateDevice() {
+        random_device r;
+        default_random_engine e1(r());
+        return e1;
+    }
 
 public:
-    VirusWave(std::queue<Virus> viruses) : count(viruses.size()), virusQueue(viruses) {
-    }
-
-    void Insert(Virus &virus) {
-        virusQueue.push(move(virus));
-    }
-
-    //no free of viruses it destructs in Game viruses map
+    //no need to free viruses - it destructs in Game viruses map
     ~VirusWave() = default;
 
     VirusWave() = default;
+
+    VirusWave(int level, map<char, Virus *> viruses) : level(level) {
+        for (auto i = viruses.begin(); i != viruses.end(); ++i) {
+            virusQueue.push_back(i->second);
+        }
+
+        //virusQueue.push(viruses.begin()->second);
+        //todo: generate vawe
+    }
+
+    queue<pair<Virus *, Coords >> GeneateWave(int maxX, int maxY) {
+        queue<pair<Virus *, Coords >> wave;
+        int max = CountMax();
+
+        int waveCount = MyRand(0, max);
+        uniform_int_distribution<int> distVirusType(0, virusQueue.size() - 1);
+        uniform_int_distribution<int> distCoords(0, maxX - 1);
+
+        for (int i = 0; i < waveCount; ++i) {
+            int virusType = MyRand(0, virusQueue.size() - 1);
+            int coordsX = MyRand(0, maxX - 1);
+            wave.push({virusQueue[virusType], Coords(coordsX, maxY - 1)});
+        }
+
+        return wave;
+    }
+
+    void Insert(Virus &virus) {
+        //virusQueue.push(virus);
+    }
+
+    bool getNext(Virus *v) {
+        if (virusQueue.empty())
+            return false;
+        *v = *(virusQueue.front());
+        return true;
+    }
+
+    void RemoveFirst() {
+        virusQueue.pop_back();
+    }
+
 };
 

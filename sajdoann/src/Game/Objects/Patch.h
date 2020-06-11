@@ -68,6 +68,8 @@ public:
 
     virtual bool isVirus() const { return false; };
 
+    virtual bool isPatch() const { return true; };
+
     /** returns true if patch can shoot, if movement none -> false */
     virtual bool canShoot() const { return movementType != MovementType::NONE; }
 

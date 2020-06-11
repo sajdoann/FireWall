@@ -64,3 +64,26 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
     return 0;
 
 }
+
+Coords *Strategy::getMovedCoords(const Coords &startCoords) {
+    if (movementDirection == MovementDirection::RIGHT) {
+        return new Coords(startCoords.X(), startCoords.Y() + 1);
+    }
+    if (movementDirection == MovementDirection::LEFT) {
+        return new Coords(startCoords.X(), startCoords.Y() - 1);
+    }
+    if (movementDirection == MovementDirection::DOWN) {
+        return new Coords(startCoords.X() + 1, startCoords.Y());
+    }
+    if (movementDirection == MovementDirection::UP) {
+        return new Coords(startCoords.X() - 1, startCoords.Y());
+    }
+    if (movementDirection == MovementDirection::DIAGONAL_U) {
+        return new Coords(startCoords.X() - 1, startCoords.Y() + 1);
+    }
+    if (movementDirection == MovementDirection::DIAGONAL_D) {
+        return new Coords(startCoords.X() + 1, startCoords.Y() + 1);
+    }
+    //TODO: OSETRIT DEFAULT
+    return nullptr;
+}

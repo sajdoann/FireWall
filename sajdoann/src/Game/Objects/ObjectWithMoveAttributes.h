@@ -43,6 +43,8 @@ public:
 
     virtual bool isVirus() const = 0;
 
+    virtual bool isPatch() const = 0;
+
     istream &MovementFromIn(istream &in, MovementType &value) {
         string a;
         in >> a;

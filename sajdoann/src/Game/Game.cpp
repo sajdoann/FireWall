@@ -60,17 +60,21 @@ bool Game::isPatch(char PatchName) {
 
 Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 
-bool Game::MoveLoop() {
-    // VirusWave vw = createVirusWave();
+bool Game::MoveLoop(Interface anInterface) {
+    VirusWave *virusWave = createVirusWave();
     int virusPoints = 0;
     for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
         virusPoints = 0;
-        if (i == 0) {
-            //TODO: vawe  isert logic for viruses
-            Virus virus = Virus(*viruses.begin()->second);
-            gameBoard.InsertObject(virus, Coords(gameBoard.MaxX() - 1, gameBoard.MaxY() - 1));
-            //gameBoard.Print();
+        queue<pair<Virus *, Coords>> vw = virusWave->GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
+        while (!vw.empty()) {
+            pair<Virus *, Coords> a = vw.front();
+            if (gameBoard.At(a.second)->isEmpty()) {
+                gameBoard.InsertObject(*(a.first), a.second);
+            }
+            vw.pop();
+            anInterface.PrintBoardPrep(gameBoard);
         }
+
         virusPoints += movement.MoveAll();
         ram -= virusPoints;
         if (ram <= 0) {
@@ -79,7 +83,20 @@ bool Game::MoveLoop() {
             break;
         }
 
+        anInterface.PrintBoardPrep(gameBoard);
+        cout << "ram: " << ram << endl;
+        this_thread::sleep_for(0.3s);
     }
+    gameBoard.ClearButPatches();
+    ++level;    // game goes to bigger lvl
+    delete virusWave;
+}
 
-    cout << "ram: " << ram << endl;
+VirusWave *Game::createVirusWave() {
+
+    VirusWave *virusWave = new VirusWave(level, viruses);
+
+    /*Virus virus = Virus(*viruses.begin()->second);
+    virusWave->Insert(virus);*/
+    return virusWave;
 }
