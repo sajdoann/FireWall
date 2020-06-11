@@ -61,11 +61,12 @@ bool Game::isPatch(char PatchName) {
 Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 
 bool Game::MoveLoop(Interface anInterface) {
-    VirusWave *virusWave = createVirusWave();
+    VirusWave virusWave(level, viruses);
+
     int virusPoints = 0;
     for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
         virusPoints = 0;
-        queue<pair<Virus *, Coords>> vw = virusWave->GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
+        queue<pair<Virus *, Coords>> vw = virusWave.GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
         while (!vw.empty()) {
             pair<Virus *, Coords> a = vw.front();
             if (gameBoard.At(a.second)->isEmpty()) {
@@ -89,14 +90,5 @@ bool Game::MoveLoop(Interface anInterface) {
     }
     gameBoard.ClearButPatches();
     ++level;    // game goes to bigger lvl
-    delete virusWave;
 }
 
-VirusWave *Game::createVirusWave() {
-
-    VirusWave *virusWave = new VirusWave(level, viruses);
-
-    /*Virus virus = Virus(*viruses.begin()->second);
-    virusWave->Insert(virus);*/
-    return virusWave;
-}
