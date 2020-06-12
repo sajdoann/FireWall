@@ -7,4 +7,3 @@ Z         5     FRONT     LEFT
 W         15    NONE      UP
 
 R         50    RAND      LEFT
-

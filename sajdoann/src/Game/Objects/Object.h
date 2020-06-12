@@ -32,6 +32,10 @@ public:
     //print object in game
     //virtual ostream &Print(ostream &out) = 0;
 
+    char Name() {
+        return name;
+    }
+
     virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
 
 

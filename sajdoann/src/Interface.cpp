@@ -112,3 +112,40 @@ void Interface::PrintBoardAttack(Board &board) {
 
     os << endl << endl;
 }
+
+string Interface::PromptSaveFolder() {
+
+    string s;
+    while (true) {
+        os << "Enter name to save the game: " << endl;
+        in >> s;
+        bool isOK = true;
+        if (s.empty()) continue;
+        for (int i = 0; i < s.size(); ++i) {
+            if (!isdigit(s[i]) && !isalpha(s[i])) {
+                isOK = false;
+                break;
+            }
+        }
+        if (isOK) break;
+    }
+    s = '/' + s;
+    return s;
+}
+
+string &Interface::chooseFile(vector<string> filenames) {
+    os << "Saved games:" << endl;
+    for (int i = 0; i < filenames.size(); ++i) {
+        os << i << setw(15) << filenames[i];
+    }
+
+    os << "Write number of game you want to load:" << endl;
+    int choosed;
+    while (in >> choosed) {
+        if (choosed < filenames.size() && choosed >= 0) {
+            break;
+        }
+    }
+    return filenames[choosed];
+}
+

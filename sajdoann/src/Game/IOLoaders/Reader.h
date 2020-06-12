@@ -11,7 +11,7 @@
 #include <map>
 #include "../Objects/Patch.h"
 #include "../Objects/Virus.h"
-#include "../../Game_Constants.h"
+#include "../GameConstants.h"
 
 using namespace std;
 
@@ -28,7 +28,7 @@ public:
     explicit Reader(const string &filename) : filename(filename) {
         ifs.open(filename);
         if (!ifs)
-            throw runtime_error("filename:" + filename + "not found");
+            throw runtime_error(filename + " not found");
     }
 
     //TODO: exeptions for invalid input
@@ -57,7 +57,8 @@ public:
         }
 
         if (!ifs.eof()) {
-            throw runtime_error(filename + " - Error loading input from this file.");
+            string s = "Error loading input from this file: " + filename;
+            throw runtime_error(s);
         }
 
         delete object;
@@ -75,12 +76,16 @@ public:
                     to_string(my));
 
         int x, y;
+        char br1, br2, sep;
         char c;
-        while (ifs >> x >> y >> c) {
+        while (ifs >> br1 >> x >> sep >> y >> br2 >> c) {
+            if (br1 != '(' || sep != ',' || br2 != ')')
+                throw invalid_argument("Wrong format in board input.");
+
             Coords coord(x, y);
 
             if (coord.X() >= mx || coord.Y() >= my || coord.X() < 0 || coord.Y() < 0)
-                throw invalid_argument("Coords " + coord.toStr() + "are out of board.");
+                throw invalid_argument("Coords " + coord.toStr() + " are out of board.");
 
             if (coords.find(coord) == coords.end()) {
                 coords.insert({coord, c});

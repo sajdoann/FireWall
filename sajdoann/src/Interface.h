@@ -97,5 +97,9 @@ public:
 
     void PrintBoardAttack(Board &board);
 
+    string PromptSaveFolder();
+
+    string &chooseFile(vector<string> filenames);
+
 };
 

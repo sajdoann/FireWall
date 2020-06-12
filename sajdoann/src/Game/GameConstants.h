@@ -4,8 +4,19 @@
 */
 
 #pragma once
+/**
+ * class that has all constants needed for game
+ */
 
-const int MOVEMENT_LOOP_MAX = 15;
-const int BOARD_MAX_Y = 150;
-const int BOARD_MAX_X = 150;
+/** how many times virus move during attack stage */
+const int MOVEMENT_LOOP_MAX = 5;
 
+/** board limit measures */
+const static int MAX_BOARD_MEASURE = 100;
+const static int MIN_BOARD_MEASURE = 1;
+
+/** how many viruses can espace firewall, hence come through wall */
+const static int RAM_CONSTANT = 5;
+
+const static char *DEFAULT_PATH = "../sajdoann/Data/Default";
+const static char *SAVES_PATH = "../sajdoann/Data/Saves";

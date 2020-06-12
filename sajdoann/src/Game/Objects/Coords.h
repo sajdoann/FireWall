@@ -38,7 +38,7 @@ public:
         this->y = y;
     }
 
-    std::string toStr() const { return std::to_string(x) + ", " + std::to_string(y); }
+    std::string toStr() const { return "(" + std::to_string(x) + ", " + std::to_string(y) + ")"; }
 
     friend int operator==(const Coords &a, const Coords &b) {
         return a.x == b.x && a.y == b.y;

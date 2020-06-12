@@ -6,17 +6,17 @@
 #pragma once
 
 #include <string>
+#include <dirent.h>
+//#include <filesystem>          //TODO: -lstdc++fs to flags
 #include "Command.h"
 #include "Game/IOLoaders/Writer.h"
 #include "constants.h"
 
 using namespace std;
 
-/**
- * remembers all commands that can be executed during game
- */
 class Commands {
     map<string, Command> commands;
+
 
 public:
 
@@ -49,6 +49,9 @@ public:
         //save game
         Command save = Save();
         commands.insert({SAVE_NAME, save});
+
+        Command load = Load();
+        commands.insert({LOAD_NAME, load});
 
     }
 
@@ -120,29 +123,77 @@ public:
     }
 
 
+    /**
+     * saves the game when called
+     * @return command to save the game
+     */
     Command Save() {
         return Command(SAVE_NAME,
                        SAVE_HELP,
                        saveFunction());
     }
 
+    /**
+     * makes directory (asks user for name) and saves all neadable data for game to it
+     * @return function to execute for saving
+     */
     function<CommandEndType(string, Game &, Interface &)> saveFunction() {
         return [](const string &, Game &g, Interface &i) {
+            string name = SAVES_PATH + i.PromptSaveFolder();
 
-            Writer patchWriter("../sajdoann/Data/Saves/ahoj.txt");
-            patchWriter.getHeading(*(g.Patches().begin()->second));
-            patchWriter.writeToFile(g.Patches());
+            DIR *dir = opendir(name.c_str());
+            if (dir == nullptr) {
+                system(("mkdir " + name).c_str());
+            }
+            closedir(dir);
 
-            Writer VirusWriter("../sajdoann/Data/Saves/jak.txt");
-            VirusWriter.getHeading(*(g.Viruses().begin()->second));
-            VirusWriter.writeToFile(g.Viruses());
-
-
+            g.SaveGame(name);
             return CommandEndType::VALID;
 
         };
     }
 
+
+    function<CommandEndType(string, Game &g, Interface &)> loadFunction() {
+        return [](const string &, Game &g, Interface &anInterface) {
+            vector<string> fileNames;                                   //will contain filenames from save directory
+            struct dirent *entry;
+            DIR *dir = opendir(SAVES_PATH);
+            if (dir != nullptr) {
+                while ((entry = readdir(dir))) {                         //loads all files in dir
+                    if (entry->d_type != DT_DIR) continue;                // not directory -> continue
+
+                    bool isReadable = true;                              //contains only allowed chars
+                    for (auto i: entry->d_name) {
+                        if (!isdigit(i) && !isalpha(i) && i != '\0') {
+                            isReadable = false;
+                            break;
+                        }
+                        if (i == '\0') break;
+                    }
+
+                    if (isReadable)
+                        fileNames.push_back(entry->d_name);
+                }
+            }
+
+            closedir(dir);
+
+            string s = anInterface.chooseFile(fileNames);
+            // g.LoadGame();
+
+            return CommandEndType::DONE;
+
+        };
+    }
+
+    /**
+     * prints all saved game and user picks the game to load
+     * @return
+     */
+    Command Load() {
+        return Command(LOAD_NAME, LOAD_HELP, loadFunction());
+    }
 
 };
 

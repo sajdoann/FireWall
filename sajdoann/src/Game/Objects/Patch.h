@@ -123,15 +123,15 @@ public:
 
     /** prints just the name representation of object */
     ostream &SaveObject(ostream &os) override {
-        os << name << setw(10) << price << setw(10);
+        os << name << setw(15) << price << setw(15);
         MovementToOut(os, movementType);
-        os << setw(10);
+        os << setw(15);
         DirectionsToOut(os, movementDirection);
         return os;
     }
 
     static ostream &Heading(ostream &os) {
-        return os << "NAME" << setw(10) << "PRICE" << setw(10) << "MOVEMENT" << setw(10)
+        return os << "NAME" << setw(15) << "PRICE" << setw(15) << "MOVEMENT" << setw(15)
                   << "DIRECTION" << endl;
     }
 

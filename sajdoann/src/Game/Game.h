@@ -29,8 +29,9 @@ class Game {
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
-    int ram = 5;        //TODO: zapojit do třídy
+    int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
     int level = 0;
+    int money = 50;
 
 public:
     Game();
@@ -55,7 +56,9 @@ public:
     map<char, Patch *> Patches() const { return patches; }
 
 
-    void LoadGame();
+    void LoadGame(const string &directoryPath);
+
+    void SaveGame(const string &folderName);
 
     void InsertPatch(const char patchType, const Coords &coords);
 

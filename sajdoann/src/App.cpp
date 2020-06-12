@@ -5,6 +5,7 @@
 
 #include <string>
 #include <regex>
+#include "Game/GameConstants.h"
 #include "App.h"
 
 void App::Greet() {
@@ -20,7 +21,8 @@ int App::PrepLoop() {
 
         for (auto &com : commands.CommandsMap()) {
             //makes regex from com name
-            regex c(com.first);
+            regex c("[ ]*" + com.first + "[ ]*",
+                    regex_constants::icase);   //spaces before after allowed + case insensitive
 
             //if command matches with regex key in map of commands
             if (regex_match(command, c)) {
@@ -51,11 +53,15 @@ int App::PrepLoop() {
 
 int App::Run() {
 
-    /*try{*/
-    game.LoadGame();
-    /*}catch(invalid_argument invalid_argument){
-         invalid_argument.what();
-     }*/
+    try {
+        game.LoadGame(DEFAULT_PATH);
+    } catch (invalid_argument &invalid_argument) {
+        cerr << invalid_argument.what();
+        return 1;
+    } catch (runtime_error &runtime_error) {
+        cerr << runtime_error.what();
+        return 2;
+    }
 
     bool firstPrep = true;
     game.GameState(State::ATTACK);
