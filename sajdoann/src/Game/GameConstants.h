@@ -9,7 +9,7 @@
  */
 
 /** how many times virus move during attack stage */
-const int MOVEMENT_LOOP_MAX = 40;
+const int MOVEMENT_LOOP_MAX = 60;
 
 /** board limit measures */
 const static int MAX_BOARD_MEASURE = 100;

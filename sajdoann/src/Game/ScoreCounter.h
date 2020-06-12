@@ -6,14 +6,18 @@
 #pragma once
 
 #include "ResultEnum.h"
+#include "GameConstants.h"
 
 /**
  * counts score based on how many viruses survive through the wall
  */
 class ScoreCounter {
-    int numberOfViruses = 0;
-    int acceptableLosses = 0;
-    int actualLoss = 0;
+    ResultEnum gameResult = ResultEnum::UNKNOWN;
+    int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
+    int ramStart = RAM_CONSTANT;
+    int level = 0;
+    int money = 50;
+
 
 public:
     //TODO: implement this

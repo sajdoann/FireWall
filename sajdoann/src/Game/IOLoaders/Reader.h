@@ -12,6 +12,7 @@
 #include "../Objects/Patch.h"
 #include "../Objects/Virus.h"
 #include "../GameConstants.h"
+#include "../ScoreCounter.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ using namespace std;
  */
 class Reader {
 protected:
-    ifstream ifs;
+    ifstream in;
     const string filename;
 
     /**
@@ -39,8 +40,8 @@ protected:
 public:
 
     explicit Reader(const string &filename) : filename(filename) {
-        ifs.open(filename);
-        if (!ifs)
+        in.open(filename);
+        if (!in)
             throw runtime_error(filename + " not found");
     }
 
@@ -51,12 +52,12 @@ public:
     template<typename StillObj>
     std::map<char, StillObj *> ReadStillObjects() {
         string s;
-        getline(ifs, s);
+        getline(in, s);
 
         std::map<char, StillObj *> objects;
 
         StillObj *object = new StillObj();
-        while (ifs >> (*object)) {
+        while (in >> (*object)) {
             bool found = objects.find(object->Name()) != objects.end();
             if (!found)
                 objects.insert({object->Name(), object});
@@ -72,14 +73,14 @@ public:
         }
 
         delete object;
-        check_eof(ifs.eof());
+        check_eof(in.eof());
         return objects;
     }
 
     map<Coords, char> ReadBoard(int &mx, int &my) {
         map<Coords, char> coords;
 
-        ifs >> mx >> my;
+        in >> mx >> my;
         if (mx < MIN_BOARD_MEASURE || my < MIN_BOARD_MEASURE || mx > MAX_BOARD_MEASURE || my > MAX_BOARD_MEASURE)
             throw invalid_argument(
                     "Board does not fit max/min specifications. Measures input was :" + to_string(mx) + " " +
@@ -88,7 +89,7 @@ public:
         int x, y;
         char br1, br2, sep;
         char c;
-        while (ifs >> br1 >> x >> sep >> y >> br2 >> c) {
+        while (in >> br1 >> x >> sep >> y >> br2 >> c) {
             if (br1 != '(' || sep != ',' || br2 != ')')
                 throw invalid_argument("Wrong format in board input.");
 
@@ -104,11 +105,23 @@ public:
             throw invalid_argument("Coordinations " + coord.toStr() + " already taken on this board.");
         }
 
-        check_eof(ifs.eof());
+        check_eof(in.eof());
 
         return coords;
     }
 
+
+    ScoreCounter &ReadScore() {
+        string name, variable;
+        in >> name >> variable;
+        if (name != "gameState:")
+            throw invalid_argument("not provided/corrupted \'gameState:\' headline");
+        in >> name >> variable;
+        if (name != "gameState:")
+            throw invalid_argument("not provided/corrupted \'gameResult:\' headline");
+
+
+    }
 };
 
 

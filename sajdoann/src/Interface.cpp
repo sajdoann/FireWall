@@ -53,12 +53,16 @@ void Interface::NumberLinePrep(int max) const {
 void Interface::getColorOfObject(Object *o) const {
     if (o->isEmpty()) {
         clr = colorClass.Color(ColorClass::CYAN);
-    }
-    if (!o->isMovingObject() && !o->isEmpty()) {
+    } else if (o->isPatch()) {
         if (((Patch *) o)->canShoot())
             clr = colorClass.Color(ColorClass::BLUE);
         else
             clr = colorClass.Color(ColorClass::RED);
+    } else if (o->isVirus()) {
+        clr = colorClass.Color(ColorClass::VIRUS);
+
+    } else {
+        clr = colorClass.Color(ColorClass::HOTFIX);
     }
 }
 
