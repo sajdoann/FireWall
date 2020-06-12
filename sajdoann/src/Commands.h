@@ -25,33 +25,33 @@ public:
     }
 
     void CreateCommands() {
-        //TODO place const chars in separate file
-        //exit command
         Command exit = Exit();
         commands.insert({EXIT_NAME, exit});
 
-        //placePatch command, it places the patch
         Command placePatch = PlacePatch();
         commands.insert({PATCH_REGEX, placePatch});
 
-        //put online (done)
         Command done = Done();
         commands.insert({DONE_NAME, done});
 
-        //help
         Command help = Help();
         commands.insert({HELP_NAME, help});
 
-        //google patch
         Command google = Google();
         commands.insert({GOOGLE_REGEX, google});
 
-        //save game
         Command save = Save();
         commands.insert({SAVE_NAME, save});
 
         Command load = Load();
         commands.insert({LOAD_NAME, load});
+
+        Command patches = Patches();
+        commands.insert({PATCHES_NAME, patches});
+
+        Command showBoard = ShowBoard();
+        commands.insert({SHOW_NAME, showBoard});
+
 
     }
 
@@ -104,20 +104,22 @@ public:
     Command Google() {
         return Command(GOOGLE_NAME, GOOGLE_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
-                           stringstream s(userInput);
+                           const char *strInput = userInput.c_str();
+                           stringstream s(strInput);
                            string google;
                            s >> google;
                            char c;
                            s >> c;
                            c = toupper(c);
 
-                           if (!g.isPatch(c)) {
-                               return CommandEndType::INVALID;
+                           if (g.isPatch(c)) {
+                               i.PrintObjectInfo(g.getPatch(c));
+                           } else if (g.isVirus(c)) {
+                               i.PrintObjectInfo(g.getVirus(c));
                            } else {
-                               i.PrintPatchInfo(g.getPatch(c));
-                               return CommandEndType::VALID;
+                               i.Print(c + NOT_AN_OBJECT);
                            }
-
+                           return CommandEndType::VALID;
                        }
         );
     }
@@ -179,8 +181,9 @@ public:
 
             closedir(dir);
 
-            string s = anInterface.chooseFile(fileNames);
-            // g.LoadGame();
+            string s = SAVES_PATH;
+            s = s + "/" + anInterface.chooseFile(fileNames);
+            g.LoadGame(s);
 
             return CommandEndType::DONE;
 
@@ -195,5 +198,24 @@ public:
         return Command(LOAD_NAME, LOAD_HELP, loadFunction());
     }
 
+    Command Patches() {
+        return Command(PATCHES_NAME, PATCHES_HELP,
+                       [](const string &userInput, Game &g, Interface &i) {
+                           for (auto iterP : g.Patches()) {
+                               i.PrintObjectInfo(*iterP.second);
+                           }
+                           return CommandEndType::DONE;
+                       }
+        );
+    }
+
+    Command ShowBoard() {
+        return Command(SHOW_NAME, SHOW_HELP,
+                       [](const string &userInput, Game &g, Interface &i) {
+                           i.PrintBoardPrep(g.GameBoard());
+                           return CommandEndType::DONE;
+                       }
+        );
+    }
 };
 

@@ -50,6 +50,8 @@ public:
     /** asks the user to enter command */
     string PromptCommand() const;
 
+    void Print(const string &s) { os << s << endl; }
+
     /** suggests to use help to print commands and their syntax */
     void HelpAdvertiser();
 
@@ -62,7 +64,7 @@ public:
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
         //TODO: in clion term variable not found -> not functioning (on other sys should not be a prob)
-        system("clear");
+        //system("clear");
         //os << string(100, '\n');
     }
 
@@ -91,8 +93,8 @@ public:
     }
 
 
-    void PrintPatchInfo(const Patch &p) const {
-        p.PrintInfo(os);
+    void PrintObjectInfo(const Object &object) const {
+        object.PrintInfo(os);
     }
 
     void PrintBoardAttack(Board &board);
@@ -100,6 +102,8 @@ public:
     string PromptSaveFolder();
 
     string &chooseFile(vector<string> filenames);
+
+    void PrintRam(int ram, int startRam) const;
 
 };
 

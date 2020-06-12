@@ -23,6 +23,19 @@ protected:
     ifstream ifs;
     const string filename;
 
+    /**
+     * check if loading ends with eof if not throws invalid argument exception
+     * @param endsWithEof - bool that says if file ends with eof
+     */
+    void check_eof(bool endsWithEof) {
+        if (endsWithEof)
+            return;
+
+        string str = "Error loading input from this file: " + filename + " wrong file format.";
+        throw invalid_argument(str);
+
+    }
+
 public:
 
     explicit Reader(const string &filename) : filename(filename) {
@@ -30,6 +43,8 @@ public:
         if (!ifs)
             throw runtime_error(filename + " not found");
     }
+
+    virtual ~Reader() = default;
 
     //TODO: exeptions for invalid input
 
@@ -56,13 +71,8 @@ public:
 
         }
 
-        if (!ifs.eof()) {
-            string s = "Error loading input from this file: " + filename;
-            throw runtime_error(s);
-        }
-
         delete object;
-
+        check_eof(ifs.eof());
         return objects;
     }
 
@@ -91,12 +101,14 @@ public:
                 coords.insert({coord, c});
                 continue;
             }
-            throw invalid_argument("coordinations " + coord.toStr() + " already taken on this board");
+            throw invalid_argument("Coordinations " + coord.toStr() + " already taken on this board.");
         }
+
+        check_eof(ifs.eof());
+
         return coords;
     }
 
-    virtual ~Reader() = default;
 };
 
 

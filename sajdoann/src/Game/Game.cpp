@@ -9,14 +9,39 @@
 #include <dirent.h>
 #include "GameConstants.h"
 
+Game::Game() : gameBoard(), movement(&gameBoard) {
+}
+
+Game::~Game() {
+    free_patches_and_viruses();
+}
+
 void Game::LoadGame(const string &directoryPath) {
+    free_patches_and_viruses();
+    read_patches_and_viruses(directoryPath);
+    read_gameBoard(directoryPath);
+}
+
+
+void Game::free_patches_and_viruses() {
+    for (auto p : patches) {
+        delete p.second;
+    }
+    for (auto v : viruses) {
+        delete v.second;
+    }
+}
+
+void Game::read_patches_and_viruses(const string &directoryPath) {
     //TODO: invalid inputs
     Reader patchReader(directoryPath + "/patches.txt");
     patches = patchReader.ReadStillObjects<Patch>();
 
     Reader virusReader(directoryPath + "/viruses.txt");
     viruses = virusReader.ReadStillObjects<Virus>();
+}
 
+void Game::read_gameBoard(const string &directoryPath) {
     Reader boardReader(directoryPath + "/board.txt");
     int maxX, maxY;
 
@@ -40,17 +65,6 @@ void Game::LoadGame(const string &directoryPath) {
     gameBoard = b;
 }
 
-Game::Game() : scoreCounter(ScoreCounter()), gameBoard(), movement(&gameBoard) {
-}
-
-Game::~Game() {
-    for (auto p : patches) {
-        delete p.second;
-    }
-    for (auto v : viruses) {
-        delete v.second;
-    }
-}
 
 void Game::InsertPatch(const char patchType, const Coords &coords) {
     auto it = patches.find(patchType);
@@ -61,9 +75,16 @@ bool Game::isPatch(char PatchName) {
     return patches.find(PatchName) != patches.end();
 }
 
+bool Game::isVirus(char VirusName) {
+    return viruses.find(VirusName) != viruses.end();
+}
+
 Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 
-bool Game::MoveLoop(Interface anInterface) {
+Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
+
+
+bool Game::MoveLoop(const Interface &anInterface) {
     VirusWave virusWave(level, viruses);
 
     int virusPoints = 0;
@@ -88,28 +109,34 @@ bool Game::MoveLoop(Interface anInterface) {
         }
 
         anInterface.PrintBoardPrep(gameBoard);
-        cout << "ram: " << ram << endl;
+        anInterface.PrintRam(ram, ramStart);
         this_thread::sleep_for(0.3s);
     }
     gameBoard.ClearButPatches();
     ++level;    // game goes to bigger lvl
 }
 
-void Game::SaveGame(const string &folderName) {
+void Game::SaveGame(const string &directoryPath) {
+    save_patches_and_viruses(directoryPath);
+    save_gameBoard(directoryPath);
+}
 
-
-    Writer patchWriter(folderName + "/patches.txt");
+void Game::save_patches_and_viruses(const string &directoryPath) const {
+    Writer patchWriter(directoryPath + "/patches.txt");
     patchWriter.getHeading(*(Patches().begin()->second));
     patchWriter.writeStillObjectsFromMap(Patches());
     patchWriter.Close();
 
-    Writer VirusWriter(folderName + "/viruses.txt");
+    Writer VirusWriter(directoryPath + "/viruses.txt");
     VirusWriter.getHeading(*(Viruses().begin()->second));
     VirusWriter.writeStillObjectsFromMap(Viruses());
     VirusWriter.Close();
-
-    Writer GameWriter(folderName + "/board.txt");
-    GameWriter.writeBoard(gameBoard);
-    GameWriter.Close();
 }
+
+void Game::save_gameBoard(const string &directoryPath) {
+    Writer BoardWriter(directoryPath + "/board.txt");
+    BoardWriter.writeBoard(gameBoard);
+    BoardWriter.Close();
+}
+
 

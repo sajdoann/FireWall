@@ -15,7 +15,7 @@ void App::Greet() {
 
 int App::PrepLoop() {
     while (game.GameState() == State::PREPARATION) {
-        interface.PrintBoardPrep(game.GameBoard());
+       // interface.PrintBoardPrep(game.GameBoard());
         string command = interface.PromptCommand();
         bool found = false;
 
@@ -28,7 +28,7 @@ int App::PrepLoop() {
             if (regex_match(command, c)) {
                 interface.ClearScreen();
 
-                //ececutes command
+                //executes command
                 CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
                 // finds out what to do next
                 switch (typeOfCommand) {
@@ -46,7 +46,8 @@ int App::PrepLoop() {
         }
 
         // no command was found, suggest to use help
-        if (!found) interface.HelpAdvertiser();
+        if (!found)
+            interface.HelpAdvertiser();
     }
     return 1;
 }
@@ -64,7 +65,7 @@ int App::Run() {
     }
 
     bool firstPrep = true;
-    game.GameState(State::ATTACK);
+    game.GameState(State::PREPARATION);
     while (true) {
         switch (game.GameState()) {
             case State::WELCOME: {
@@ -75,6 +76,7 @@ int App::Run() {
             case State::PREPARATION: {
                 if (firstPrep) {
                     interface.ExplainPrepState();
+                    interface.PrintBoardPrep(game.GameBoard());
                     firstPrep = false;
                 }
                 if (!PrepLoop()) return 0;

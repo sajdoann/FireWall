@@ -9,14 +9,15 @@
  */
 
 /** how many times virus move during attack stage */
-const int MOVEMENT_LOOP_MAX = 5;
+const int MOVEMENT_LOOP_MAX = 40;
 
 /** board limit measures */
 const static int MAX_BOARD_MEASURE = 100;
 const static int MIN_BOARD_MEASURE = 1;
 
 /** how many viruses can espace firewall, hence come through wall */
-const static int RAM_CONSTANT = 5;
+const static int RAM_CONSTANT = 20;
+const static int MAX_RAM_CONSTANT = 20;
 
 const static char *DEFAULT_PATH = "../sajdoann/Data/Default";
 const static char *SAVES_PATH = "../sajdoann/Data/Saves";

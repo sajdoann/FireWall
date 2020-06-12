@@ -4,6 +4,6 @@ D        12     FRONT     RIGHT
 Y         0     FRONT     DIAGONAL_U
 X        12     FRONT     DIAGONAL_D
 Z         5     FRONT     LEFT
-W         15    NONE      UP
+W         15    NONE
 
 R         50    RAND      LEFT

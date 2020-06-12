@@ -23,15 +23,27 @@ using namespace std;
 class Game {
     State gameState = State::WELCOME;
     ResultEnum gameResult = ResultEnum::UNKNOWN;
-    ScoreCounter scoreCounter;
+    //ScoreCounter scoreCounter;
     Board gameBoard;
     Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
     int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
+    int ramStart = RAM_CONSTANT;
     int level = 0;
     int money = 50;
+
+
+    void free_patches_and_viruses();
+
+    void read_patches_and_viruses(const string &directoryPath);
+
+    void read_gameBoard(const string &directoryPath);
+
+    void save_patches_and_viruses(const string &directoryPath) const;
+
+    void save_gameBoard(const string &directoryPath);
 
 public:
     Game();
@@ -58,19 +70,24 @@ public:
 
     void LoadGame(const string &directoryPath);
 
-    void SaveGame(const string &folderName);
+    void SaveGame(const string &directoryPath);
 
     void InsertPatch(const char patchType, const Coords &coords);
 
     bool isPatch(char PatchName);
 
+    bool isVirus(char VirusName);
+
     Patch &getPatch(const char c) const;
+
+    Virus &getVirus(const char c) const;
 
 
     //TODO: implement
-    bool MoveLoop(Interface anInterface);
+    bool MoveLoop(const Interface &anInterface);
 
     VirusWave *createVirusWave();
+
 };
 
 

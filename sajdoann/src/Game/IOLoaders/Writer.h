@@ -39,7 +39,7 @@ public:
         T::Heading(out);
     }
 
-    void writeBoard(Board b) {
+    void writeBoard(Board &b) {
         out << b.MaxX() << " " << b.MaxY() << endl;
         for (int i = 0; i < b.MaxX(); ++i) {
             for (int j = 0; j < b.MaxY(); ++j) {

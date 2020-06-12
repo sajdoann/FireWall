@@ -1,0 +1,4 @@
+gameState: WELCOME
+ramStart: 10
+ram: 10
+level: 0

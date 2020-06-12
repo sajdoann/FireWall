@@ -100,6 +100,7 @@ public:
             return in;
         in >> patch.price;
         patch.MovementFromIn(in, patch.movementType);
+        if (patch.movementType == NONE) return in;
         patch.DirectionFromIn(in, patch.movementDirection);
         return in;
     }
@@ -112,12 +113,14 @@ public:
 
     /** prints all available information for patches */
     ostream &PrintInfo(ostream &os) const override {
-        os << "name: " << name << " price: " << price << " movement: ";
+        os << "patch: " << name << " price: " << price << " movement: ";
         MovementToOut(os, movementType);
+
+        if (movementType == MovementType::NONE) return os << endl;
+
         os << " direction: ";
         DirectionsToOut(os, movementDirection);
-        os << endl;
-        return os;
+        return os << endl;
     }
 
 
@@ -126,6 +129,8 @@ public:
         os << name << setw(15) << price << setw(15);
         MovementToOut(os, movementType);
         os << setw(15);
+
+        if (movementType == MovementType::NONE) return os << endl;
         DirectionsToOut(os, movementDirection);
         return os;
     }

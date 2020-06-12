@@ -3,6 +3,9 @@
 * @date 5/4/2020
 */
 
+#include <cfloat>
+#include <cmath>
+
 #include "Interface.h"
 #include "Interface_Constants.h"
 
@@ -91,6 +94,8 @@ void Interface::InvalidMove() const {
 
 void Interface::ExplainPrepState() {
     os << EXPLANATION << endl;
+    string s;
+    getline(in, s);
 }
 
 void Interface::PrintResult(ResultEnum gameResult) {
@@ -136,7 +141,7 @@ string Interface::PromptSaveFolder() {
 string &Interface::chooseFile(vector<string> filenames) {
     os << "Saved games:" << endl;
     for (int i = 0; i < filenames.size(); ++i) {
-        os << i << setw(15) << filenames[i];
+        os << i << setw(15) << filenames[i] << endl;
     }
 
     os << "Write number of game you want to load:" << endl;
@@ -147,5 +152,18 @@ string &Interface::chooseFile(vector<string> filenames) {
         }
     }
     return filenames[choosed];
+}
+
+void Interface::PrintRam(int ram, int startRam) const {
+    os << "Ram: ";
+    int poc = 11;
+    double skok = poc / (double) ram;
+    for (double i = skok; i - poc <= DBL_EPSILON * fabs(i + poc) * 10000; i += skok) {
+        cout << "\u001b[48;5;" + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
+    }
+    for (int j = startRam - ram; j > 0; --j) {
+        cout << "\u001b[48;5;" + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
+    }
+    os << " " << ram << endl;
 }
 

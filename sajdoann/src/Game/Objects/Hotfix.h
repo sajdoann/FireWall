@@ -78,7 +78,7 @@ public:
     }
 
     ostream &PrintInfo(ostream &os) const override {
-        os << "name :" << name << "movement: ";
+        os << "hotfix :" << name << "movement: ";
         MovementToOut(os, movementType);
         os << " direction: ";
         DirectionsToOut(os, movementDirection);

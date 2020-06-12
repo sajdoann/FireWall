@@ -70,13 +70,18 @@ public:
     }
 
     ostream &PrintInfo(ostream &out) const override {
-        return out << *this;
+        out << "virus: " << name << " lives: " << lives << " movement: ";
+        MovementToOut(out, movementType);
+        out << " directions: ";
+        DirectionsToOut(out, movementDirection);
+        return out << endl;
     }
 
 
     friend ostream &operator<<(ostream &out, const Virus &virus) {
-        out << virus.name << " " << virus.lives;
+        out << virus.name << " " << virus.lives << " ";
         virus.MovementToOut(out, virus.movementType);
+        out << " ";
         virus.DirectionsToOut(out, virus.movementDirection);
 
 
