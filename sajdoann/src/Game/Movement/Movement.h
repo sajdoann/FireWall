@@ -38,7 +38,7 @@ public:
 
         *board = newBoard;
         //interface.PrintBoardAttack(*board);
-        // interface.PrintBoardPrep(*board);
+        // interface.PrintBoard(*board);
         return virusPoints;
     }
 

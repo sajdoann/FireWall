@@ -13,6 +13,7 @@ string Interface::PromptCommand() const {
     string command;
     os << ENTER_COMMAND << endl;
     getline(in, command);
+
     return command;
 }
 
@@ -36,9 +37,7 @@ void Interface::GetPatchInfo(const string &s, char &patchName, Coords &coords) {
 }
 
 void Interface::Greet() {
-    os << GREETING << endl;
-    string s;
-    while (!(getline(in, s))) {}
+    PrintMessageWaitForEnter(GREETING);
     ClearScreen();
 }
 
@@ -73,7 +72,7 @@ void Interface::resetClr() const {
 }
 
 
-void Interface::PrintBoardPrep(Board &board) const {
+void Interface::PrintBoard(const Board &board) const {
     os << "patches:" << endl;
     NumberLinePrep(board.MaxY());
 
@@ -97,9 +96,7 @@ void Interface::InvalidMove() const {
 }
 
 void Interface::ExplainPrepState() {
-    os << EXPLANATION << endl;
-    string s;
-    getline(in, s);
+    PrintMessageWaitForEnter(EXPLANATION);
 }
 
 void Interface::PrintResult(ResultEnum gameResult) {
@@ -139,35 +136,81 @@ string Interface::PromptSaveFolder() {
         if (isOK) break;
     }
     s = '/' + s;
+    ClearBuffers();
     return s;
 }
 
-string &Interface::chooseFile(vector<string> filenames) {
+string Interface::chooseFile(vector<string> filenames) {
     os << "Saved games:" << endl;
-    for (int i = 0; i < filenames.size(); ++i) {
-        os << i << setw(15) << filenames[i] << endl;
+    for (int i = 1; i <= filenames.size(); ++i) {
+        os << i << setw(15) << " " << filenames[i - 1] << endl;
     }
 
     os << "Write number of game you want to load:" << endl;
-    int choosed;
-    while (in >> choosed) {
-        if (choosed < filenames.size() && choosed >= 0) {
+    int choosed = -1;
+    while (true) {
+        string s;
+        getline(in, s);
+        stringstream ss(s);
+        ss >> choosed;
+        if (choosed < filenames.size() && choosed > 0) {
             break;
+        } else {
+            os << "The input was incorrect. Write a number of the game you want to load." << endl;
         }
     }
-    return filenames[choosed];
+
+    ClearBuffers();
+    return filenames[choosed - 1];
 }
 
 void Interface::PrintRam(int ram, int startRam) const {
     os << "Ram: ";
+    if (ram == 0) {
+        PrintGreyRam(startRam);
+        os << " " << ram << endl;
+        return;
+    }
     int poc = 11;
     double skok = poc / (double) ram;
     for (double i = skok; i - poc <= DBL_EPSILON * fabs(i + poc) * 10000; i += skok) {
         cout << "\u001b[48;5;" + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
     }
-    for (int j = startRam - ram; j > 0; --j) {
-        cout << "\u001b[48;5;" + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
-    }
+    PrintGreyRam(startRam - ram);
     os << " " << ram << endl;
+}
+
+void Interface::PrintMessageWaitForEnter(const string &message) {
+    Print(message);
+    string s;
+    while (!(getline(in, s))) {}
+    ClearScreen();
+}
+
+void Interface::Print(const string &message) {
+    os << message << endl;
+}
+
+string Interface::AskWhichGame() {
+    Print(LOAD_OR_NEW);
+    string s;
+    getline(in, s);
+    return s;
+}
+
+void Interface::PrintGreyRam(int ram) const {
+    for (int j = ram; j > 0; --j) {
+        os << "\u001b[48;5;" + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
+    }
+}
+
+void Interface::PrintMoney(int money) const {
+    os << "Money: " << money;
+}
+
+void Interface::PrintGamePane(int ram, int startRam, int money, const Board &board) {
+    PrintBoard(board);
+    PrintRam(ram, startRam);
+    PrintMoney(money);
 }
 

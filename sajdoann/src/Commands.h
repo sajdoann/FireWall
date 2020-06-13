@@ -43,14 +43,17 @@ public:
         Command save = Save();
         commands.insert({SAVE_NAME, save});
 
-        Command load = Load();
-        commands.insert({LOAD_NAME, load});
+        // Command load = Load();
+        //commands.insert({LOAD_NAME, load});
 
         Command patches = Patches();
         commands.insert({PATCHES_NAME, patches});
 
         Command showBoard = ShowBoard();
         commands.insert({SHOW_NAME, showBoard});
+
+        Command quit = Quit();
+        commands.insert({QUIT_NAME, quit});
 
 
     }
@@ -79,7 +82,7 @@ public:
         return Command(DONE_NAME, DONE_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
                            g.GameState(State::ATTACK);
-                           return CommandEndType::DONE;
+                           return CommandEndType::VALID;
                        }
         );
     }
@@ -87,7 +90,10 @@ public:
     Command Exit() {
         return Command(EXIT_NAME,
                        EXIT_HELP,
-                       [](const string &, Game &, Interface &) { return CommandEndType::ENDGAME; });
+                       [](const string &, Game &g, Interface &) {
+
+                           return CommandEndType::ENDGAME;
+                       });
     }
 
     Command Help() {
@@ -117,7 +123,7 @@ public:
                            } else if (g.isVirus(c)) {
                                i.PrintObjectInfo(g.getVirus(c));
                            } else {
-                               i.Print(c + NOT_AN_OBJECT);
+                               i.PrintString(c + NOT_AN_OBJECT);
                            }
                            return CommandEndType::VALID;
                        }
@@ -185,7 +191,7 @@ public:
             s = s + "/" + anInterface.chooseFile(fileNames);
             g.LoadGame(s);
 
-            return CommandEndType::DONE;
+            return CommandEndType::VALID;
 
         };
     }
@@ -204,7 +210,7 @@ public:
                            for (auto iterP : g.Patches()) {
                                i.PrintObjectInfo(*iterP.second);
                            }
-                           return CommandEndType::DONE;
+                           return CommandEndType::VALID;
                        }
         );
     }
@@ -212,8 +218,17 @@ public:
     Command ShowBoard() {
         return Command(SHOW_NAME, SHOW_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
-                           i.PrintBoardPrep(g.GameBoard());
-                           return CommandEndType::DONE;
+                           i.PrintBoard(g.GameBoard());
+                           return CommandEndType::VALID;
+                       }
+        );
+    }
+
+    Command Quit() {
+        return Command(QUIT_NAME, QUIT_HELP,
+                       [](const string &userInput, Game &g, Interface &i) {
+                           g.GameState(MENU);
+                           return CommandEndType::VALID;
                        }
         );
     }

@@ -25,8 +25,14 @@ class Interface {
     ColorClass colorClass;
     mutable const char *clr = colorClass.Color(ColorClass::RESET);
 
+    void PrintMessageWaitForEnter(const string &message);
+
+    void Print(const string &message);
+
+    void PrintGreyRam(int ram) const;
+
 private:
-    /** prints numbers from 0-max in the same format as PrintBoardPrep
+    /** prints numbers from 0-max in the same format as PrintBoard
     * @param max till what number it prints
     */
     void NumberLinePrep(int max) const;
@@ -50,7 +56,7 @@ public:
     /** asks the user to enter command */
     string PromptCommand() const;
 
-    void Print(const string &s) { os << s << endl; }
+    void PrintString(const string &s) { os << s << endl; }
 
     /** suggests to use help to print commands and their syntax */
     void HelpAdvertiser();
@@ -75,7 +81,7 @@ public:
      * prints the board for the preparation mode
      * @param board - the board it prints
      */
-    void PrintBoardPrep(Board &board) const;
+    void PrintBoard(const Board &board) const;
 
 
     /** prints the invalid move text to the user */
@@ -90,6 +96,7 @@ public:
 
     void ClearBuffers() {
         //TODO: IMPLEMENT
+        //in.ignore(numeric_limits<streamsize>::max(),'\n');
     }
 
 
@@ -101,9 +108,15 @@ public:
 
     string PromptSaveFolder();
 
-    string &chooseFile(vector<string> filenames);
+    string chooseFile(vector<string> filenames);
 
     void PrintRam(int ram, int startRam) const;
+
+    void PrintMoney(int money) const;
+
+    string AskWhichGame();
+
+    void PrintGamePane(int ram, int startRam, int money, const Board &board);
 
 };
 

@@ -24,6 +24,11 @@ class App {
     Interface interface;
     Commands commands;
 
+
+    bool LoadOrNewGame();
+
+    CommandEndType FindAndExecCommand(string &command);
+
 public:
     App() :
             game(),

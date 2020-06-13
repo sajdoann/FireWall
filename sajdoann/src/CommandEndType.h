@@ -6,6 +6,6 @@
 #pragma once
 
 enum CommandEndType {
-    VALID, INVALID, ENDGAME, DONE
+    VALID, INVALID, ENDGAME
 };
 

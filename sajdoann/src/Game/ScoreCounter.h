@@ -23,17 +23,8 @@ public:
     //TODO: implement this
     ScoreCounter() = default;
 
-    /**sets the number of viruses*/
-    void setNumberOfViruses(const int &numberOfViruses);
-
-    /**returns number of viruses */
-    int NumberOfViruses() const;
-
-    /**returns how many viruses can get through wall and its still a win*/
-    int AcceptableLosses() const;
-
-    /**counts the result */
-    ResultEnum GetResult() const;
+    ScoreCounter(ResultEnum gameResult, int ram, int ramStart, int level, int money)
+            : gameResult(gameResult), ram(ram), ramStart(ramStart), level(level), money(money) {}
 
 
 };

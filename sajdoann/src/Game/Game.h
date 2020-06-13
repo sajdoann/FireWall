@@ -21,7 +21,7 @@ class Interface;
 using namespace std;
 
 class Game {
-    State gameState = State::WELCOME;
+    State gameState = State::MENU;
     ResultEnum gameResult = ResultEnum::UNKNOWN;
     //ScoreCounter scoreCounter;
     Board gameBoard;
@@ -29,8 +29,8 @@ class Game {
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
-    int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
-    int ramStart = RAM_CONSTANT;
+    int ram = 5;        //TODO: zapojit do třídy
+    int ramStart = 5;
     int level = 0;
     int money = 50;
 
@@ -53,7 +53,6 @@ public:
     State GameState() const { return gameState; }
 
     void GameState(State state) { this->gameState = state; }
-
     ResultEnum GameResult() const { return gameResult; }
 
     void GameResult(ResultEnum result) { this->gameResult = result; }

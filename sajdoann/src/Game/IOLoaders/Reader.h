@@ -111,6 +111,14 @@ public:
     }
 
 
+    void ReadLineScore(string &name, string &variable) {
+        string nameIn;
+        in >> nameIn >> variable;
+        if (nameIn != name)
+            throw invalid_argument("not provided/corrupted \'" + name + "\' headline");
+
+    }
+
     ScoreCounter &ReadScore() {
         string name, variable;
         in >> name >> variable;

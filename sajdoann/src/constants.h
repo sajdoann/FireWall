@@ -39,3 +39,5 @@ const static char *SHOW_NAME = "show";
 const static char *SHOW_HELP = "shows the entire firewall that was till now coded.";
 
 const static char *NOT_AN_OBJECT = "is not object in the game.";
+const static char *QUIT_NAME = "quit";
+const static char *QUIT_HELP = "Quits the current game and goes to menu (where new game or load saved game can be choosed).";

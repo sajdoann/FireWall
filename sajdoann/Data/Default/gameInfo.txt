@@ -1,4 +1,4 @@
-gameState: WELCOME
+gameState: MENU
 gameResult: UNKNOWN
 ramStart: 10
 ram: 10

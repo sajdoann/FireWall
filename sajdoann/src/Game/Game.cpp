@@ -97,23 +97,23 @@ bool Game::MoveLoop(const Interface &anInterface) {
                 gameBoard.InsertObject(*(a.first), a.second);
             }
             vw.pop();
-            anInterface.PrintBoardPrep(gameBoard);
+            anInterface.PrintBoard(gameBoard);
         }
 
         virusPoints += movement.MoveAll();
         ram -= virusPoints;
         if (ram < 0) {
             GameResult(LOSE);
-            gameState = State::END;
+            gameState = State::MENU;
             break;
         }
 
-        anInterface.PrintBoardPrep(gameBoard);
+        anInterface.PrintBoard(gameBoard);
         anInterface.PrintRam(ram, ramStart);
         this_thread::sleep_for(0.3s);
     }
     gameBoard.ClearButPatches();
-    ++level;    // game goes to bigger lvl
+    if (gameResult != LOSE) ++level;    // game goes to bigger lvl
 }
 
 void Game::SaveGame(const string &directoryPath) {
