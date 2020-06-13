@@ -24,7 +24,7 @@ const static char *GREETING = "Hello!\n"
                               " I wish you good luck :) \n"
                               "To continue press enter.";
 
-const static char *INVALID_MOVE = "This move cannot be executed.";
+const static char *INVALID_MOVE = "Cannot be executed.";
 
 const static char *LOST_MESSAGE = "You lost!";
 const static char *WIN_MESSAGE = "Congrats! You won!";

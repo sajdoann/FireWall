@@ -13,6 +13,7 @@
 #include "../Objects/Virus.h"
 #include "../GameConstants.h"
 #include "../ScoreCounter.h"
+#include "../State.enum"
 
 using namespace std;
 
@@ -111,7 +112,7 @@ public:
     }
 
 
-    void ReadLineScore(string &name, string &variable) {
+    void ReadLineScore(const string &name, int &variable) {
         string nameIn;
         in >> nameIn >> variable;
         if (nameIn != name)
@@ -120,8 +121,13 @@ public:
     }
 
     ScoreCounter &ReadScore() {
-        string name, variable;
-        in >> name >> variable;
+        int variable;
+        string name;
+        ReadLineScore("Ram:", variable);
+        if (variable > MAX_RAM_CONSTANT) {
+            throw invalid_argument(variable + "exceeeds max ram allowed");
+        }
+
         if (name != "gameState:")
             throw invalid_argument("not provided/corrupted \'gameState:\' headline");
         in >> name >> variable;

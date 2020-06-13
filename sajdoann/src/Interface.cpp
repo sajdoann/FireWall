@@ -205,12 +205,12 @@ void Interface::PrintGreyRam(int ram) const {
 }
 
 void Interface::PrintMoney(int money) const {
-    os << "Money: " << money;
+    os << "Money: " << money << endl;
 }
 
-void Interface::PrintGamePane(int ram, int startRam, int money, const Board &board) {
+void Interface::PrintGamePane(ScoreCounter scoreCounter, const Board &board) const {
     PrintBoard(board);
-    PrintRam(ram, startRam);
-    PrintMoney(money);
+    PrintRam(scoreCounter.Ram(), scoreCounter.RamStart());
+    PrintMoney(scoreCounter.Money());
 }
 

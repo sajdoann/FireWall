@@ -37,7 +37,8 @@ int App::Run() {
                      interface.PrintBoard(game.GameBoard());
                      firstPrep = false;
                  }*/
-                interface.PrintBoard(game.GameBoard());
+                interface.PrintGamePane(game.getScoreCounter(), game.GameBoard());
+                // interface.PrintBoard(game.GameBoard());
                 if (!PrepLoop()) return 0;
                 break;
             }

@@ -9,7 +9,7 @@
 #include <dirent.h>
 #include "GameConstants.h"
 
-Game::Game() : gameBoard(), movement(&gameBoard) {
+Game::Game() : gameBoard(), movement(&gameBoard), scoreCounter() {
 }
 
 Game::~Game() {
@@ -20,6 +20,7 @@ void Game::LoadGame(const string &directoryPath) {
     free_patches_and_viruses();
     read_patches_and_viruses(directoryPath);
     read_gameBoard(directoryPath);
+
 }
 
 
@@ -85,7 +86,7 @@ Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
 
 
 bool Game::MoveLoop(const Interface &anInterface) {
-    VirusWave virusWave(level, viruses);
+    VirusWave virusWave(scoreCounter.Level(), viruses);
 
     int virusPoints = 0;
     for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
@@ -101,19 +102,21 @@ bool Game::MoveLoop(const Interface &anInterface) {
         }
 
         virusPoints += movement.MoveAll();
-        ram -= virusPoints;
-        if (ram < 0) {
+
+        scoreCounter.takeRam(virusPoints);
+        if (scoreCounter.Ram() < 0) {
             GameResult(LOSE);
             gameState = State::MENU;
             break;
         }
 
-        anInterface.PrintBoard(gameBoard);
-        anInterface.PrintRam(ram, ramStart);
+        anInterface.PrintGamePane(scoreCounter, gameBoard);
+        /* anInterface.PrintBoard(gameBoard);
+         anInterface.PrintRam(s, ramStart);*/
         this_thread::sleep_for(0.3s);
     }
     gameBoard.ClearButPatches();
-    if (gameResult != LOSE) ++level;    // game goes to bigger lvl
+    if (gameResult != LOSE) scoreCounter.IncreaseLevel();    // game goes to bigger lvl
 }
 
 void Game::SaveGame(const string &directoryPath) {

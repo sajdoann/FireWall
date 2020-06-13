@@ -67,10 +67,16 @@ public:
 
                            //validates input
                            if (!g.isPatch(patchName) || g.OutOfGameBoard(coords)) {
+                               i.PrintString("Not a patch or coords are out of board.");
                                return CommandEndType::INVALID;
                            }
 
-                           g.InsertPatch(patchName, coords);
+                           if (g.BuyPatch(g.getPatch(patchName).Price()))
+                               g.InsertPatch(patchName, coords);
+                           else {
+                               i.PrintString("Not enough money to buy patch.");
+                               return CommandEndType::INVALID;
+                           }
 
 
                            return CommandEndType::VALID;

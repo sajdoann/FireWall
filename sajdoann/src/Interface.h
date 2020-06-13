@@ -116,7 +116,7 @@ public:
 
     string AskWhichGame();
 
-    void PrintGamePane(int ram, int startRam, int money, const Board &board);
+    void PrintGamePane(ScoreCounter scoreCounter, const Board &board) const;
 
 };
 

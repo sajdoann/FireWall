@@ -12,7 +12,6 @@
  * counts score based on how many viruses survive through the wall
  */
 class ScoreCounter {
-    ResultEnum gameResult = ResultEnum::UNKNOWN;
     int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
     int ramStart = RAM_CONSTANT;
     int level = 0;
@@ -20,13 +19,28 @@ class ScoreCounter {
 
 
 public:
-    //TODO: implement this
     ScoreCounter() = default;
 
-    ScoreCounter(ResultEnum gameResult, int ram, int ramStart, int level, int money)
-            : gameResult(gameResult), ram(ram), ramStart(ramStart), level(level), money(money) {}
+    ScoreCounter(int ram, int ramStart, int level, int money)
+            : ram(ram), ramStart(ramStart), level(level), money(money) {}
 
+    int Ram() const { return ram; }
 
+    int takeRam(int take) { ram -= take; }
+
+    int RamStart() const { return ramStart; }
+
+    int Level() const { return level; }
+
+    void IncreaseLevel() { ++level; }
+
+    int Money() const { return money; }
+
+    bool Buy(int cost) {
+        if (money - cost < 0) return false;
+        money -= cost;
+        return true;
+    }
 };
 
 

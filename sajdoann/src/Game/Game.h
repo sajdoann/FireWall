@@ -29,11 +29,7 @@ class Game {
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
-    int ram = 5;        //TODO: zapojit do třídy
-    int ramStart = 5;
-    int level = 0;
-    int money = 50;
-
+    ScoreCounter scoreCounter;
 
     void free_patches_and_viruses();
 
@@ -53,7 +49,14 @@ public:
     State GameState() const { return gameState; }
 
     void GameState(State state) { this->gameState = state; }
+
     ResultEnum GameResult() const { return gameResult; }
+
+    ScoreCounter &getScoreCounter() { return scoreCounter; }
+
+    bool BuyPatch(int cost) {
+        return scoreCounter.Buy(cost);
+    }
 
     void GameResult(ResultEnum result) { this->gameResult = result; }
 
@@ -81,11 +84,7 @@ public:
 
     Virus &getVirus(const char c) const;
 
-
-    //TODO: implement
     bool MoveLoop(const Interface &anInterface);
-
-    VirusWave *createVirusWave();
 
 };
 
