@@ -23,7 +23,7 @@ using namespace std;
 class Game {
     State gameState = State::MENU;
     ResultEnum gameResult = ResultEnum::UNKNOWN;
-    //Counter scoreCounter;
+
     Board gameBoard;
     Movement movement;
     map<char, Patch *> patches;
@@ -36,6 +36,8 @@ class Game {
     void read_patches_and_viruses(const string &directoryPath);
 
     void read_gameBoard(const string &directoryPath);
+
+    void read_score(const string &directoryPath);
 
     void save_patches_and_viruses(const string &directoryPath) const;
 

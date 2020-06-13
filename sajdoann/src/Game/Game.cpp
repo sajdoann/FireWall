@@ -20,6 +20,7 @@ void Game::LoadGame(const string &directoryPath) {
     free_patches_and_viruses();
     read_patches_and_viruses(directoryPath);
     read_gameBoard(directoryPath);
+    read_score(directoryPath);
 
 }
 
@@ -66,6 +67,11 @@ void Game::read_gameBoard(const string &directoryPath) {
     gameBoard = b;
 }
 
+void Game::read_score(const string &directoryPath) {
+    Reader scoreReader(directoryPath + "/score.txt");
+    scoreCounter = scoreReader.ReadScore();
+
+}
 
 void Game::InsertPatch(const char patchType, const Coords &coords) {
     auto it = patches.find(patchType);
@@ -142,5 +148,6 @@ void Game::save_gameBoard(const string &directoryPath) {
     BoardWriter.writeBoard(gameBoard);
     BoardWriter.Close();
 }
+
 
 

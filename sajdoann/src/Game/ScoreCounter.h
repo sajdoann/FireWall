@@ -24,6 +24,19 @@ public:
     Counter(int ram, int ramStart, int level, int money)
             : ram(ram), ramStart(ramStart), level(level), money(money) {}
 
+    Counter &operator=(const Counter &other) {
+        if (this == &other) return *this;
+        ram = other.ram;
+        ramStart = other.ramStart;
+        level = other.level;
+        money = other.money;
+        return *this;
+    }
+
+    Counter(const Counter &other) {
+        *this = other;
+    }
+
     int Ram() const { return ram; }
 
     int takeRam(int take) { ram -= take; }
