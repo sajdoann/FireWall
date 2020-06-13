@@ -10,7 +10,7 @@
 //#include <filesystem>          //TODO: -lstdc++fs to flags
 #include "Command.h"
 #include "Game/IOLoaders/Writer.h"
-#include "constants.h"
+#include "Commands_Constants.h"
 
 using namespace std;
 
@@ -54,6 +54,9 @@ public:
 
         Command quit = Quit();
         commands.insert({QUIT_NAME, quit});
+
+        Command explain = Explain();
+        commands.insert({EXPLAIN_NAME, explain});
 
 
     }
@@ -234,6 +237,15 @@ public:
         return Command(QUIT_NAME, QUIT_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
                            g.GameState(MENU);
+                           return CommandEndType::VALID;
+                       }
+        );
+    }
+
+    Command Explain() {
+        return Command(EXPLAIN_NAME, EXPLAIN_HELP,
+                       [](const string &userInput, Game &g, Interface &i) {
+                           i.ExplainPrepState();
                            return CommandEndType::VALID;
                        }
         );

@@ -13,7 +13,7 @@
 #include "../Objects/Virus.h"
 #include "../GameConstants.h"
 #include "../ScoreCounter.h"
-#include "../State.enum"
+#include "../State_Enum.h"
 
 using namespace std;
 
@@ -29,22 +29,11 @@ protected:
      * check if loading ends with eof if not throws invalid argument exception
      * @param endsWithEof - bool that says if file ends with eof
      */
-    void check_eof(bool endsWithEof) {
-        if (endsWithEof)
-            return;
-
-        string str = "Error loading input from this file: " + filename + " wrong file format.";
-        throw invalid_argument(str);
-
-    }
+    void check_eof(bool endsWithEof);
 
 public:
 
-    explicit Reader(const string &filename) : filename(filename) {
-        in.open(filename);
-        if (!in)
-            throw runtime_error(filename + " not found");
-    }
+    explicit Reader(const string &filename);
 
     virtual ~Reader() = default;
 
@@ -120,21 +109,15 @@ public:
 
     }
 
-    ScoreCounter &ReadScore() {
-        int variable;
-        string name;
-        ReadLineScore("Ram:", variable);
-        if (variable > MAX_RAM_CONSTANT) {
-            throw invalid_argument(variable + "exceeeds max ram allowed");
-        }
-
-        if (name != "gameState:")
-            throw invalid_argument("not provided/corrupted \'gameState:\' headline");
-        in >> name >> variable;
-        if (name != "gameState:")
-            throw invalid_argument("not provided/corrupted \'gameResult:\' headline");
-
-
+    Counter &ReadScore() {
+        Counter scoreCounter;
+        int ram, startRam, lvl;
+        in >> ram >> startRam >> lvl;
+        if (ram > startRam)
+            throw logic_error("Ram cannot be bigger than start ram.");
+        if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)
+            throw logic_error("One of arguments exceeded max allowed constant.");
+        check_eof(in.eof());
     }
 };
 

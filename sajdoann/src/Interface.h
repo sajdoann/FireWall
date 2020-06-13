@@ -27,7 +27,9 @@ class Interface {
 
     void PrintMessageWaitForEnter(const string &message);
 
-    void Print(const string &message);
+    void Print(const string &message) const;
+
+    void PrintInColor(const char *color, const string &message) const;
 
     void PrintGreyRam(int ram) const;
 
@@ -46,7 +48,7 @@ private:
     /**
      * resets the stream color
      */
-    void resetClr() const;
+    void ResetClr() const;
 
 public:
     Interface(istream &in, ostream &os) : in(in), os(os), colorClass() {}
@@ -57,6 +59,18 @@ public:
     string PromptCommand() const;
 
     void PrintString(const string &s) { os << s << endl; }
+
+    void PrintState(const State &state) const {
+        string s;
+
+        if (state == State::PREPARATION)
+            s = "PREPARATION: ";
+        else if (state == State::ATTACK)
+            s = "ATTACK: ";
+        else s = "MENU: ";
+
+        os << colorClass.Color(ColorClass::BLUE) << s << colorClass.Color(ColorClass::RESET) << endl;
+    }
 
     /** suggests to use help to print commands and their syntax */
     void HelpAdvertiser();
@@ -116,7 +130,7 @@ public:
 
     string AskWhichGame();
 
-    void PrintGamePane(ScoreCounter scoreCounter, const Board &board) const;
+    void PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const;
 
 };
 

@@ -25,7 +25,9 @@ class App {
     Commands commands;
 
 
-    bool LoadOrNewGame();
+    bool MenuSwitcher();
+
+    int to_menu_Switch();
 
     CommandEndType FindAndExecCommand(string &command);
 

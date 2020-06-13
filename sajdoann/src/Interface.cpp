@@ -65,7 +65,7 @@ void Interface::getColorOfObject(Object *o) const {
     }
 }
 
-void Interface::resetClr() const {
+void Interface::ResetClr() const {
     clr = colorClass.Color(ColorClass::RESET);
     os << clr;
 
@@ -73,7 +73,7 @@ void Interface::resetClr() const {
 
 
 void Interface::PrintBoard(const Board &board) const {
-    os << "patches:" << endl;
+    //os << "patches:" << endl;
     NumberLinePrep(board.MaxY());
 
     for (int i = 0; i < board.MaxX(); ++i) {
@@ -85,7 +85,7 @@ void Interface::PrintBoard(const Board &board) const {
 
 
             os << clr << setw(3) << (board(i, j));
-            resetClr();
+            ResetClr();
         }
         os << endl;
     }
@@ -111,7 +111,7 @@ void Interface::PrintBoardAttack(Board &board) {
             Object *o = board(i, j);
             getColorOfObject(o);
             os << clr << setw(3) << (o);
-            resetClr();
+            ResetClr();
         }
         os << endl;
     }
@@ -153,7 +153,7 @@ string Interface::chooseFile(vector<string> filenames) {
         getline(in, s);
         stringstream ss(s);
         ss >> choosed;
-        if (choosed < filenames.size() && choosed > 0) {
+        if (choosed <= filenames.size() && choosed > 0) {
             break;
         } else {
             os << "The input was incorrect. Write a number of the game you want to load." << endl;
@@ -174,10 +174,10 @@ void Interface::PrintRam(int ram, int startRam) const {
     int poc = 11;
     double skok = poc / (double) ram;
     for (double i = skok; i - poc <= DBL_EPSILON * fabs(i + poc) * 10000; i += skok) {
-        cout << "\u001b[48;5;" + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
+        cout << RAM_COLOR_START + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
     }
     PrintGreyRam(startRam - ram);
-    os << " " << ram << endl;
+    os << " " << ram << "/" << startRam << endl;
 }
 
 void Interface::PrintMessageWaitForEnter(const string &message) {
@@ -187,8 +187,10 @@ void Interface::PrintMessageWaitForEnter(const string &message) {
     ClearScreen();
 }
 
-void Interface::Print(const string &message) {
-    os << message << endl;
+void Interface::Print(const string &message) const {
+    os << message;
+    ResetClr();
+    os << endl;
 }
 
 string Interface::AskWhichGame() {
@@ -200,17 +202,25 @@ string Interface::AskWhichGame() {
 
 void Interface::PrintGreyRam(int ram) const {
     for (int j = ram; j > 0; --j) {
-        os << "\u001b[48;5;" + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
+        os << RAM_COLOR_START + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
     }
 }
 
 void Interface::PrintMoney(int money) const {
-    os << "Money: " << money << endl;
+    os << "Money: ";
+    PrintInColor(colorClass.Color(ColorClass::GREEN), to_string(money));
+    os << endl;
 }
 
-void Interface::PrintGamePane(ScoreCounter scoreCounter, const Board &board) const {
+void Interface::PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const {
+    PrintState(gameState);
     PrintBoard(board);
     PrintRam(scoreCounter.Ram(), scoreCounter.RamStart());
     PrintMoney(scoreCounter.Money());
+}
+
+void Interface::PrintInColor(const char *color, const string &message) const {
+    os << color;
+    Print(message);
 }
 

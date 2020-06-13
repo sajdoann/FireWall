@@ -7,7 +7,6 @@
 
 #include <queue>
 #include <vector>
-//#include <algorithm>
 #include "Objects/Virus.h"
 #include <cmath>
 #include <random>
@@ -48,9 +47,6 @@ public:
         for (auto i = viruses.begin(); i != viruses.end(); ++i) {
             virusQueue.push_back(i->second);
         }
-
-        //virusQueue.push(viruses.begin()->second);
-        //todo: generate vawe
     }
 
     queue<pair<Virus *, Coords >> GeneateWave(int maxX, int maxY) {
@@ -68,10 +64,6 @@ public:
         }
 
         return wave;
-    }
-
-    void Insert(Virus &virus) {
-        //virusQueue.push(virus);
     }
 
     bool getNext(Virus *v) {

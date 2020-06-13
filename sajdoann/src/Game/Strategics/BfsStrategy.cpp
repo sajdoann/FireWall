@@ -66,7 +66,7 @@ Coords *BfsStrategy::getTargetCoords(Board *oldBoard, Board &newBoard, const Coo
             pathExists = Bfs(&newBoard, startCoords, destination, pred);
             setPath(pred);
 
-            printRoute(newBoard);
+            //printRoute(newBoard);
 
         }
 

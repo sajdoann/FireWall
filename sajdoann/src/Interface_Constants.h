@@ -6,16 +6,15 @@
 const static char *ENTER_COMMAND = "Enter command: ";
 const static char *HELP_ADVERTISE = "Unknown command. \n To see help type \"help\"";
 
-const static char *EXPLANATION = "Now your goal is to place patches so no virus could break through your wall. \n"
+const static char *EXPLANATION = "Your goal is to place patches so no virus could break through your wall. \n"
                                  "To do that type in name of patch (coord1, coord2) (fe: \"W(0,0)\" ) \n"
-                                 "To see:\n"
-                                 "        .    all possible commands type \"help\"\n"
-                                 "        .    all possible patches and their info type \"patches\"\n\n"
                                  " what the letters mean:\n"
                                  "         .   E - empty\n"
                                  "         .   W - wall\n"
                                  "         .   other letter - some super special patch you can google up (use: \"google\" + name of patch)\n"
-                                 "To see what the IT departament came with so far press enter.";
+                                 "To see what the IT departament came with so far type \'show.\'\n"
+                                 "When you want to put the patch online where it can be attacked by viruses type \'done\'";
+
 const static char *GREETING = "Hello!\n"
                               "There is a very important mission ahead of you.\n"
                               "The FireWall has breaches, your goal is to survive next vicious attack from the hackers.\n"
@@ -33,3 +32,5 @@ const static char *ENTER_MESSAGE = "To continue press enter";
 const static char *LOAD_OR_NEW = "To load game from existing sources type \'load\'\n"
                                  "to start new game type \'new\'\n"
                                  "to exit type \'exit\'";
+
+const static char *RAM_COLOR_START = "\u001b[48;5;";

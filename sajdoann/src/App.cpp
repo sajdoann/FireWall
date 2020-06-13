@@ -7,38 +7,25 @@
 #include <regex>
 #include "Game/GameConstants.h"
 #include "App.h"
-#include "Interface_Constants.h"
 
 int App::Run() {
-    bool firstPrep = true;
     Greet();
     while (true) {
         switch (game.GameState()) {
             case State::MENU: {
-                bool end = false;
-                try {
-                    end = LoadOrNewGame();
-                } catch (invalid_argument &invalid_argument) {
-                    cerr << invalid_argument.what();
-                    return 1;
-                } catch (runtime_error &runtime_error) {
-                    cerr << runtime_error.what();
-                    return 2;
-                }
+                interface.PrintState(game.GameState());
+                bool end;
 
-                if (end) return 0;
+                int error = to_menu_Switch();
+                if (error == 1) return 0;
+                else if (error) return error;
+
 
                 game.GameState(State::PREPARATION);
+                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
                 break;
             }
             case State::PREPARATION: {
-                /* if (firstPrep) {
-                     interface.ExplainPrepState();
-                     interface.PrintBoard(game.GameBoard());
-                     firstPrep = false;
-                 }*/
-                interface.PrintGamePane(game.getScoreCounter(), game.GameBoard());
-                // interface.PrintBoard(game.GameBoard());
                 if (!PrepLoop()) return 0;
                 break;
             }
@@ -88,7 +75,7 @@ int App::AttackLoop() {
     return 0;
 }
 
-bool App::LoadOrNewGame() {
+bool App::MenuSwitcher() {
     while (true) {
         string recievedString = interface.AskWhichGame();
         string command;
@@ -136,6 +123,25 @@ CommandEndType App::FindAndExecCommand(string &command) {
     // no command was found, suggest to use help
     if (!found)
         interface.HelpAdvertiser();
+}
+
+int App::to_menu_Switch() {
+    int end;
+    try {
+        end = MenuSwitcher();
+    } catch (invalid_argument &invalid_argument) {
+        cerr << invalid_argument.what();
+        return 2;
+    } catch (runtime_error &runtime_error) {
+        cerr << runtime_error.what();
+        return 3;
+    } catch (logic_error &logic_error) {
+        cerr << logic_error.what();
+        return 4;
+    }
+    if (end)
+        return 1;
+    return 0;
 }
 
 

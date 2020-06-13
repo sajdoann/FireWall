@@ -11,17 +11,17 @@
 /**
  * counts score based on how many viruses survive through the wall
  */
-class ScoreCounter {
-    int ram = RAM_CONSTANT;        //TODO: zapojit do třídy
+class Counter {
+    int ram = RAM_CONSTANT;
     int ramStart = RAM_CONSTANT;
     int level = 0;
     int money = 50;
 
 
 public:
-    ScoreCounter() = default;
+    Counter() = default;
 
-    ScoreCounter(int ram, int ramStart, int level, int money)
+    Counter(int ram, int ramStart, int level, int money)
             : ram(ram), ramStart(ramStart), level(level), money(money) {}
 
     int Ram() const { return ram; }

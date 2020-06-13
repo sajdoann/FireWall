@@ -11,7 +11,7 @@
 #include "Objects/Patch.h"
 #include "IOLoaders/Reader.h"
 #include "ResultEnum.h"
-#include "State.enum"
+#include "State_Enum.h"
 #include "ScoreCounter.h"
 #include "Movement/Movement.h"
 #include "VirusWave.h"
@@ -23,13 +23,13 @@ using namespace std;
 class Game {
     State gameState = State::MENU;
     ResultEnum gameResult = ResultEnum::UNKNOWN;
-    //ScoreCounter scoreCounter;
+    //Counter scoreCounter;
     Board gameBoard;
     Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 
-    ScoreCounter scoreCounter;
+    Counter scoreCounter;
 
     void free_patches_and_viruses();
 
@@ -52,7 +52,7 @@ public:
 
     ResultEnum GameResult() const { return gameResult; }
 
-    ScoreCounter &getScoreCounter() { return scoreCounter; }
+    Counter &getScoreCounter() { return scoreCounter; }
 
     bool BuyPatch(int cost) {
         return scoreCounter.Buy(cost);

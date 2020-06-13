@@ -86,37 +86,38 @@ Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
 
 
 bool Game::MoveLoop(const Interface &anInterface) {
-    VirusWave virusWave(scoreCounter.Level(), viruses);
+    VirusWave virusGenerator(scoreCounter.Level(), viruses);
 
     int virusPoints = 0;
     for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
         virusPoints = 0;
-        queue<pair<Virus *, Coords>> vw = virusWave.GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
-        while (!vw.empty()) {
-            pair<Virus *, Coords> a = vw.front();
+
+        //Generate_Viruses();
+        queue<pair<Virus *, Coords>> virusWave = virusGenerator.GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
+        while (!virusWave.empty()) {
+            pair<Virus *, Coords> a = virusWave.front();
             if (gameBoard.At(a.second)->isEmpty()) {
                 gameBoard.InsertObject(*(a.first), a.second);
             }
-            vw.pop();
-            anInterface.PrintBoard(gameBoard);
+            virusWave.pop();
+            //anInterface.PrintBoard(gameBoard);
         }
 
         virusPoints += movement.MoveAll();
-
         scoreCounter.takeRam(virusPoints);
+
         if (scoreCounter.Ram() < 0) {
             GameResult(LOSE);
             gameState = State::MENU;
             break;
         }
 
-        anInterface.PrintGamePane(scoreCounter, gameBoard);
-        /* anInterface.PrintBoard(gameBoard);
-         anInterface.PrintRam(s, ramStart);*/
-        this_thread::sleep_for(0.3s);
+        anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
+
+        this_thread::sleep_for(0.2s);
     }
     gameBoard.ClearButPatches();
-    if (gameResult != LOSE) scoreCounter.IncreaseLevel();    // game goes to bigger lvl
+    if (gameResult != LOSE) scoreCounter.IncreaseLevel();
 }
 
 void Game::SaveGame(const string &directoryPath) {
