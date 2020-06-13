@@ -14,7 +14,7 @@ Některé patche mají schopnost střílet na viry **hotfixy**. Hotfixy se pak p
 
 ### Fáze hry:
 Hra má 3 části:
-1. `welcome` je hráč uveden do děje.
+1. `menu` možnost načíst uloženou hru nebo rozehrát novou hru.
 2. `preparation` hráč rozmusťuje patche
 3. `attack` viry se snaží proniknout přes patche
 
@@ -36,17 +36,6 @@ pohyby po board pro moving objects. Classa moving object si pamatuje movement ty
 Polymorfismus využívám pro metody SaveObject a PrintInfo v objektu, ty jsou implementovány v 
 hotfixu, virusu, patchi a empty. 
  
- (stačí to?)
- 
- // původně měl být ještě pro metodu move, ale k té
-potřebuju board do kterého includuju objecty, tj objecty nemůžou 
-includovat board(zacyklené includy).
- Jelikož pohyby mají být inteligentní board potřebuju nezbytně.
-Asi by nebyl problém si poslat nějaký otisk board, typu každému typu objectu přiřadím číslo. Ale
-nepřipadalo mi to úplně jako nej řešení, tak jsem to překopala na to,
- že mám třídu mimo (movement, includuju ji v game a beru si patche z pointru 
- na board co  si třída pamatuje.) Je to ok? 
-
 ### Třídy a reprezentace
  Krom výše zmíněných tříd zde je: 
   - `Interface` - uživatelské rozhraní

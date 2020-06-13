@@ -39,14 +39,7 @@ public:
         *this = other;
     }
 
-    Hotfix &operator=(const Hotfix &other) {
-        if (this == &other) return *this;
-        name = other.name;
-        strategy = other.strategy->Clone();
-        movementType = other.movementType;
-        movementDirection = other.movementDirection;
-        return *this;
-    }
+    Hotfix &operator=(const Hotfix &other);
 
 
     Object *Clone() const override { return new Hotfix(name, movementType, movementDirection); }
@@ -62,27 +55,13 @@ public:
 
     int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
-    Strategy *getStrategy() {
-        return strategy;
-    }
+    Strategy *getStrategy() { return strategy; }
 
     ostream &SaveObject(ostream &out) override;
 
-    istream &LoadObject(istream &is) {
-        is >> name;
-        if (is.eof()) return is;
-        MovementFromIn(is, movementType);
-        DirectionFromIn(is, movementDirection);
-        setStrategy();
+    istream &LoadObject(istream &is) override;
 
-    }
-
-    ostream &PrintInfo(ostream &os) const override {
-        os << "hotfix :" << name << "movement: ";
-        MovementToOut(os, movementType);
-        os << " direction: ";
-        DirectionsToOut(os, movementDirection);
-    }
+    ostream &PrintInfo(ostream &os) const override;
 
 
 };

@@ -6,8 +6,6 @@
 #include "Game.h"
 #include "IOLoaders/Writer.h"
 #include <iostream>
-#include <dirent.h>
-#include "GameConstants.h"
 
 Game::Game() : gameBoard(), movement(&gameBoard), scoreCounter() {
 }

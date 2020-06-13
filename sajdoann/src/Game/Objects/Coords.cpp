@@ -29,3 +29,10 @@ std::vector<Coords> Coords::getNeighbours(Board *board) {
     }
     return c;
 }
+
+Coords &Coords::operator=(const Coords &other) {
+    if (*this == other) return *this;
+    x = other.x;
+    y = other.y;
+    return *this;
+}

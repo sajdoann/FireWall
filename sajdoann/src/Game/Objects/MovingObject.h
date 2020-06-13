@@ -25,8 +25,7 @@ class MovingObject : public ObjectWithMoveAttributes {
 protected:
     Strategy *strategy = nullptr;
 public:
-    MovingObject() {
-    }
+    MovingObject() = default;
 
     MovingObject(char name, MovementType movementType, MovementDirection movementDirection)
             : ObjectWithMoveAttributes(name, movementType, movementDirection) {
@@ -37,12 +36,12 @@ public:
 
     virtual Object *Clone() const override = 0;
 
-    virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) = 0;
+    virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override = 0;
 
 
-    bool isEmpty() const { return false; }
+    bool isEmpty() const override { return false; }
 
-    virtual bool isPatch() const { return false; };
+    virtual bool isPatch() const override { return false; };
 
     MovementType MovementTypeObject() const { return movementType; }
 
@@ -62,19 +61,12 @@ public:
 
     }
 
-    //virtual bool Interact(Object * objectTarget) = 0;
-
-
-    //object methods
-
     virtual ostream &SaveObject(ostream &out) override = 0;
-
     virtual ostream &PrintInfo(ostream &out) const override = 0;
-
 
     bool isMovingObject() const override { return true; }
 
-    virtual bool isVirus() const = 0;
+    virtual bool isVirus() const override = 0;
 };
 
 
