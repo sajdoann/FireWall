@@ -60,20 +60,20 @@ public:
     /** prints object for user */
     virtual ostream &PrintInfo(ostream &out) const = 0;
 
-
+    /** returns true if object is a moving object */
     virtual bool isMovingObject() const = 0;
 
+    /** returns true if object is empty */
     virtual bool isEmpty() const = 0;
 
+    /** returns true if object is virus */
     virtual bool isVirus() const = 0;
 
+    /** returns true if object is a patch */
     virtual bool isPatch() const = 0;
 
 
-    friend std::ostream &operator<<(std::ostream &out, Object *object) {
-        out << object->name;
-        return out;
-    }
+    friend std::ostream &operator<<(std::ostream &out, Object *object);
 
     friend std::istream &operator>>(std::istream &in, Object *object) {
         object->LoadObject(in);
@@ -82,3 +82,8 @@ public:
 
 
 };
+
+std::ostream &operator<<(ostream &out, Object *object) {
+    out << object->name;
+    return out;
+}

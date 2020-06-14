@@ -72,14 +72,23 @@ public:
 
     ~Game();
 
+    /** gets game state */
     State GameState() const { return gameState; }
 
+    /** sets game state */
     void GameState(State state) { this->gameState = state; }
 
+    /** returns game result  */
     ResultEnum GameResult() const { return gameResult; }
 
+    /** gets score counter */
     Counter &getScoreCounter() { return scoreCounter; }
 
+    /**
+     * buys patch if enough money
+     * @param cost - what is the price of the patch
+     * @return
+     */
     bool BuyPatch(int cost) {
         return scoreCounter.Buy(cost);
     }

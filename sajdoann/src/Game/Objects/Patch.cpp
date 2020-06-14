@@ -24,3 +24,73 @@ int Patch::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
     delete targetCoords;
     return 0;
 }
+
+Patch &Patch::operator=(const Patch &patch) {
+    if (this == &patch) return *this;
+    movementType = patch.movementType;
+    movementDirection = patch.movementDirection;
+
+    this->name = patch.name;
+    this->price = patch.price;
+    return *this;
+}
+
+istream &operator>>(istream &in, Patch &patch) {
+    char n;
+    in >> n;
+    if (in.eof())
+        return in;
+
+    if (!isalpha(n)) {
+        in.setstate(iostream::failbit);
+        return in;
+    }
+    patch.name = toupper(n);
+
+    int pr;
+    in >> pr;
+    if (pr < 0) {
+        in.setstate(iostream::failbit);
+        return in;
+    }
+    patch.price = pr;
+
+    patch.MovementFromIn(in, patch.movementType);
+    if (!in.good())
+        return in;
+
+    if (patch.movementType == NONE) return in;
+    patch.DirectionFromIn(in, patch.movementDirection);
+    return in;
+}
+
+istream &Patch::LoadObject(istream &is) {
+    is >> *this;
+    return is;
+}
+
+ostream &Patch::PrintInfo(ostream &out) const {
+    out << "patch: " << name << " price: " << price << " movement: ";
+    MovementToOut(out, movementType);
+
+    if (movementType == MovementType::NONE) return out << endl;
+
+    out << " direction: ";
+    DirectionsToOut(out, movementDirection);
+    return out << endl;
+}
+
+ostream &Patch::SaveObject(ostream &os) {
+    os << name << setw(15) << price << setw(15);
+    MovementToOut(os, movementType);
+    os << setw(15);
+
+    if (movementType == MovementType::NONE) return os << endl;
+    DirectionsToOut(os, movementDirection);
+    return os;
+}
+
+ostream &Patch::Heading(ostream &os) {
+    return os << "NAME" << setw(15) << "PRICE" << setw(15) << "MOVEMENT" << setw(15)
+              << "DIRECTION" << endl;
+}

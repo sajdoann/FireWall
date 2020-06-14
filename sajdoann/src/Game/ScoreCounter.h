@@ -24,14 +24,7 @@ public:
     Counter(int ram, int ramStart, int level, int money)
             : ram(ram), ramStart(ramStart), level(level), money(money) {}
 
-    Counter &operator=(const Counter &other) {
-        if (this == &other) return *this;
-        ram = other.ram;
-        ramStart = other.ramStart;
-        level = other.level;
-        money = other.money;
-        return *this;
-    }
+    Counter &operator=(const Counter &other);
 
     Counter(const Counter &other) {
         *this = other;
@@ -39,6 +32,10 @@ public:
 
     int Ram() const { return ram; }
 
+    /**
+     * substracts take from ram
+     * @param take - what to substract from ram
+     */
     void takeRam(int take) { ram -= take; }
 
     int RamStart() const { return ramStart; }
@@ -49,11 +46,7 @@ public:
 
     int Money() const { return money; }
 
-    bool Buy(int cost) {
-        if (money - cost < 0) return false;
-        money -= cost;
-        return true;
-    }
+    bool Buy(int cost);
 };
 
 

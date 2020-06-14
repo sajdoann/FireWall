@@ -17,7 +17,8 @@
 using namespace std;
 
 /**
- * grid for objects, it stores the placement of Objects in the playing area
+ * grid for objects in game
+ * it stores the placement of Objects on Board
  */
 class Board {
     int maxX = 0;
@@ -47,48 +48,22 @@ public:
 
     Board(Board &other);
 
-    Board &operator=(Board &other) {
-        if (this == &other) return *this;
+    Board &operator=(Board &other);
 
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-                delete tiles[i][j];
-                tiles[i][j] = nullptr;
-            }
-        }
-
-        //because I use push back
-        // -> needs to free the row to so the rows dont get to be placed after previous rows
-        for (int k = 0; k < maxX; ++k) {
-            tiles.pop_back();
-        }
-
-        maxX = other.maxX;
-        maxY = other.maxY;
-        for (int i = 0; i < maxX; ++i) {
-            vector<Object *> tmp;
-            for (int j = 0; j < maxY; ++j) {
-                tmp.push_back(other.tiles[i][j]->Clone());
-            }
-            tiles.push_back(tmp);
-        }
-        return *this;
-    }
-
-    ~Board() {
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-                delete tiles[i][j];
-                tiles[i][j] = nullptr;
-            }
-        }
-
-    }
+    /**
+     * destructor that destructs board tiles
+     */
+    ~Board();
 
     int MaxX() const { return maxX; }
 
     int MaxY() const { return maxY; }
 
+    /**
+     * returns object at coords
+     * @param coords
+     * @return object
+     */
     Object *At(const Coords &coords) { return tiles[coords.X()][coords.Y()]; }
 
     /**
@@ -105,11 +80,7 @@ public:
      * @param patch
      * @param coords
      */
-    void InsertPatch(Patch &patch, const Coords &coords) {
-        delete tiles[coords.X()][coords.Y()];
-        tiles[coords.X()][coords.Y()] = nullptr;
-        tiles[coords.X()][coords.Y()] = new Patch(patch);
-    }
+    void InsertPatch(Patch &patch, const Coords &coords);
 
     /**
      * template to insert object on board to coords
@@ -125,12 +96,11 @@ public:
         *((O *) tiles[coords.X()][coords.Y()]) = o;
     }
 
-    void setEmpty(const Coords &coords) {
-        Object *object = tiles[coords.X()][coords.Y()];
-        if (object->isEmpty()) return;
-        delete object;
-        tiles[coords.X()][coords.Y()] = new Empty();
-    }
+    /**
+     * sets place at coords emtpy
+     * @param coords
+     */
+    void setEmpty(const Coords &coords);
 
 
     /**
@@ -144,32 +114,14 @@ public:
     }
 
     /**
-     * adds all patches to the other board
-     * @param other
+     * adds all patches to the other board (! they need to be of the same measurements)
+     * @param other - other board
      */
-    void AddAllPatches(Board *other) {
-        //if measurement are not the same throw errror
-        if (other->maxX != maxX || other->maxY != maxY) {
-            throw logic_error("Boards dont have the same size.");
-        }
-
-        //for all tiles, if tile is a patch insert it to this board
-        for (int i = 0; i < maxX; ++i) {
-            for (int j = 0; j < maxY; ++j) {
-                Object *o = (Object *) (other->At(Coords(i, j)));
-                if (!o->isEmpty() && !o->isMovingObject()) {
-                    Patch *p = (Patch *) o;
-                    InsertObject(*p, Coords(i, j));
-                }
-            }
-        }
-    }
+    void AddAllPatches(Board *other);
 
     /**
      * clears all objects but patches
      */
     void ClearButPatches();
-
-    void Print();
 };
 

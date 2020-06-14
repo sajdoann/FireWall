@@ -28,21 +28,11 @@ protected:
     /** throws invalid argument exception */
     void EofError();
 
-    void ReadLineScore(const string &name, int &variable) {
-        string nameIn;
-        in >> nameIn >> variable;
-        if (nameIn != name)
-            throw invalid_argument("not provided/corrupted \'" + name + "\' headline");
-
-    }
-
 public:
 
     explicit Reader(const string &filename);
 
     virtual ~Reader() = default;
-
-    //TODO: exeptions for invalid input
 
     template<typename StillObj>
     std::map<char, StillObj *> ReadStillObjects() {
@@ -79,7 +69,6 @@ public:
 
     map<Coords, char> ReadBoard(int &mx, int &my);
 
-    //todo: osetrit new line
     Counter ReadScore() {
         int ram, startRam, lvl, money;
         string input;

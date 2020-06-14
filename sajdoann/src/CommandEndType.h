@@ -4,7 +4,9 @@
 */
 
 #pragma once
-
+/**
+ * says if commmand is valid, invalid or after the command game should end
+ */
 enum CommandEndType {
     VALID, INVALID, ENDGAME
 };

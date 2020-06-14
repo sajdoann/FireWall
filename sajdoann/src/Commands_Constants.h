@@ -5,7 +5,9 @@
 
 #pragma once
 
-
+/**
+ * constants for commands - their names, regex, help
+ */
 const static char *EXIT_NAME = "exit";
 const static char *EXIT_HELP = "exits the game witout saving. To save type save";
 

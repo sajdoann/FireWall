@@ -24,6 +24,7 @@ class Commands {
 
 public:
 
+    /** gets commands map */
     map<string, Command> &CommandsMap() {
         return commands;
     }
@@ -33,14 +34,19 @@ public:
      */
     void CreateCommands();
 
+    /** places patch */
     Command PlacePatch();
 
+    /** goes to attack stage */
     Command Done();
 
+    /** exits the game without saving */
     Command Exit();
 
+    /** prints all available commands */
     Command Help();
 
+    /** googles object */
     Command Google();
 
 
@@ -56,7 +62,10 @@ public:
      */
     function<CommandEndType(string, Game &, Interface &)> saveFunction();
 
-
+    /**
+     * returns function that asks from where to load and loads game
+     * @return  function to execute
+     */
     function<CommandEndType(string, Game &g, Interface &)> loadFunction();
 
     /**
@@ -65,14 +74,19 @@ public:
      */
     Command Load();
 
+    /** shows patches */
     Command Patches();
 
+    /** shows viruses */
     Command Viruses();
 
+    /** shows board */
     Command ShowBoard();
 
+    /** quits the game goes to menu */
     Command Quit();
 
+    /** explains prep state */
     Command Explain();
 };
 

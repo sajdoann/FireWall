@@ -9,6 +9,10 @@
 #include "Strategy.h"
 class Board;
 
+/**
+ * object that implements this strategy moves randomly to left(diagonals and left) when mov. type is left
+ * othervise it moves randomly to right(diag. + right)
+ */
 class RandomStrategy : public Strategy {
 
 public:
@@ -21,7 +25,7 @@ public:
 
     RandomStrategy(MovementDirection movementDirection) : Strategy(movementDirection) {}
 
-    Strategy *Clone() const {
+    Strategy *Clone() const override {
         return new RandomStrategy(movementDirection);
     }
 };

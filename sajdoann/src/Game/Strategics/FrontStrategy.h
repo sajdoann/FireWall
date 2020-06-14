@@ -19,7 +19,7 @@ public:
     /** gets target coords */
     Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords) override;
 
-    Strategy *Clone() const {
+    Strategy *Clone() const override {
         return new FrontStrategy(movementDirection);
     }
 };

@@ -12,6 +12,7 @@
 
 /**
  * strategy that finds the shortest route from start coords to destination
+ * if such strategy does not exist continues straight to left
  */
 class BfsStrategy : public Strategy {
     std::vector<Coords> path;

@@ -24,29 +24,15 @@ public:
             : MovingObject(name, movementType, movementDirection), lives(lives) {
     }
 
-
     ~Virus() override {
         delete strategy;
     }
 
-    virtual Object *Clone() const {
-        return new Virus(*this);
-    }
+    virtual Object *Clone() const { return new Virus(*this); }
 
-    Virus(const Virus &other) {
-        *this = other;
-    }
+    Virus(const Virus &other) { *this = other; }
 
-    Virus &operator=(const Virus &other) {
-        if (this == &other) return *this;
-        if (strategy != nullptr) delete strategy;
-        name = other.name;
-        lives = other.lives;
-        movementType = other.movementType;
-        movementDirection = other.movementDirection;
-        strategy = other.strategy->Clone();
-        return *this;
-    }
+    Virus &operator=(const Virus &other);
 
     virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
@@ -61,47 +47,18 @@ public:
         return in >> *this;
     }
 
-    ostream &PrintInfo(ostream &out) const override {
-        out << "virus: " << name << " lives: " << lives << " movement: ";
-        MovementToOut(out, movementType);
-        out << " directions: ";
-        DirectionsToOut(out, movementDirection);
-        return out << endl;
-    }
+    ostream &PrintInfo(ostream &out) const override;
 
 
-    friend ostream &operator<<(ostream &out, const Virus &virus) {
-        out << virus.name << " " << virus.lives << " ";
-        virus.MovementToOut(out, virus.movementType);
-        out << " ";
-        virus.DirectionsToOut(out, virus.movementDirection);
-        return out;
-    }
+    friend ostream &operator<<(ostream &out, const Virus &virus);
 
-    friend istream &operator>>(istream &in, Virus &v) {
-        in >> v.name;
-        if (in.eof())
-            return in;
-        in >> v.lives;
-        v.MovementFromIn(in, v.movementType);
-        v.DirectionFromIn(in, v.movementDirection);
-        v.setStrategy();
-        return in;
+    friend istream &operator>>(istream &in, Virus &v);
 
-    }
-
-    bool Hitted() {
-        if (lives) {
-            --lives;
-            return true;
-        }
-        return false;
-    }
-
-    void Destroy() {
-        delete this;
-
-    }
+    /**
+     * takes live
+     * @return if not enough lives to take one returns false
+     */
+    bool Hitted();
 
     /** less comparator for virus by its name*/
     int operator<(const Virus &virus) const {

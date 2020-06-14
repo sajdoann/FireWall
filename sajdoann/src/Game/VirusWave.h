@@ -13,6 +13,9 @@
 
 using namespace std;
 
+/**
+ * creates virus wave mainly its generator
+ */
 class VirusWave {
 private:
     int level = 0;
@@ -49,6 +52,12 @@ public:
         }
     }
 
+    /**
+     * generates next wave
+     * @param maxX - board maxX
+     * @param maxY - board maxY
+     * @return generated vawe for thhis round
+     */
     queue<pair<Virus *, Coords >> GeneateWave(int maxX, int maxY) {
         queue<pair<Virus *, Coords >> wave;
         int max = CountMax();
@@ -64,17 +73,6 @@ public:
         }
 
         return wave;
-    }
-
-    bool getNext(Virus *v) {
-        if (virusQueue.empty())
-            return false;
-        *v = *(virusQueue.front());
-        return true;
-    }
-
-    void RemoveFirst() {
-        virusQueue.pop_back();
     }
 
 };

@@ -4,6 +4,9 @@
 */
 
 #pragma once
+/**
+ * state of the game
+ */
 enum State {
     MENU, PREPARATION, ATTACK
 };

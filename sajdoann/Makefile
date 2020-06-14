@@ -1,21 +1,32 @@
-CXX=g++
+CXX=g++		#compiler
 CXXFLAGS = -Wall -pedantic -g -Og -std=c++14 #-fsanitize=address
-LD=g++
+LD=g++		#linker
 LDFLAGS = -Wall -pedantic -g -Og -std=c++14 #-fsanitize=address
-USERNAME=sajdoann
-compile: App.o Commands.o Interface.o main.o Game.o ScoreCounter.o Board.o Reader.o Coords.o Empty.o Hotfix.o Patch.o Virus.o BfsStrategy.o FrontStrategy.o RandomStrategy.o Strategy.o
-	$(LD) $(LDFLAGS) App.o Commands.o Interface.o main.o Game.o ScoreCounter.o Board.o Reader.o Coords.o Empty.o Hotfix.o Patch.o Virus.o BfsStrategy.o FrontStrategy.o RandomStrategy.o Strategy.o  -o $(USERNAME)
+EXECUTABLE=sajdoann
+
+all: compile
+
+doc:
+
 
 # get all .o files: cat tmp.txt | grep -o '^.*\.o' > jmena.txt
-# count num of lines: find . -name '*.cpp' -o -name '*.h' | xargs wc -l
+compile: App.o Commands.o Interface.o main.o Game.o ScoreCounter.o Board.o Reader.o Coords.o Empty.o Hotfix.o Patch.o Virus.o BfsStrategy.o FrontStrategy.o RandomStrategy.o Strategy.o
+	$(LD) $(LDFLAGS) App.o Commands.o Interface.o main.o Game.o ScoreCounter.o Board.o Reader.o Coords.o Empty.o Hotfix.o Patch.o Virus.o BfsStrategy.o FrontStrategy.o RandomStrategy.o Strategy.o  -o $(EXECUTABLE)
 
 #command make run
 run: compile
-	./$(USERNAME)
+	./$(EXECUTABLE)
 
+.PHONY: clean all compile #phony - directive says clean is not a filename
+clean:
+	rm *.o
+	rm $(EXECUTABLE)
+
+
+# count num of lines: find . -name '*.cpp' -o -name '*.h' | xargs wc -l
 
 %.o: src/%.cpp
-	$(LD) $(CXXFLAGS) -c $< -o $@
+	$(LD) $(CXXFLAGS) -c $< -o $@	#makes .o
 %.o: src/Game/%.cpp
 	$(LD) $(CXXFLAGS) -c $< -o $@
 %.o: src/Game/Board/%.cpp

@@ -17,7 +17,7 @@ using namespace std;
 
 /**
  *   class for command - remembers name, help and function what to do if this command is called
- *   strucutre of this class loosely inspired by https://gitlab.fit.cvut.cz/bernhdav/pa2-minesweeper/blob/master/src/CCommand.h
+ *   strucutre of this class inspired by https://gitlab.fit.cvut.cz/bernhdav/pa2-minesweeper/blob/master/src/CCommand.h
  *   author @bernhdav
  */
 class Command {
