@@ -41,14 +41,6 @@ void Interface::Greet() {
     ClearScreen();
 }
 
-void Interface::NumberLinePrep(int max) const {
-    os << setw(3) << " ";
-    for (int i = 0; i < max; ++i) {
-        os << setw(3) << i;
-    }
-    os << endl;
-}
-
 void Interface::getColorOfObject(Object *o) const {
     if (o->isEmpty()) {
         clr = colorClass.Color(ColorClass::CYAN);
@@ -71,10 +63,16 @@ void Interface::ResetClr() const {
 
 }
 
+void Interface::numberRow(int max) const {
+    os << setw(3) << " ";
+    for (int i = 0; i < max; ++i) {
+        os << setw(3) << i;
+    }
+    os << endl;
+}
 
 void Interface::PrintBoard(const Board &board) const {
-    //os << "patches:" << endl;
-    NumberLinePrep(board.MaxY());
+    numberRow(board.MaxY());
 
     for (int i = 0; i < board.MaxX(); ++i) {
         for (int j = 0; j < board.MaxY(); ++j) {

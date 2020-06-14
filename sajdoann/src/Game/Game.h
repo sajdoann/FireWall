@@ -43,6 +43,9 @@ class Game {
 
     void save_gameBoard(const string &directoryPath);
 
+    void save_ctr(const string &directoryPath);
+
+
 public:
     Game();
 
@@ -86,7 +89,7 @@ public:
 
     Virus &getVirus(const char c) const;
 
-    bool MoveLoop(const Interface &anInterface);
+    bool MoveLoop(Interface &anInterface);
 
 };
 

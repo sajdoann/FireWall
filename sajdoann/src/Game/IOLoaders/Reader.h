@@ -77,6 +77,7 @@ public:
 
     map<Coords, char> ReadBoard(int &mx, int &my);
 
+    //todo: osetrit new line
     Counter ReadScore() {
         int ram, startRam, lvl, money;
         in >> ram >> startRam >> lvl >> money;
@@ -89,7 +90,3 @@ public:
         return ctr;
     }
 };
-
-
-
-

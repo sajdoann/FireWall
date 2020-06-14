@@ -89,7 +89,7 @@ Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
 
 
-bool Game::MoveLoop(const Interface &anInterface) {
+bool Game::MoveLoop(Interface &anInterface) {
     VirusWave virusGenerator(scoreCounter.Level(), viruses);
 
     int virusPoints = 0;
@@ -116,6 +116,7 @@ bool Game::MoveLoop(const Interface &anInterface) {
             break;
         }
 
+        anInterface.ClearScreen();
         anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
 
         this_thread::sleep_for(0.2s);
@@ -127,6 +128,7 @@ bool Game::MoveLoop(const Interface &anInterface) {
 void Game::SaveGame(const string &directoryPath) {
     save_patches_and_viruses(directoryPath);
     save_gameBoard(directoryPath);
+    save_ctr(directoryPath);
 }
 
 void Game::save_patches_and_viruses(const string &directoryPath) const {
@@ -145,6 +147,12 @@ void Game::save_gameBoard(const string &directoryPath) {
     Writer BoardWriter(directoryPath + "/board.txt");
     BoardWriter.writeBoard(gameBoard);
     BoardWriter.Close();
+}
+
+void Game::save_ctr(const string &directoryPath) {
+    Writer ctrWriter(directoryPath + "/score.txt");
+    ctrWriter.writeCounter(scoreCounter);
+    ctrWriter.Close();
 }
 
 

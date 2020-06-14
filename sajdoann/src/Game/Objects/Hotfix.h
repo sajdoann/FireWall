@@ -31,13 +31,11 @@ public:
 
     }
 
-    ~ Hotfix() {
+    ~ Hotfix() override {
         delete strategy;
     }
 
-    Hotfix(const Hotfix &other) {
-        *this = other;
-    }
+    Hotfix(const Hotfix &other) { *this = other; }
 
     Hotfix &operator=(const Hotfix &other);
 
@@ -45,7 +43,7 @@ public:
     Object *Clone() const override { return new Hotfix(name, movementType, movementDirection); }
 
 
-    bool isVirus() const { return false; };
+    bool isVirus() const override { return false; };
 
     bool JustInserted() { return just_inserted; }
 

@@ -37,7 +37,7 @@ private:
     /** prints numbers from 0-max in the same format as PrintBoard
     * @param max till what number it prints
     */
-    void NumberLinePrep(int max) const;
+    void numberRow(int max) const;
 
     /**
      * gets the right color for object o
@@ -84,7 +84,7 @@ public:
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
         //TODO: in clion term variable not found -> not functioning (on other sys should not be a prob)
-        //system("clear");
+        system("clear");
         //os << string(100, '\n');
     }
 
@@ -111,6 +111,7 @@ public:
     void ClearBuffers() {
         //TODO: IMPLEMENT
         //in.ignore(numeric_limits<streamsize>::max(),'\n');
+        in.clear();
     }
 
 

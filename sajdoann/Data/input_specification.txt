@@ -1,7 +1,0 @@
-BOARD
-- the maxX and maxY of board cannot overflow MAX_BOARD_MEASURE / underflow MIN_BOARD_MEASURE constant
-- the coordinates cannot be
-        .   already taken
-        .   out of board
-
-VIRUS

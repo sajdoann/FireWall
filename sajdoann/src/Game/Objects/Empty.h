@@ -22,36 +22,28 @@ public:
 
     Empty(Empty &e) { *this = e; }
 
-    Empty &operator=(Empty &empty) {
-        if (this == &empty) return *this;
-        name = empty.name;
-    }
+    Empty &operator=(Empty &empty);
 
     int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override;
-
 
     Object *Clone() const override { return new Empty(); }
 
 
     ostream &SaveObject(ostream &os) override;
 
-    ostream &PrintInfo(ostream &os) const { os << "empty"; }
+    ostream &PrintInfo(ostream &os) const { return os << "empty"; }
 
     bool isMovingObject() const override { return false; }
 
     bool isEmpty() const override { return true; }
 
-    bool isVirus() const { return false; }
+    bool isVirus() const override { return false; }
 
-    virtual bool isPatch() const { return false; }
+    bool isPatch() const override { return false; }
 
 
-    friend ostream &operator<<(ostream &os, const Empty &empty) {
-        os << "-";
-    }
+    friend ostream &operator<<(ostream &os, const Empty &empty) { return os << "-"; }
 
-    istream &LoadObject(istream &is) {
-        is >> name;
-    }
+    istream &LoadObject(istream &is) override { return is >> name; }
 
 };

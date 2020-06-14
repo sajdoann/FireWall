@@ -24,6 +24,10 @@ public:
             throw runtime_error("filename:" + filename + "not found");
     }
 
+    void Close() {
+        out.close();
+    }
+
     //writes the data to file
     template<typename O>
     void writeStillObjectsFromMap(O object) {
@@ -52,8 +56,8 @@ public:
         out << endl;
     }
 
-    void Close() {
-        out.close();
+    void writeCounter(const Counter &c) {
+        out << c.Ram() << " " << c.RamStart() << " " << c.Level() << " " << c.Money() << endl;
     }
 };
 

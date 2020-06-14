@@ -11,3 +11,8 @@ ostream &Empty::SaveObject(ostream &os) { os << *this; }
 int Empty::Attack(Board *newBoard, Board &oldBoard, Coords startCoords) {
     return 0;
 }
+
+Empty &Empty::operator=(Empty &empty) {
+    if (this == &empty) return *this;
+    name = empty.name;
+}
