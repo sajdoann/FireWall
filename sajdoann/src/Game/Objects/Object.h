@@ -73,7 +73,7 @@ public:
     virtual bool isPatch() const = 0;
 
 
-    friend std::ostream &operator<<(std::ostream &out, Object *object);
+    //friend std::ostream &operator<<(std::ostream &out, Object *object);
 
     friend std::istream &operator>>(std::istream &in, Object *object) {
         object->LoadObject(in);
@@ -83,7 +83,3 @@ public:
 
 };
 
-std::ostream &operator<<(ostream &out, Object *object) {
-    out << object->name;
-    return out;
-}

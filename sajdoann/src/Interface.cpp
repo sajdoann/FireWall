@@ -85,7 +85,7 @@ void Interface::PrintBoard(const Board &board) const {
             getColorOfObject(o);
 
 
-            os << clr << setw(3) << (board(i, j));
+            os << clr << setw(3) << (board(i, j))->Name();
             ResetClr();
         }
         os << endl;
