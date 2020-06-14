@@ -22,6 +22,7 @@ int App::Run() {
 
                 game.GameState(State::PREPARATION);
                 interface.ClearScreen();
+                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
                 break;
             }
             case State::PREPARATION: {
@@ -31,7 +32,8 @@ int App::Run() {
             case State::ATTACK: {
                 interface.ClearScreen();
                 AttackLoop();
-
+                interface.ClearScreen();
+                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
                 interface.PrintResult(game.GameResult());
 
                 //if user looses then go to MENU
@@ -40,6 +42,7 @@ int App::Run() {
                     break;
                 }
                 game.GameState(State::PREPARATION);
+                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
                 break;
             }
         }
@@ -50,13 +53,10 @@ int App::Run() {
 
 void App::Greet() {
     interface.Greet();
-    interface.ClearScreen();
 }
 
 int App::PrepLoop() {
-    interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
     while (game.GameState() == State::PREPARATION) {
-
         string command = interface.PromptCommand();
         CommandEndType endType = FindAndExecCommand(command);
         if (endType == CommandEndType::ENDGAME)
@@ -109,7 +109,7 @@ CommandEndType App::FindAndExecCommand(string &command) {
 
         if (regex_match(command, c)) {                  //if command matches with regex key in map of commands
             interface.ClearScreen();
-
+            interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
             CommandEndType typeOfCommand = com.second.Exec(command, game, interface);  //executes command
 
             if (typeOfCommand == ENDGAME || typeOfCommand == INVALID)
@@ -122,6 +122,7 @@ CommandEndType App::FindAndExecCommand(string &command) {
     // no command was found, suggest to use help
     if (!found) {
         interface.ClearScreen();
+        interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
         interface.HelpAdvertiser();
 
     }

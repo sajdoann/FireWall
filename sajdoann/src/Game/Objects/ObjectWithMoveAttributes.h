@@ -22,6 +22,14 @@ protected:
     MovementType movementType = MovementType::STRAIGHT;
     MovementDirection movementDirection = MovementDirection::LEFT;
 
+    bool isAlphaToUpper(string &s) {
+        for (unsigned int i = 0; i < s.size(); ++i) {
+            if (!isalpha(s[i])) return false;
+            s[i] = toupper(s[i]);
+        }
+        return true;
+    }
+
 public:
     ObjectWithMoveAttributes() = default;
 
@@ -61,6 +69,12 @@ public:
     istream &MovementFromIn(istream &in, MovementType &value) {
         string a;
         in >> a;
+
+        if (!isAlphaToUpper(a)) {
+            in.setstate(std::ios_base::failbit);
+            return in;
+        }
+
         if (a == "STRAIGHT")
             value = MovementType::STRAIGHT;
         else if (a == "FRONT")
@@ -113,6 +127,12 @@ public:
     istream &DirectionFromIn(istream &in, MovementDirection &value) {
         string a;
         in >> a;
+
+        if (!isAlphaToUpper(a)) {
+            in.setstate(std::ios_base::failbit);
+            return in;
+        }
+
         if (a == "RIGHT")
             value = MovementDirection::RIGHT;
         else if (a == "UP")
@@ -121,10 +141,10 @@ public:
             value = MovementDirection::DOWN;
         else if (a == "LEFT")
             value = MovementDirection::LEFT;
-        else if (a == "DIAGONAL_U")
-            value = MovementDirection::DIAGONAL_U;
-        else if (a == "DIAGONAL_D")
-            value = MovementDirection::DIAGONAL_D;
+        else if (a == "DIAGONALU")
+            value = MovementDirection::DIAGONALU;
+        else if (a == "DIAGONALD")
+            value = MovementDirection::DIAGONALD;
         else
             in.setstate(std::ios_base::failbit);
         return in;
@@ -151,11 +171,11 @@ public:
             case MovementDirection::LEFT:
                 s = "LEFT";
                 break;
-            case MovementDirection::DIAGONAL_U:
-                s = "DIAGONAL_U";
+            case MovementDirection::DIAGONALU:
+                s = "DIAGONALU";
                 break;
-            case MovementDirection::DIAGONAL_D:
-                s = "DIAGONAL_D";
+            case MovementDirection::DIAGONALD:
+                s = "DIAGONALD";
                 break;
         }
         return out << s;

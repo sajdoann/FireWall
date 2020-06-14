@@ -145,5 +145,8 @@ public:
      */
     void PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const;
 
+    void PrintClock(int time) const;
+
+    void PrintLvl(int lvl) const;
 };
 

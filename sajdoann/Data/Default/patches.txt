@@ -1,9 +1,9 @@
 NAME     PRICE  MOVEMENT DIRECTION
 A        15     FRONT     DOWN
 D        12     FRONT     RIGHT
-Y         0     FRONT     DIAGONAL_U
-X        12     FRONT     DIAGONAL_D
+Y         0     FRONT     DIAGONALU
+X        12     FRONT     DIAGONALD
 Z         5     FRONT     LEFT
 W         15    NONE
-
+U         50    FRONT     UP
 R         50    RAND      LEFT

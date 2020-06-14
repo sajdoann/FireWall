@@ -25,12 +25,7 @@ protected:
     ifstream in;
     const string filename;
 
-    /**
-     * check if loading ends with eof if not throws invalid argument exception
-     * @param endsWithEof - bool that says if file ends with eof
-     */
-    int check_eof(bool endsWithEof);
-
+    /** throws invalid argument exception */
     void EofError();
 
     void ReadLineScore(const string &name, int &variable) {
@@ -89,8 +84,15 @@ public:
         int ram, startRam, lvl, money;
         string input;
         getline(in, input);
-        stringstream strstream(input);
-        strstream >> ram >> startRam >> lvl >> money;
+        stringstream ss(input);
+        ss >> ram >> startRam >> lvl >> money;
+
+        if (!ss.good())
+            EofError();
+        getline(in, input);
+        if (input.size() > 1)
+            EofError();
+
         if (ram > startRam)
             throw logic_error("Ram cannot be bigger than start ram.");
         if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)

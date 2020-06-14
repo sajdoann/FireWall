@@ -10,7 +10,7 @@
 
 /** how many times virus move during attack stage, in game steadily increased by level */
 //todo: increase by lvl
-const int MOVEMENT_LOOP_MAX = 60;
+const int MOVEMENT_LOOP_MAX = 100;
 
 /** board limit measures */
 const static int MAX_BOARD_MEASURE = 100;

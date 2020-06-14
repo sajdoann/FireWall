@@ -9,7 +9,7 @@
  * classic directions up, down, ... + diagonals
  */
 enum MovementDirection {
-    RIGHT, UP, DOWN, LEFT, DIAGONAL_U, DIAGONAL_D
+    RIGHT, UP, DOWN, LEFT, DIAGONALU, DIAGONALD
 };
 //if updated interface needs to be also updated
 

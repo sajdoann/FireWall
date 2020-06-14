@@ -74,10 +74,10 @@ Coords *Strategy::getMovedCoords(const Coords &startCoords) {
     if (movementDirection == MovementDirection::UP) {
         return new Coords(startCoords.X() - 1, startCoords.Y());
     }
-    if (movementDirection == MovementDirection::DIAGONAL_U) {
+    if (movementDirection == MovementDirection::DIAGONALU) {
         return new Coords(startCoords.X() - 1, startCoords.Y() + 1);
     }
-    if (movementDirection == MovementDirection::DIAGONAL_D) {
+    if (movementDirection == MovementDirection::DIAGONALD) {
         return new Coords(startCoords.X() + 1, startCoords.Y() + 1);
     }
     //TODO: OSETRIT DEFAULT

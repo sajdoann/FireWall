@@ -37,6 +37,9 @@ void Interface::GetPatchInfo(const string &s, char &patchName, Coords &coords) {
 }
 
 void Interface::Greet() {
+    ClearScreen();
+    os << colorClass.Color(ColorClass::BLUE) << "FireWall" << endl;
+    ResetClr();
     PrintMessageWaitForEnter(GREETING);
     ClearScreen();
 }
@@ -102,6 +105,7 @@ void Interface::PrintResult(ResultEnum gameResult) {
         PrintInColor(colorClass.Color(ColorClass::RED), LOST_MESSAGE);
     else PrintInColor(colorClass.Color(ColorClass::GREEN), WIN_MESSAGE);
     PrintMessageWaitForEnter("To continue press enter.");
+    ClearScreen();
 }
 
 string Interface::PromptSaveFolder() {
@@ -110,9 +114,10 @@ string Interface::PromptSaveFolder() {
     while (true) {
         os << "Enter name to save the game: " << endl;
         in >> s;
+        ClearBuffers();
         bool isOK = true;
         if (s.empty()) continue;
-        for (int i = 0; i < s.size(); ++i) {
+        for (unsigned int i = 0; i < s.size(); ++i) {
             if (!isdigit(s[i]) && !isalpha(s[i])) {
                 isOK = false;
                 break;
@@ -121,13 +126,12 @@ string Interface::PromptSaveFolder() {
         if (isOK) break;
     }
     s = '/' + s;
-    ClearBuffers();
     return s;
 }
 
 string Interface::chooseFile(vector<string> filenames) {
     os << "Saved games:" << endl;
-    for (int i = 1; i <= filenames.size(); ++i) {
+    for (unsigned int i = 1; i <= filenames.size(); ++i) {
         os << i << setw(15) << " " << filenames[i - 1] << endl;
     }
 
@@ -138,7 +142,7 @@ string Interface::chooseFile(vector<string> filenames) {
         getline(in, s);
         stringstream ss(s);
         ss >> choosed;
-        if (choosed <= filenames.size() && choosed > 0) {
+        if (choosed <= (int) filenames.size() && choosed > 0) {
             break;
         } else {
             os << "The input was incorrect. Write a number of the game you want to load." << endl;
@@ -151,9 +155,9 @@ string Interface::chooseFile(vector<string> filenames) {
 
 void Interface::PrintRam(int ram, int startRam) const {
     os << "Ram: ";
-    if (ram == 0) {
+    if (ram <= 0) {
         PrintGreyRam(startRam);
-        os << " " << ram << endl;
+        os << " " << 0 << endl;
         return;
     }
     int poc = 11;
@@ -168,8 +172,7 @@ void Interface::PrintRam(int ram, int startRam) const {
 void Interface::PrintMessageWaitForEnter(const string &message) {
     Print(message);
     string s;
-    while (!(getline(in, s))) {}
-    ClearScreen();
+    getline(in, s);
 }
 
 void Interface::Print(const string &message) const {
@@ -200,6 +203,7 @@ void Interface::PrintMoney(int money) const {
 void Interface::PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const {
     PrintState(gameState);
     PrintBoard(board);
+    PrintLvl(scoreCounter.Level());
     PrintRam(scoreCounter.Ram(), scoreCounter.RamStart());
     PrintMoney(scoreCounter.Money());
 }
@@ -207,5 +211,13 @@ void Interface::PrintGamePane(const State &gameState, Counter scoreCounter, cons
 void Interface::PrintInColor(const char *color, const string &message) const {
     os << color;
     Print(message);
+}
+
+void Interface::PrintClock(int time) const {
+    Print("System time: " + to_string(time));
+}
+
+void Interface::PrintLvl(int lvl) const {
+    Print("lvl: " + to_string(lvl));
 }
 

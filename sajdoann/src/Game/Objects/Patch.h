@@ -28,7 +28,7 @@ public:
     Patch(char name, int price, MovementType movementType, MovementDirection movementDirection) noexcept
             : ObjectWithMoveAttributes(name, movementType, movementDirection), price(price) {}
 
-    ~Patch() = default;
+    ~Patch() override = default;
 
     virtual Object *Clone() const { return new Patch(name, price, movementType, movementDirection); }
 
@@ -99,11 +99,29 @@ public:
 
     /** gets patch atributes from istream */
     friend istream &operator>>(istream &in, Patch &patch) {
-        in >> patch.name;
+        char n;
+        in >> n;
         if (in.eof())
             return in;
-        in >> patch.price;
+
+        if (!isalpha(n)) {
+            in.setstate(iostream::failbit);
+            return in;
+        }
+        patch.name = toupper(n);
+
+        int pr;
+        in >> pr;
+        if (pr < 0 || pr > 150) {
+            in.setstate(iostream::failbit);
+            return in;
+        }
+        patch.price = pr;
+
         patch.MovementFromIn(in, patch.movementType);
+        if (!in.good())
+            return in;
+
         if (patch.movementType == NONE) return in;
         patch.DirectionFromIn(in, patch.movementDirection);
         return in;
@@ -116,15 +134,15 @@ public:
     }
 
     /** prints all available information for patches */
-    ostream &PrintInfo(ostream &os) const override {
-        os << "patch: " << name << " price: " << price << " movement: ";
-        MovementToOut(os, movementType);
+    ostream &PrintInfo(ostream &out) const override {
+        out << "patch: " << name << " price: " << price << " movement: ";
+        MovementToOut(out, movementType);
 
-        if (movementType == MovementType::NONE) return os << endl;
+        if (movementType == MovementType::NONE) return out << endl;
 
-        os << " direction: ";
-        DirectionsToOut(os, movementDirection);
-        return os << endl;
+        out << " direction: ";
+        DirectionsToOut(out, movementDirection);
+        return out << endl;
     }
 
 

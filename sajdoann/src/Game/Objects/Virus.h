@@ -51,8 +51,6 @@ public:
     virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
 
-    char Name() { return name; }
-
     int Lives() { return lives; }
 
     bool isVirus() const { return true; };

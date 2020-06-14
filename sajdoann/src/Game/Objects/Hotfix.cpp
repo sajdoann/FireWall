@@ -10,6 +10,7 @@ ostream &Hotfix::SaveObject(ostream &out) {
     MovementToOut(out, movementType);
     out << " ";
     DirectionsToOut(out, movementDirection);
+    return out;
 }
 
 int Hotfix::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {

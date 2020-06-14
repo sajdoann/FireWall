@@ -36,6 +36,7 @@ map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
             throw invalid_argument("Coords " + coord.toStr() + " are out of board.");
 
         if (coords.find(coord) == coords.end()) {
+            if (isalpha(c)) c = toupper(c);
             coords.insert({coord, c});
             continue;
         }

@@ -93,7 +93,8 @@ void Game::MoveLoop(Interface &anInterface) {
     VirusWave virusGenerator(scoreCounter.Level(), viruses);
 
     int virusPoints = 0;
-    for (int i = 0; i < MOVEMENT_LOOP_MAX; ++i) {
+    int loopMax = (gameBoard.MaxY() + gameBoard.MaxY() / 2) + (2 * scoreCounter.Level() + 2) * 2;
+    for (int i = 0; i < loopMax; ++i) {
         virusPoints = 0;
 
         //Generate_Viruses();
@@ -104,7 +105,6 @@ void Game::MoveLoop(Interface &anInterface) {
                 gameBoard.InsertObject(*(a.first), a.second);
             }
             virusWave.pop();
-            //anInterface.PrintBoard(gameBoard);
         }
 
         virusPoints += movement.MoveAll();
@@ -118,8 +118,9 @@ void Game::MoveLoop(Interface &anInterface) {
 
         anInterface.ClearScreen();
         anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
+        anInterface.PrintClock(loopMax - i - 1);
 
-        this_thread::sleep_for(0.2s);
+        this_thread::sleep_for(0.1s);
     }
     gameBoard.ClearButPatches();
     if (gameResult != LOSE) scoreCounter.IncreaseLevel();

@@ -47,3 +47,8 @@ const static char *QUIT_HELP = "quits the current game and goes to menu (where n
 
 const static char *EXPLAIN_NAME = "explain";
 const static char *EXPLAIN_HELP = "explains game";
+
+const static char *INVALID_NOT_A_PATCH_OR_OUT_OF_BOARD = "Not a patch or coords are out of board.";
+const static char *INVALID_NOT_ENOUGH_MONEY = "Not enough money to buy patch.";
+
+const static char *MKDIR = "mkdir ";
