@@ -49,6 +49,10 @@ public:
         Command patches = Patches();
         commands.insert({PATCHES_NAME, patches});
 
+        Command viruses = Viruses();
+        commands.insert({VIRUSES_NAME, viruses});
+
+
         Command showBoard = ShowBoard();
         commands.insert({SHOW_NAME, showBoard});
 
@@ -109,9 +113,12 @@ public:
         return Command(HELP_NAME,
                        HELP_HELP,
                        [this](const string &, Game &, Interface &i) {
+                           i.PrintString(HELP_NAME);
                            for (const auto &c : commands) {
                                i.PrintHelp(c.second.Name(), c.second.Help());
                            }
+                           i.PrintString("\n");
+
                            return CommandEndType::VALID;
                        });
     }
@@ -224,10 +231,21 @@ public:
         );
     }
 
+    Command Viruses() {
+        return Command(VIRUSES_NAME, VIRUSES_HELP,
+                       [](const string &userInput, Game &g, Interface &i) {
+                           for (auto iterV : g.Viruses()) {
+                               i.PrintObjectInfo(*iterV.second);
+                           }
+                           return CommandEndType::VALID;
+                       }
+        );
+    }
+
     Command ShowBoard() {
         return Command(SHOW_NAME, SHOW_HELP,
                        [](const string &userInput, Game &g, Interface &i) {
-                           i.PrintBoard(g.GameBoard());
+                           i.PrintGamePane(g.GameState(), g.getScoreCounter(), g.GameBoard());
                            return CommandEndType::VALID;
                        }
         );

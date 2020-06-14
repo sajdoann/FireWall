@@ -13,16 +13,15 @@ int App::Run() {
     while (true) {
         switch (game.GameState()) {
             case State::MENU: {
+                interface.ClearScreen();
                 interface.PrintState(game.GameState());
-                bool end;
 
                 int error = to_menu_Switch();
                 if (error == 1) return 0;
                 else if (error) return error;
 
-
                 game.GameState(State::PREPARATION);
-                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
+                interface.ClearScreen();
                 break;
             }
             case State::PREPARATION: {
@@ -32,6 +31,7 @@ int App::Run() {
             case State::ATTACK: {
                 interface.ClearScreen();
                 AttackLoop();
+
                 interface.PrintResult(game.GameResult());
 
                 //if user looses then go to MENU
@@ -54,8 +54,9 @@ void App::Greet() {
 }
 
 int App::PrepLoop() {
+    interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
     while (game.GameState() == State::PREPARATION) {
-        // interface.PrintBoard(game.GameBoard());
+
         string command = interface.PromptCommand();
         CommandEndType endType = FindAndExecCommand(command);
         if (endType == CommandEndType::ENDGAME)
@@ -70,16 +71,15 @@ int App::PrepLoop() {
 }
 
 
-int App::AttackLoop() {
+void App::AttackLoop() {
     game.MoveLoop(interface);
-    return 0;
 }
 
 bool App::MenuSwitcher() {
     while (true) {
         string recievedString = interface.AskWhichGame();
         string command;
-        for (int i = 0; i < recievedString.size(); i++) {
+        for (unsigned int i = 0; i < recievedString.size(); i++) {
             if (isalpha(recievedString[i]))
                 command.push_back(toupper(recievedString[i]));
 
@@ -110,8 +110,7 @@ CommandEndType App::FindAndExecCommand(string &command) {
         if (regex_match(command, c)) {                  //if command matches with regex key in map of commands
             interface.ClearScreen();
 
-            //executes command
-            CommandEndType typeOfCommand = com.second.Exec(command, game, interface);
+            CommandEndType typeOfCommand = com.second.Exec(command, game, interface);  //executes command
 
             if (typeOfCommand == ENDGAME || typeOfCommand == INVALID)
                 return typeOfCommand;
@@ -121,8 +120,12 @@ CommandEndType App::FindAndExecCommand(string &command) {
         }
     }
     // no command was found, suggest to use help
-    if (!found)
+    if (!found) {
+        interface.ClearScreen();
         interface.HelpAdvertiser();
+
+    }
+    return CommandEndType::VALID;
 }
 
 int App::to_menu_Switch() {

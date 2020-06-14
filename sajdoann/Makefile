@@ -8,6 +8,10 @@ compile: App.o Interface.o main.o Game.o ScoreCounter.o Board.o Reader.o Coords.
 
 # cat tmp.txt | grep -o '^.*\.o' > jmena.txt
 
+#command make run
+run: compile
+	./$(USERNAME)
+
 
 %.o: src/%.cpp
 	$(LD) $(CXXFLAGS) -c $< -o $@

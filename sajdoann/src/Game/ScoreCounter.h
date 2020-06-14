@@ -39,7 +39,7 @@ public:
 
     int Ram() const { return ram; }
 
-    int takeRam(int take) { ram -= take; }
+    void takeRam(int take) { ram -= take; }
 
     int RamStart() const { return ramStart; }
 

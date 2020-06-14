@@ -3,7 +3,6 @@ A             15          FRONT           DOWN
 D             12          FRONT          RIGHT
 R             50           RAND           LEFT
 W             15           NONE
-
-              X             12          FRONT     DIAGONAL_D
+X             12          FRONT     DIAGONAL_D
 Y              0          FRONT     DIAGONAL_U
 Z              5          FRONT           LEFT

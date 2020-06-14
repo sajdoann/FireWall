@@ -24,7 +24,7 @@ const static char *HELP_HELP = "lists all the commands";
 
 const static char *GOOGLE_NAME = "google";
 const static char *GOOGLE_REGEX = "[ ]*google[ ]*[a-z!@#$%^&?]{1}[ ]*";
-const static char *GOOGLE_HELP = "Type the name of the object and all you will get all info about it";
+const static char *GOOGLE_HELP = "type the name of the object and all you will get all info about it";
 
 const static char *SAVE_NAME = "save";
 const static char *SAVE_HELP = "saves the game into files";
@@ -35,12 +35,15 @@ const static char *LOAD_HELP = "loads game from saved games";
 const static char *PATCHES_NAME = "patches";
 const static char *PATCHES_HELP = "describes all patches";
 
+const static char *VIRUSES_NAME = "viruses";
+const static char *VIRUSES_HELP = "describes all viruses";
+
 const static char *SHOW_NAME = "show";
 const static char *SHOW_HELP = "shows the entire firewall that was till now coded.";
 
 const static char *NOT_AN_OBJECT = "is not object in the game.";
 const static char *QUIT_NAME = "quit";
-const static char *QUIT_HELP = "Quits the current game and goes to menu (where new game or load saved game can be choosed).";
+const static char *QUIT_HELP = "quits the current game and goes to menu (where new game or load saved game can be choosed)";
 
 const static char *EXPLAIN_NAME = "explain";
 const static char *EXPLAIN_HELP = "explains game";

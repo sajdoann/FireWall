@@ -99,22 +99,9 @@ void Interface::ExplainPrepState() {
 
 void Interface::PrintResult(ResultEnum gameResult) {
     if (gameResult == ResultEnum::LOSE)
-        os << LOST_MESSAGE << endl;
-    else os << WIN_MESSAGE << endl;
-}
-
-void Interface::PrintBoardAttack(Board &board) {
-    for (int i = 0; i < board.MaxX(); ++i) {
-        for (int j = 0; j < board.MaxY(); ++j) {
-            Object *o = board(i, j);
-            getColorOfObject(o);
-            os << clr << setw(3) << (o);
-            ResetClr();
-        }
-        os << endl;
-    }
-
-    os << endl << endl;
+        PrintInColor(colorClass.Color(ColorClass::RED), LOST_MESSAGE);
+    else PrintInColor(colorClass.Color(ColorClass::GREEN), WIN_MESSAGE);
+    PrintMessageWaitForEnter("To continue press enter.");
 }
 
 string Interface::PromptSaveFolder() {

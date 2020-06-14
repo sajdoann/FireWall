@@ -49,6 +49,7 @@ bool BfsStrategy::Bfs(Board *board, Coords start, Coords &dest, std::map<Coords,
 }
 
 void BfsStrategy::setPath(map<Coords, Coords> &pred) {
+    if (!pathExists) return;
     Coords itr = destination;
     while (itr != pred.at(start)) {
         path.push_back(itr);
@@ -73,7 +74,7 @@ Coords *BfsStrategy::getTargetCoords(Board *oldBoard, Board &newBoard, const Coo
         //no next coord was found
         if (path.empty()) {
             if (!pathExists)
-                return nullptr;
+                return new Coords(startCoords.X(), startCoords.Y() - 1);
             else return new Coords(-1, -1);
         }
 

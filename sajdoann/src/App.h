@@ -25,10 +25,24 @@ class App {
     Commands commands;
 
 
+    /**
+     *  menu mode switches bteweeen new game, load game and exit
+     * @return true if exit the game, false stay in game
+     */
     bool MenuSwitcher();
 
+    /**
+     * help function to go to menu switcher
+     * catches all possible errors
+     * @return 0 - all was ok, 1 - exit game, other number - error occured
+     */
     int to_menu_Switch();
 
+    /**
+     * finds command and executes it
+     * @param command - input command from user
+     * @return command end type - what to do next
+     */
     CommandEndType FindAndExecCommand(string &command);
 
 public:
@@ -41,27 +55,24 @@ public:
 
     ~App() = default;
 
-
+    /** getter for game board */
     Board &GameBoard() { return game.GameBoard(); }
 
+    /** getter for game state */
     void GameState(State &state) { game.GameState(state); }
 
-    /**
-     * welcomes the user
-     */
+    /** welcomes the user */
     void Greet();
 
-    /**
-     * loop for prep state
-     * @return
+    /**loop for prep state
+       @return 0 to end game, 1 to continue
      */
     int PrepLoop();
 
     /**
-     * loop for attack
-     * @return
+     * loop for attack, moves objects, deals with collisions
      */
-    int AttackLoop();
+    void AttackLoop();
 
     /**
      * game loop

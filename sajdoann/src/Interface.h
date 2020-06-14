@@ -25,17 +25,21 @@ class Interface {
     ColorClass colorClass;
     mutable const char *clr = colorClass.Color(ColorClass::RESET);
 
+    /** prints message waits for enter */
     void PrintMessageWaitForEnter(const string &message);
 
+    /** prints message */
     void Print(const string &message) const;
 
+    /** prints message in color */
     void PrintInColor(const char *color, const string &message) const;
 
+    /** prints ram that was used in grey */
     void PrintGreyRam(int ram) const;
 
 private:
-    /** prints numbers from 0-max in the same format as PrintBoard
-    * @param max till what number it prints
+    /** prints numbers from 0-max
+    * @param max - till what number it prints
     */
     void numberRow(int max) const;
 
@@ -58,8 +62,10 @@ public:
     /** asks the user to enter command */
     string PromptCommand() const;
 
+    /** prints string s */
     void PrintString(const string &s) { os << s << endl; }
 
+    /** prints state */
     void PrintState(const State &state) const {
         string s;
 
@@ -83,9 +89,8 @@ public:
 
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
-        //TODO: in clion term variable not found -> not functioning (on other sys should not be a prob)
+        //in clion term variable not found -> not functioning (on other sys should not be a prob)
         system("clear");
-        //os << string(100, '\n');
     }
 
     /** tells the story of FireWall game */
@@ -107,30 +112,37 @@ public:
     /** prints the result */
     void PrintResult(ResultEnum gameResult);
 
-
+    /** clears in buffer */
     void ClearBuffers() {
-        //TODO: IMPLEMENT
-        //in.ignore(numeric_limits<streamsize>::max(),'\n');
         in.clear();
     }
 
-
+    /** prits all available information about given object */
     void PrintObjectInfo(const Object &object) const {
         object.PrintInfo(os);
     }
 
-    void PrintBoardAttack(Board &board);
-
+    /** asks for folder to save the game */
     string PromptSaveFolder();
 
+    /** asks user to choose from files */
     string chooseFile(vector<string> filenames);
 
+    /** prints ram */
     void PrintRam(int ram, int startRam) const;
 
+    /** prints money */
     void PrintMoney(int money) const;
 
+    /** asks youser to input either new/ load/ exit to see what to do next */
     string AskWhichGame();
 
+    /**
+     * prints entire game pane <-> prints all params
+     * @param gameState
+     * @param scoreCounter
+     * @param board
+     */
     void PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const;
 
 };

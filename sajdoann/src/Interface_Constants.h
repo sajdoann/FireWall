@@ -13,7 +13,8 @@ const static char *EXPLANATION = "Your goal is to place patches so no virus coul
                                  "         .   W - wall\n"
                                  "         .   other letter - some super special patch you can google up (use: \"google\" + name of patch)\n"
                                  "To see what the IT departament came with so far type \'show.\'\n"
-                                 "When you want to put the patch online where it can be attacked by viruses type \'done\'";
+                                 "When you want to put the patch online where it can be attacked by viruses type \'done\'"
+                                 "To continue press enter.";
 
 const static char *GREETING = "Hello!\n"
                               "There is a very important mission ahead of you.\n"

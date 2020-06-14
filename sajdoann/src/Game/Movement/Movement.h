@@ -17,12 +17,17 @@ class Movement {
     Interface interface;
 
 public:
-    Movement(Board *board) : board(board), interface(cin, cout){}
+    Movement(Board *board) : board(board), interface(cin, cout) {}
 
     ~Movement() {}
 
-    //game gives order and the entire board moves
-    // first vawe are moving objects then patches
+
+    /**
+     * moves all objects on the board by one step
+     * creates new board, adds all patches, interates and adds all objects on moved(target) position
+     * assigns board new board
+     * @return how many viruses broke through the wall
+     */
     int MoveAll() {
         Board newBoard(board->MaxX(), board->MaxY());
         newBoard.AddAllPatches(board);
@@ -37,8 +42,6 @@ public:
         }
 
         *board = newBoard;
-        //interface.PrintBoardAttack(*board);
-        // interface.PrintBoard(*board);
         return virusPoints;
     }
 

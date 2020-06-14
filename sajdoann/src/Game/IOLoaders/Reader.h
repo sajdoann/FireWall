@@ -29,7 +29,9 @@ protected:
      * check if loading ends with eof if not throws invalid argument exception
      * @param endsWithEof - bool that says if file ends with eof
      */
-    void check_eof(bool endsWithEof);
+    int check_eof(bool endsWithEof);
+
+    void EofError();
 
     void ReadLineScore(const string &name, int &variable) {
         string nameIn;
@@ -71,7 +73,12 @@ public:
         }
 
         delete object;
-        check_eof(in.eof());
+        if (!in.eof()) {
+            for (auto &obj : objects) {
+                delete obj.second;
+            }
+            EofError();
+        }
         return objects;
     }
 
@@ -80,12 +87,17 @@ public:
     //todo: osetrit new line
     Counter ReadScore() {
         int ram, startRam, lvl, money;
-        in >> ram >> startRam >> lvl >> money;
+        string input;
+        getline(in, input);
+        stringstream strstream(input);
+        strstream >> ram >> startRam >> lvl >> money;
         if (ram > startRam)
             throw logic_error("Ram cannot be bigger than start ram.");
         if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)
             throw logic_error("One of arguments exceeded max allowed constant.");
-        check_eof(in.eof());
+        if (!in.eof())
+            EofError();
+
         Counter ctr(ram, startRam, lvl, money);
         return ctr;
     }

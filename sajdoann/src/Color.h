@@ -10,7 +10,10 @@
 
 using namespace std;
 
-
+/**
+ * class for colors that are used in game interface
+ * has colors that are assigned ansi escape sequences
+ */
 class ColorClass {
 public:
     enum Color {
@@ -37,12 +40,16 @@ private:
 public:
     vector<Color> COLORS = {RED, BLUE, CYAN, GREY, GREEN, VIRUS, HOTFIX, RESET};
 
+    /**
+     * assigns color enum its char representation
+     */
     ColorClass() {
-        for (int i = 0; i < ANSI.size(); ++i) {
+        for (unsigned int i = 0; i < ANSI.size(); ++i) {
             colors.insert({COLORS[i], ANSI[i]});
         }
     }
 
+    /** gets color ansi escape sequence */
     const char *Color(Color colorEnum) const {
         return colors.at(colorEnum);
     }

@@ -6,7 +6,7 @@
 #pragma once
 /**
  * class for directions of movement
- * classic direction + other - for inteligent
+ * classic directions up, down, ... + diagonals
  */
 enum MovementDirection {
     RIGHT, UP, DOWN, LEFT, DIAGONAL_U, DIAGONAL_D

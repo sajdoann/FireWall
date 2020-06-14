@@ -66,7 +66,7 @@ public:
     ostream &SaveObject(ostream &out) override;
 
     istream &LoadObject(istream &in) {
-        in >> *this;
+        return in >> *this;
     }
 
     ostream &PrintInfo(ostream &out) const override {
@@ -83,8 +83,7 @@ public:
         virus.MovementToOut(out, virus.movementType);
         out << " ";
         virus.DirectionsToOut(out, virus.movementDirection);
-
-
+        return out;
     }
 
     friend istream &operator>>(istream &in, Virus &v) {

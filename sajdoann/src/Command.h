@@ -16,7 +16,9 @@
 using namespace std;
 
 /**
- * class for command - remembers name, help and function what to do if this command is called
+ *   class for command - remembers name, help and function what to do if this command is called
+ *   strucutre of this class loosely inspired by https://gitlab.fit.cvut.cz/bernhdav/pa2-minesweeper/blob/master/src/CCommand.h
+ *   author @bernhdav
  */
 class Command {
     string name;
@@ -25,6 +27,7 @@ class Command {
     function<CommandEndType(string, Game &, Interface &)> exec;
 
 public:
+
     Command(string name, string help, function<CommandEndType(string, Game &, Interface &)> exec) : name(
             std::move(name)), help(std::move(help)), exec(std::move(exec)) {}
 

@@ -5,14 +5,8 @@
 
 #include "Reader.h"
 
-void Reader::check_eof(bool endsWithEof) {
-    if (endsWithEof)
-        return;
 
-    string str = "Error loading input from this file: " + filename + " wrong file format.";
-    throw invalid_argument(str);
 
-}
 
 Reader::Reader(const string &filename) : filename(filename) {
     in.open(filename);
@@ -48,7 +42,12 @@ map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
         throw invalid_argument("Coordinations " + coord.toStr() + " already taken on this board.");
     }
 
-    check_eof(in.eof());
-
+    if (!in.eof())
+        EofError();
     return coords;
+}
+
+void Reader::EofError() {
+    string str = "Error loading input from this file: " + filename + " wrong file format.";
+    throw invalid_argument(str);
 }
