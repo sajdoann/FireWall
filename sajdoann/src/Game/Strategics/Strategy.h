@@ -12,11 +12,15 @@ class Board;
 
 class Object;
 
+/**
+ * moving object has its strategy how it can move
+ * it can be very basic - front strategy (moves in the given direction)
+ * or a bit more inteligent - random or shortest path
+ */
 class Strategy {
 protected:
     MovementDirection movementDirection = MovementDirection::RIGHT;
 public:
-    // Strategy() = default;
 
     Strategy(MovementDirection movementDirection) : movementDirection(movementDirection) {}
 
@@ -42,6 +46,11 @@ public:
     int
     execMove(Object *object, Board &newBoard, Board *oldBoard, const Coords &startCoords, const Coords &targetCoords);
 
+    /**
+     * from movement direction adn start coords counts target coords
+     * @param startCoords
+     * @return target coords
+     */
     Coords *getMovedCoords(const Coords &startCoords);
 
 

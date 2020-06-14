@@ -11,7 +11,7 @@ bool Coords::isOnBoard(Board *b) const {
     return b->MaxX() > x && x >= 0 && b->MaxY() > y && y >= 0;
 }
 
-std::vector<Coords> Coords::getNeighbours(Board *board) {
+std::vector<Coords> Coords::getNeighbours(Board *b) {
     vector<Coords> c;
     int xC[4] = {-1, 1, 0, 0};
     int yC[4] = {0, 0, -1, 1};
@@ -20,10 +20,10 @@ std::vector<Coords> Coords::getNeighbours(Board *board) {
         int neibX = xC[i] + x;
         int neibY = yC[i] + y;
         Coords neibCoords = Coords(neibX, neibY);
-        if (!neibCoords.isOnBoard(board))
+        if (!neibCoords.isOnBoard(b))
             continue;
         //is a patch -> cannot step
-        auto a = board->At(neibCoords);
+        auto a = b->At(neibCoords);
         if (!a->isEmpty() && !a->isMovingObject()) continue;
         c.push_back(neibCoords);
     }

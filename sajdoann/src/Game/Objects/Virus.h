@@ -7,15 +7,13 @@
 
 #include <iomanip>
 #include "MovingObject.h"
-
+/**
+ * an object that tries to get from right side of board to left
+ * it remembers its lives
+ */
 class Virus : public MovingObject {
     int lives;
-    int difficulty = 0;
 
-    void setDifficulty() {
-        //TODO: imlement this
-        //if(type == 'C')
-    }
 
 public:
     Virus() {
@@ -24,7 +22,6 @@ public:
 
     Virus(char name, int lives, MovementType movementType, MovementDirection movementDirection)
             : MovingObject(name, movementType, movementDirection), lives(lives) {
-        setDifficulty();
     }
 
 
@@ -53,9 +50,6 @@ public:
 
     virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
-    /* bool Interact(Object * objectTarget){
-         if(objectTarget->isVirus())
-     }*/
 
     char Name() { return name; }
 

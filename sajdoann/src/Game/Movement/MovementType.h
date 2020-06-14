@@ -5,10 +5,10 @@
 
 #pragma once
 
-#include <optional>
-
 using namespace std;
-
+/**
+ * declares all types of movement a moving object can do
+ */
 enum MovementType {
     STRAIGHT, FRONT, SHORTEST, NONE, RAND
 };

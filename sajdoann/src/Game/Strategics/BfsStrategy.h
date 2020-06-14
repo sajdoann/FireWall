@@ -10,7 +10,9 @@
 #include <vector>
 #include <map>
 
-
+/**
+ * strategy that finds the shortest route from start coords to destination
+ */
 class BfsStrategy : public Strategy {
     std::vector<Coords> path;
     bool pathExists;
@@ -35,8 +37,16 @@ public:
         return new BfsStrategy(movementDirection, path, pathExists, start, destination, findPath);
     }
 
+    /**
+     * gets target coords
+     * @param oldBoard - board from previous move
+     * @param newBoard - actual board
+     * @param startCoords - start coords of object we move
+     * @return target coords
+     */
     Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords);
 
+    /** prints the route of the object that implements this strategy */
     void printRoute(Board &newBoard);
 };
 

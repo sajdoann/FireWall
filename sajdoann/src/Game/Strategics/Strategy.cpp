@@ -12,7 +12,6 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
         if (!object->isVirus()) return 0;
         //virus sucessfully gone
         if (object->isVirus() && startCoords.Y() == 0) {
-            //todo
             return 1;
         }
         return 0;
@@ -22,7 +21,6 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
     Object *objectTarget = newBoard.At(targetCoords);
 
     //there is patch on target position
-    // todo: it should never happen that virus encounters patch
     if (!objectTarget->isEmpty() && !objectTarget->isMovingObject()) {
         return 0;
     }
@@ -39,8 +37,6 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
                 return 0;
             }
         }
-
-        //todo: pokud chci vic jak jeden zivot pro patche zmenit
 
         // hotfix steps on virus
         if (!object->isVirus() && objectTarget->isVirus()) {

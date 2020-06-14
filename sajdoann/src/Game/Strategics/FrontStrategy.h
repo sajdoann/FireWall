@@ -6,7 +6,9 @@
 #pragma once
 
 #include "Strategy.h"
-
+/**
+ * object with tis strategy always continues it the direction that was given to it
+ */
 class FrontStrategy : public Strategy {
 
 public:
@@ -14,6 +16,7 @@ public:
 
     FrontStrategy(MovementDirection movementDirection) : Strategy(movementDirection) {}
 
+    /** gets target coords */
     Coords *getTargetCoords(Board *oldBoard, Board &newBoard, const Coords &startCoords) override;
 
     Strategy *Clone() const {

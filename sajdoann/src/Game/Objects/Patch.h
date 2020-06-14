@@ -64,15 +64,19 @@ public:
     /** returns false because patch is not a moving object */
     bool isMovingObject() const override { return false; }
 
+    /** returns false because patch is not empty object */
     bool isEmpty() const { return false; }
 
+    /** returns false because patch is not a virus*/
     virtual bool isVirus() const { return false; };
 
+    /** returns true because it is a patch*/
     virtual bool isPatch() const { return true; };
 
     /** returns true if patch can shoot, if movement none -> false */
     virtual bool canShoot() const { return movementType != MovementType::NONE; }
 
+    /** if can shoot it shoots hotfix and places it on board if strategy exec move conditions are met (it can be placed there) */
     int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override;
 
     Hotfix ShootHotfix() {

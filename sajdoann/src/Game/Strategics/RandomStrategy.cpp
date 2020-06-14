@@ -23,7 +23,8 @@ Coords *RandomStrategy::getTargetCoords(Board *oldBoard, Board &newBoard, const 
         if (*targetCoords == Coords()) {
             targetCoords->setCoords(targetCoords->X(), targetCoords->Y() - 1);
         }
-    } else if (movementDirection == MovementDirection::RIGHT) {
+    } else {
+        //goes to right
         targetCoords = new Coords(dist_bin(e1) + 1, dist_tri(e1));
         if (*targetCoords == Coords()) {
             targetCoords->setCoords(targetCoords->X(), targetCoords->Y() + 1);

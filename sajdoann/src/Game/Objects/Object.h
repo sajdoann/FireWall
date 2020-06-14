@@ -10,6 +10,11 @@ class Board;
 
 using namespace std;
 
+/**
+ * abstract object is a parent class that roofs all objects in game
+ * object has its name
+ *
+ */
 class Object {
 protected:
     char name = 'a';
@@ -20,26 +25,39 @@ public:
 
     virtual ~Object() = default;
 
-    virtual  Object * Clone() const = 0;
+    virtual Object *Clone() const = 0;
 
 
-    //saves object into stream for storing
+    /**
+     * saves object into stream for storing
+     * @param out - output stream
+     * @return out stream
+     */
     virtual ostream &SaveObject(ostream &out) = 0;
 
-    //loads objects in save object format
+    /**
+     * class to load objects from stream in
+     * @param in - stream
+     * @return in stream
+     */
     virtual istream &LoadObject(istream &in) = 0;
 
-    //print object in game
-    //virtual ostream &Print(ostream &out) = 0;
-
+    /** prints name of object */
     char Name() {
         return name;
     }
 
+    /**
+     * says what to do when object needs to attack - that means shoot hotfix or move
+     * @param newBoard - board that constains objects that already moved/attacked
+     * @param oldBoard - pre move board, contains last move
+     * @param startCoords - coords of object before move
+     * @return virus points that were gained during this move
+     */
     virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
 
 
-    //prints object for user
+    /** prints object for user */
     virtual ostream &PrintInfo(ostream &out) const = 0;
 
 

@@ -89,7 +89,7 @@ Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
 
 
-bool Game::MoveLoop(Interface &anInterface) {
+void Game::MoveLoop(Interface &anInterface) {
     VirusWave virusGenerator(scoreCounter.Level(), viruses);
 
     int virusPoints = 0;

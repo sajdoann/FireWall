@@ -12,6 +12,10 @@ using namespace std;
 
 class Board;
 
+/**
+ * emty object its name is always -
+ * can be placed on board
+ */
 class Empty : public Object {
     char name = '-';
 

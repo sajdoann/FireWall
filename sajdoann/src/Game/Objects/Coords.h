@@ -8,8 +8,11 @@
 #include <string>
 #include <vector>
 
-class Board;
+class Board;    //foward declaration because of includes would otherwise not function
 
+/**
+ * class for coordination remembers x and y coords
+ */
 class Coords {
     int x = 0;
     int y = 0;
@@ -24,10 +27,13 @@ public:
 
     Coords &operator=(const Coords &other);
 
+    /** gets x*/
     int X() const { return x; }
 
+    /** gets y */
     int Y() const { return y; }
 
+    /** sets coords */
     void setCoords(int x, int y) {
         this->x = x;
         this->y = y;
@@ -47,8 +53,16 @@ public:
         }
     };*/
 
-    std::vector<Coords> getNeighbours(Board *board);
+    /** gets all coords of tiles in one distance
+     * @param b - board
+     * */
+    std::vector<Coords> getNeighbours(Board *b);
 
+    /**
+     * says if this coords are on board
+     * @param b - board
+     * @return true if this coord is on board
+     */
     bool isOnBoard(Board *b) const;
 
 };
