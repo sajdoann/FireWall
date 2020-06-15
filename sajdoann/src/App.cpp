@@ -5,7 +5,6 @@
 
 #include <string>
 #include <regex>
-#include "Game/GameConstants.h"
 #include "App.h"
 
 int App::Run() {
@@ -56,6 +55,8 @@ void App::Greet() {
 int App::PrepLoop() {
     while (game.GameState() == State::PREPARATION) {
         string command = interface.PromptCommand();
+
+
         CommandEndType endType = FindAndExecCommand(command);
         if (endType == CommandEndType::ENDGAME)
             return 0;
@@ -77,7 +78,10 @@ void App::AttackLoop() {
     interface.PrintResult(game.GameResult());
 
     game.GameBoard().ClearButPatches();
-    if (game.GameResult() != LOSE) game.getScoreCounter().IncreaseLevel();
+    if (game.GameResult() != LOSE) {
+        game.getScoreCounter().AddMoney();
+        game.getScoreCounter().IncreaseLevel();
+    }
 
 }
 
@@ -108,6 +112,7 @@ bool App::MenuSwitcher() {
 
 CommandEndType App::FindAndExecCommand(string &command) {
     bool found = false;
+
     for (auto &com : commands.CommandsMap()) {
 
         regex c("[ ]*" + com.first + "[ ]*",                //makes regex from com name

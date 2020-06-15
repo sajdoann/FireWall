@@ -16,6 +16,7 @@ class Counter {
     int ramStart = RAM_CONSTANT;
     int level = 0;
     int money = 50;
+    const static int INCREASE = 10;
 
 
 public:
@@ -43,6 +44,8 @@ public:
     int Level() const { return level; }
 
     void IncreaseLevel() { ++level; }
+
+    void AddMoney() { money += INCREASE; }
 
     int Money() const { return money; }
 

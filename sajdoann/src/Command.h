@@ -7,7 +7,6 @@
 
 #include <map>
 #include <functional>
-#include <utility>
 
 #include "Game/Game.h"
 #include "CommandEndType.h"
@@ -39,16 +38,4 @@ public:
     CommandEndType Exec(string &userInput, Game &game, Interface &interface) {
         return exec(userInput, game, interface);
     }
-
-    /* functor that compares commands based on their names ( which are required to ne unique )
-     struct cmp{
-         int operator()(const Command & a, const Command & b){
-             if( a.name != b.name ) return a.name < b.name;
-             return 0;
-         }
-     };*/
-
 };
-
-
-

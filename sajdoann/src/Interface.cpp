@@ -9,10 +9,12 @@
 #include "Interface.h"
 #include "Interface_Constants.h"
 
-string Interface::PromptCommand() const {
+string Interface::PromptCommand() {
     string command;
     os << ENTER_COMMAND << endl;
-    getline(in, command);
+    ClearBuffers();
+    while (command.empty())
+        getline(in, command);
 
     return command;
 }

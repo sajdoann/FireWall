@@ -79,8 +79,5 @@ public:
      * @return no errors 0 / app errors nonzero number
      */
     int Run();
-
 };
-
-
 

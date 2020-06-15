@@ -28,19 +28,18 @@ public:
         out.close();
     }
 
-    //writes the data to file
+    /**
+     * writes object data to file
+     * @tparam O
+     * @param object
+     */
     template<typename O>
-    void writeStillObjectsFromMap(O object) {
+    void writeObjectsFromMap(O object) {
         for (const auto &p :object) {
             auto single = *p.second;
             single.SaveObject(out);
             out << endl;
         }
-    }
-
-    template<typename T>
-    void getHeading(T t) {
-        T::Heading(out);
     }
 
     void writeBoard(Board &b) {

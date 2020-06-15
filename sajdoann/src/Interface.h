@@ -60,7 +60,7 @@ public:
     ~Interface() = default;
 
     /** asks the user to enter command */
-    string PromptCommand() const;
+    string PromptCommand();
 
     /** prints string s */
     void PrintString(const string &s) { os << s << endl; }
@@ -87,6 +87,11 @@ public:
     /** extracts patch from  InsertPatch command */
     void GetPatchInfo(const string &s, char &patchName, Coords &coords);
 
+    /** clears in buffer */
+    void ClearBuffers() {
+        in.clear();
+    }
+
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
         //in clion term variable not found -> not functioning (on other sys should not be a prob)
@@ -111,11 +116,6 @@ public:
 
     /** prints the result */
     void PrintResult(ResultEnum gameResult);
-
-    /** clears in buffer */
-    void ClearBuffers() {
-        in.clear();
-    }
 
     /** prits all available information about given object */
     void PrintObjectInfo(const Object &object) const {

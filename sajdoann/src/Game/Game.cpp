@@ -124,8 +124,6 @@ void Game::MoveLoop(Interface &anInterface) {
 
         this_thread::sleep_for(0.1s);
     }
-    //gameBoard.ClearButPatches();
-    //if (gameResult != LOSE) scoreCounter.IncreaseLevel();
 }
 
 void Game::SaveGame(const string &directoryPath) {
@@ -136,13 +134,11 @@ void Game::SaveGame(const string &directoryPath) {
 
 void Game::save_patches_and_viruses(const string &directoryPath) const {
     Writer patchWriter(directoryPath + "/patches.txt");
-    //patchWriter.getHeading(*(Patches().begin()->second));
-    patchWriter.writeStillObjectsFromMap(Patches());
+    patchWriter.writeObjectsFromMap(Patches());
     patchWriter.Close();
 
     Writer VirusWriter(directoryPath + "/viruses.txt");
-    // VirusWriter.getHeading(*(Viruses().begin()->second));
-    VirusWriter.writeStillObjectsFromMap(Viruses());
+    VirusWriter.writeObjectsFromMap(Viruses());
     VirusWriter.Close();
 }
 

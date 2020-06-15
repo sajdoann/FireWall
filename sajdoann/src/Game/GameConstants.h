@@ -8,8 +8,6 @@
  * class that has all constants needed for game
  */
 
-/** how many times virus move during attack stage, in game steadily increased by level */
-//const int MOVEMENT_LOOP_MAX = 100;
 
 /** board limit measures */
 const static int MAX_BOARD_MEASURE = 100;

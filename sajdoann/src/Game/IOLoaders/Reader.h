@@ -64,13 +64,14 @@ public:
         }
 
         delete object;
-        if (objects.empty())
-            throw invalid_argument("File corrupted: no/wrong object input " + filename);
 
         if (!in.eof()) {
             freeObjects(objects);
             EofError();
         }
+
+        if (objects.empty())
+            throw invalid_argument("File corrupted: no/wrong object input " + filename);
         return objects;
     }
 
