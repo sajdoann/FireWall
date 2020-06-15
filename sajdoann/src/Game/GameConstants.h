@@ -20,5 +20,5 @@ const static int RAM_CONSTANT = 20;
 const static int MAX_RAM_CONSTANT = 50;
 const static int MAX_LVL_CONSTANT = 20;
 
-const static char *DEFAULT_PATH = "../sajdoann/Data/Default";
-const static char *SAVES_PATH = "../sajdoann/Data/Saves";
+const static char *DEFAULT_PATH = "../sajdoann/data/Default";
+const static char *SAVES_PATH = "../sajdoann/data/Saves";

@@ -65,7 +65,7 @@ public:
 
         delete object;
         if (objects.empty())
-            throw invalid_argument("At least one object needs to be inputed " + filename);
+            throw invalid_argument("File corrupted: no/wrong object input " + filename);
 
         if (!in.eof()) {
             freeObjects(objects);
