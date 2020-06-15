@@ -4,11 +4,11 @@
  
  Počítači se rozbil firewall, a tak je úkolem hráče udělat **patche**, tak aby skrz firewall proniklo co nejméně zákeřných virů.
  
-Hráč má ale omezené prostředky - má konečnou velikost **ramky**. A tak hráč rozmisťuje různé druhy patchů na hrací pole a musí si
-vystačit s ramkou co má (Patche jsou náročné na ram).
+Hráč má ale omezené prostředky - nemůže si koupit kolik patchů chce. A tak hráč rozmisťuje různé druhy patchů na hrací pole a musí si
+vystačit s herními penězmi co má.
 
 Poté přichází na řadu simulace útoku. Hráč pozoruje, jak **viry** cestují z levého okraje a snaží se proniknout přes firewall. Viry se
-pohybují různým stylem (zleva-doprava, nejkratší možná cesta, inteligentní - vidí dopředu) z levé strany a chtejí proniknout doprava.
+pohybují různým stylem (zleva-doprava, nejkratší možná cesta) z levé strany a chtejí proniknout doprava.
 
 Některé patche mají schopnost střílet na viry **hotfixy**. Hotfixy se pak pohybují dál po hracím poli.
 
@@ -20,21 +20,24 @@ Hra má 3 části:
 
 ### Dědičnost a polymorfismus:
 Třídy:
-- Object (SaveObject, PrintInfo, LoadObject, isEmpty, isMovingObj, isVirus)
+- Object (SaveObject, PrintInfo, LoadObject, isEmpty, isMovingObj, isVirus, Attack)
     - empty
     - ObjectWithMoveAttributes
         - patch
         - moving object
             - hotfix
             - virus
-        
-    
-    
-jiné třídy nic nedědí. S těmito třídami jsou ještě spjaté třídy z Movement složky, kde jsou všechny možné
+       
+- Strategy
+    - Front
+    - Bfs
+    - Random (ve smeru do leva (tj diagonalne v levo a v levo) jinak smery zbyvající)      
+ 
+ S těmito třídami jsou ještě spjaté třídy z Movement složky, kde jsou všechny možné
 pohyby po board pro moving objects. Classa moving object si pamatuje movement type a movement direction.
 
-Polymorfismus využívám pro metody SaveObject a PrintInfo v objektu, ty jsou implementovány v 
-hotfixu, virusu, patchi a empty. 
+Polymorfismus využívám pro metodu Attack, která se provede pro příslušný objekt. Tato metoda u moving objectů volá příslušnou 
+strategii (getTargetCoords, ExecMove).
  
 ### Třídy a reprezentace
  Krom výše zmíněných tříd zde je: 
@@ -49,6 +52,8 @@ hotfixu, virusu, patchi a empty.
     
 ### Příkazy
 (P ... zkratka patch)
+
+například:
 
 `help:`
 - `type P (x,y)` -   places patch, syntax: " patch Type (coord x, coord y)" ... for example "W(0,0)"

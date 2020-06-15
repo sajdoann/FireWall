@@ -32,9 +32,7 @@ int App::Run() {
             case State::ATTACK: {
                 interface.ClearScreen();
                 AttackLoop();
-                interface.ClearScreen();
-                interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
-                interface.PrintResult(game.GameResult());
+
 
                 //if user looses then go to MENU
                 if (game.GameResult() == LOSE) {
@@ -73,6 +71,14 @@ int App::PrepLoop() {
 
 void App::AttackLoop() {
     game.MoveLoop(interface);
+
+    interface.ClearScreen();
+    interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
+    interface.PrintResult(game.GameResult());
+
+    game.GameBoard().ClearButPatches();
+    if (game.GameResult() != LOSE) game.getScoreCounter().IncreaseLevel();
+
 }
 
 bool App::MenuSwitcher() {
@@ -81,18 +87,18 @@ bool App::MenuSwitcher() {
         string command;
         for (unsigned int i = 0; i < recievedString.size(); i++) {
             if (isalpha(recievedString[i]))
-                command.push_back(toupper(recievedString[i]));
+                command.push_back(tolower(recievedString[i]));
 
         }
-        if (command == "NEW") {
+        if (command == NEW_NAME) {
             game.LoadGame(DEFAULT_PATH);
             return false;
         }
-        if (command == "LOAD") {
+        if (command == LOAD_NAME) {
             commands.Load().Exec(command, game, interface);
             return false;
         }
-        if (command == "EXIT") {
+        if (command == EXIT_NAME) {
             commands.Exit().Exec(command, game, interface);
             return true;
         }

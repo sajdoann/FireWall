@@ -4,6 +4,9 @@
 */
 #include "Virus.h"
 #include "../Board/Board.h"
+#include "MovingObject.h"
+#include "Object.h"
+#include "ObjectWithMoveAttributes.h"
 
 Virus &Virus::operator=(const Virus &other) {
     if (this == &other) return *this;
@@ -44,15 +47,31 @@ ostream &operator<<(ostream &out, const Virus &virus) {
 }
 
 istream &operator>>(istream &in, Virus &v) {
-    in >> v.name;
+    char n;
+    in >> n;
     if (in.eof())
         return in;
-    in >> v.lives;
-    v.MovementFromIn(in, v.movementType);
-    v.DirectionFromIn(in, v.movementDirection);
+    v.name = n;
+
+    if (v.check_input_state(!(in.good()), in)) return in;
+
+    int liv;
+    in >> liv;
+    if (v.check_input_state(!(in.good()) || liv <= 0, in)) return in;
+    v.lives = liv;
+
+    MovementType mt;
+    v.MovementFromIn(in, mt);
+    if (v.check_input_state(!(in.good()), in)) return in;
+
+    MovementDirection md;
+    v.DirectionFromIn(in, md);
+    if (v.check_input_state(!(in.good()), in)) return in;
+
+    v.movementType = mt;
+    v.movementDirection = md;
     v.setStrategy();
     return in;
-
 }
 
 ostream &Virus::PrintInfo(ostream &out) const {

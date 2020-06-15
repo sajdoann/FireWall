@@ -18,6 +18,14 @@ using namespace std;
 class Object {
 protected:
     char name = 'a';
+
+    bool check_input_state(bool bad, istream &in) {
+        if (bad) {
+            in.setstate(iostream::failbit);
+        }
+        return bad;
+    }
+
 public:
     Object(char name) : name(name) {}
 
@@ -43,9 +51,7 @@ public:
     virtual istream &LoadObject(istream &in) = 0;
 
     /** prints name of object */
-    char Name() {
-        return name;
-    }
+    char Name() { return name; }
 
     /**
      * says what to do when object needs to attack - that means shoot hotfix or move

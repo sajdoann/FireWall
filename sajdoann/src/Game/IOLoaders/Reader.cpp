@@ -4,6 +4,7 @@
 */
 
 #include "Reader.h"
+//#include "../GameConstants.h"
 
 
 
@@ -17,11 +18,12 @@ Reader::Reader(const string &filename) : filename(filename) {
 map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
     map<Coords, char> coords;
 
+    mx = my = -1;
     in >> mx >> my;
-    if (mx < MIN_BOARD_MEASURE || my < MIN_BOARD_MEASURE || mx > MAX_BOARD_MEASURE || my > MAX_BOARD_MEASURE)
+    if (mx < MIN_BOARD_MEASURE || my < MIN_BOARD_MEASURE || mx > MAX_BOARD_MEASURE || my > MAX_BOARD_MEASURE ||
+        !(in.good()))
         throw invalid_argument(
-                "Board does not fit max/min specifications. Measures input was :" + to_string(mx) + " " +
-                to_string(my));
+                "Board does not fit max/min specifications.");
 
     int x, y;
     char br1, br2, sep;

@@ -25,7 +25,9 @@ class MovingObject : public ObjectWithMoveAttributes {
 protected:
     Strategy *strategy = nullptr;
 public:
-    MovingObject() = default;
+    MovingObject() {
+        setStrategy();
+    }
 
     MovingObject(char name, MovementType movementType, MovementDirection movementDirection)
             : ObjectWithMoveAttributes(name, movementType, movementDirection) {
@@ -57,7 +59,7 @@ public:
             strategy = new RandomStrategy(movementDirection);
         } else if (movementType == MovementType::SHORTEST) {
             strategy = new BfsStrategy(movementDirection);
-        } else cout << "fck moving object" << endl;
+        }
 
     }
 

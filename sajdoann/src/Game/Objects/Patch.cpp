@@ -38,28 +38,21 @@ Patch &Patch::operator=(const Patch &patch) {
 istream &operator>>(istream &in, Patch &patch) {
     char n;
     in >> n;
-    if (in.eof())
+
+    if (in.eof())   //no patch for input
         return in;
 
-    if (!isalpha(n)) {
-        in.setstate(iostream::failbit);
-        return in;
-    }
+    if (patch.check_input_state(!(in.good()) || !isalpha(n), in)) return in;
     patch.name = toupper(n);
 
-    int pr;
+    int pr = -5;
     in >> pr;
-    if (pr < 0) {
-        in.setstate(iostream::failbit);
-        return in;
-    }
+    if (patch.check_input_state(!(in.good()) || pr < 0, in)) return in;
     patch.price = pr;
 
     patch.MovementFromIn(in, patch.movementType);
-    if (!in.good())
-        return in;
+    if (!(in.good()) || patch.movementType == NONE) return in;
 
-    if (patch.movementType == NONE) return in;
     patch.DirectionFromIn(in, patch.movementDirection);
     return in;
 }

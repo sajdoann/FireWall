@@ -57,7 +57,7 @@ public:
     }
 
     void writeCounter(const Counter &c) {
-        out << c.Ram() << " " << c.RamStart() << " " << c.Level() << " " << c.Money() << endl << endl;
+        out << c.Ram() << " " << c.RamStart() << " " << c.Level() << " " << c.Money() << endl;
     }
 };
 

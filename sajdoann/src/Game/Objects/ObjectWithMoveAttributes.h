@@ -44,21 +44,21 @@ public:
 
     virtual ~ObjectWithMoveAttributes() = default;
 
-    virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) = 0;
+    virtual int Attack(Board *newBoard, Board &oldBoard, Coords startCoords) override = 0;
 
-    virtual ostream &SaveObject(ostream &out) = 0;
+    virtual ostream &SaveObject(ostream &out) override = 0;
 
-    virtual istream &LoadObject(istream &in) = 0;
+    virtual istream &LoadObject(istream &in) override = 0;
 
-    virtual ostream &PrintInfo(ostream &out) const = 0;
+    virtual ostream &PrintInfo(ostream &out) const override = 0;
 
-    virtual bool isMovingObject() const = 0;
+    virtual bool isMovingObject() const override = 0;
 
-    virtual bool isEmpty() const { return false; };
+    virtual bool isEmpty() const override { return false; };
 
-    virtual bool isVirus() const = 0;
+    virtual bool isVirus() const override = 0;
 
-    virtual bool isPatch() const = 0;
+    virtual bool isPatch() const override = 0;
 
     /**
      * from stream finds out what movement type o with move atributs has

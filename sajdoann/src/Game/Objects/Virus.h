@@ -12,23 +12,21 @@
  * it remembers its lives
  */
 class Virus : public MovingObject {
-    int lives;
+    int lives = 5;
 
 
 public:
-    Virus() {
-
-    }
+    Virus() = default;
 
     Virus(char name, int lives, MovementType movementType, MovementDirection movementDirection)
             : MovingObject(name, movementType, movementDirection), lives(lives) {
     }
 
     ~Virus() override {
-        delete strategy;
+        if (strategy != nullptr) delete strategy;
     }
 
-    virtual Object *Clone() const { return new Virus(*this); }
+    virtual Object *Clone() const override { return new Virus(*this); }
 
     Virus(const Virus &other) { *this = other; }
 

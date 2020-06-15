@@ -185,6 +185,7 @@ string Interface::AskWhichGame() {
     Print(LOAD_OR_NEW);
     string s;
     getline(in, s);
+    ClearScreen();
     return s;
 }
 
