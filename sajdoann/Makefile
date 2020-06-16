@@ -1,10 +1,10 @@
 #compiler
 CXX=g++
-CXXFLAGS = -Wall -pedantic -g -Og -std=c++14 -fsanitize=address
+CXXFLAGS = -Wall -pedantic -g -Og -std=c++14 #-fsanitize=address
 
 #linker
 LD=g++
-LDFLAGS = -Wall -pedantic -g -Og -std=c++14 -fsanitize=address
+LDFLAGS = -Wall -pedantic -g -Og -std=c++14 #-fsanitize=address
 
 #my name of the executable
 EXECUTABLE=sajdoann			# count num of lines in files: find . -name '*.cpp' -o -name '*.h' | xargs wc -l
