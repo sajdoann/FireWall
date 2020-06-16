@@ -80,6 +80,7 @@ Coords *Strategy::getMovedCoords(const Coords &startCoords) {
     if (movementDirection == MovementDirection::DIAGONALD) {
         return new Coords(startCoords.X() + 1, startCoords.Y() + 1);
     }
-    //TODO: OSETRIT DEFAULT
-    return nullptr;
+
+    //default case
+    return new Coords(startCoords.X() + 1, startCoords.Y() + 1);
 }
