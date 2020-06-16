@@ -146,13 +146,13 @@ int App::to_menu_Switch() {
     try {
         end = MenuSwitcher();
     } catch (invalid_argument &invalid_argument) {
-        cerr << invalid_argument.what();
+        cerr << invalid_argument.what() << endl;
         return 2;
     } catch (runtime_error &runtime_error) {
-        cerr << runtime_error.what();
+        cerr << runtime_error.what() << endl;
         return 3;
     } catch (logic_error &logic_error) {
-        cerr << logic_error.what();
+        cerr << logic_error.what() << endl;
         return 4;
     }
     if (end)

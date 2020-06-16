@@ -43,7 +43,7 @@ public:
      * @param newBoard - the board it is inserted to
      * @param targetCoords - the position object is inserted to
      */
-    int
+    static int
     execMove(Object *object, Board &newBoard, Board *oldBoard, const Coords &startCoords, const Coords &targetCoords);
 
     /**

@@ -24,6 +24,13 @@ protected:
     ifstream in;
     const string filename;
 
+    const char *ERR_FILE_NOT_FOUND = " file not found ";
+    const char *ERR_BOARD_MEASURES = "Board does not fit max/min specifications.";
+    const char *ERR_BOARD_INPUT_FORMAT = "Wrong format in board input.";
+    const char *ERR_BOARD_COORDS_OUT = "Coords are out of board ";
+    const char *ERR_BOARDS_COORDS_DUPLICATE = "Coordinations already taken on this board";
+    const char *ERR_WRONG_FILE_FORMAT = "Error loading input from this file. Wrong file format. ";
+
     /** throws invalid argument exception */
     void EofError();
 
