@@ -56,13 +56,19 @@ strategii (getTargetCoords, ExecMove).
 například:
 
 `help:`
-- `type P (x,y)` -   places patch, syntax: " patch Type (coord x, coord y)" ... for example "W(0,0)"
-- `done`         -   Type it when you are done - you think FireWall can survive the next attack.
-- `exit`         -   exits the game witout saving
+
+- `google`       -   type the name of the object and all you will get all info about it
+- `type(x,y)`    -   places patch, syntax: " patch Type (coord x, coord y)" ... for example "W(0,0)"
+- `done`         -   type it when you are done - you think FireWall can survive the next attack.
+- `exit`         -   exits the game witout saving. To save type save
+- `explain`      -   explains game
 - `help`         -   lists all the commands
-- `google P`     -   prints all the available information about the patch
-- `save`         -   saves the game
-- `quit`         -   saves the game and exits
+- `patches`      -   describes all patches
+- `quit`         -   quits the current game and goes to menu (where new game or load saved game can be choosed)
+- `save`         -   saves the game into files
+- `show`         -   shows the entire firewall that was till now coded.
+- `viruses`      -   describes all viruses
+
 ### Ukázka 
 stav preparation - náhled 
 ```
