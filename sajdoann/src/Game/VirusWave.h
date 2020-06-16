@@ -21,6 +21,8 @@ private:
     int level = 0;
     vector<Virus *> virusQueue;
     default_random_engine e1 = CreateDevice();
+    const int MAX = 1;
+    const int MIN = 0;
 
 
     int MyRand(int min, int max) {
@@ -29,7 +31,6 @@ private:
     }
 
     int CountMax() {
-        //todo: alter
         if (level < 3) return 1;
         return 1;
     }
@@ -60,15 +61,15 @@ public:
      */
     queue<pair<Virus *, Coords >> GeneateWave(int maxX, int maxY) {
         queue<pair<Virus *, Coords >> wave;
-        int max = CountMax();
+        int max = MAX;
 
-        int waveCount = MyRand(0, max);
-        uniform_int_distribution<int> distVirusType(0, virusQueue.size() - 1);
-        uniform_int_distribution<int> distCoords(0, maxX - 1);
+        int waveCount = MyRand(MIN, max);
+        uniform_int_distribution<int> distVirusType(MIN, virusQueue.size() - 1);
+        uniform_int_distribution<int> distCoords(MIN, maxX - 1);
 
         for (int i = 0; i < waveCount; ++i) {
-            int virusType = MyRand(0, virusQueue.size() - 1);
-            int coordsX = MyRand(0, maxX - 1);
+            int virusType = MyRand(MIN, virusQueue.size() - 1);
+            int coordsX = MyRand(MIN, maxX - 1);
             wave.push({virusQueue[virusType], Coords(coordsX, maxY - 1)});
         }
 

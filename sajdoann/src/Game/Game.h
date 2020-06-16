@@ -15,7 +15,6 @@
 #include "ScoreCounter.h"
 #include "Movement/Movement.h"
 #include "VirusWave.h"
-#include "GameConstants.h"
 class Interface;
 
 using namespace std;

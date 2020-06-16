@@ -9,8 +9,11 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "../ScoreCounter.h"
 
 using namespace std;
+
+class Board;
 
 class Writer {
 protected:
@@ -18,12 +21,11 @@ protected:
     ofstream out;
 
 public:
-    Writer(const string filename) : filename(filename) {
-        out.open(filename);
-        if (!out)
-            throw runtime_error("filename:" + filename + "not found");
-    }
+    Writer(const string filename);
 
+    /**
+     * closes the stream (file)
+     */
     void Close() {
         out.close();
     }
@@ -42,21 +44,16 @@ public:
         }
     }
 
-    void writeBoard(Board &b) {
-        out << b.MaxX() << " " << b.MaxY() << endl;
-        for (int i = 0; i < b.MaxX(); ++i) {
-            for (int j = 0; j < b.MaxY(); ++j) {
-                Coords act(i, j);
-                if (!b.At(act)->isEmpty()) {
-                    out << act.toStr() << " " << b.At(act)->Name() << endl;
-                }
-            }
-        }
-        out << endl;
-    }
+    /**
+     * writes board to stream
+     * @param b - board
+     */
+    void writeBoard(Board &b);
 
-    void writeCounter(const Counter &c) {
-        out << c.Ram() << " " << c.RamStart() << " " << c.Level() << " " << c.Money() << endl;
-    }
+    /**
+     * writes score to file
+     * @param c - counter that counts score
+     */
+    void writeCounter(const Counter &c);
 };
 

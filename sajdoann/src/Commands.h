@@ -10,7 +10,7 @@
 //#include <filesystem>          //TODO: -lstdc++fs to flags
 #include "Command.h"
 #include "Game/IOLoaders/Writer.h"
-#include "Commands_Constants.h"
+//#include "Commands_Constants.cpp"
 
 using namespace std;
 

@@ -4,6 +4,7 @@
 */
 
 #include "Commands.h"
+#include "Commands_Constants.cpp"
 
 void Commands::CreateCommands() {
     Command exit = Exit();

@@ -2,12 +2,10 @@
 * @author Anna Sajdokova <sajdoann@fit.cvut.cz>
 * @date 5/12/2020
 */
-
-#pragma once
-
 /**
- * constants for commands - their names, regex, help
- */
+   * constants for commands - their names, regex, help
+   */
+
 const static char *EXIT_NAME = "exit";
 const static char *EXIT_HELP = "exits the game witout saving. To save type save";
 

@@ -7,6 +7,7 @@
 #include <regex>
 #include "App.h"
 
+
 int App::Run() {
     Greet();
     while (true) {
@@ -94,15 +95,15 @@ bool App::MenuSwitcher() {
                 command.push_back(tolower(recievedString[i]));
 
         }
-        if (command == NEW_NAME) {
+        if (command == "new") {
             game.LoadGame(DEFAULT_PATH);
             return false;
         }
-        if (command == LOAD_NAME) {
+        if (command == "load") {
             commands.Load().Exec(command, game, interface);
             return false;
         }
-        if (command == EXIT_NAME) {
+        if (command == "exit") {
             commands.Exit().Exec(command, game, interface);
             return true;
         }
