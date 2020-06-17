@@ -6,7 +6,7 @@
 #pragma once
 
 #include "ResultEnum.h"
-#include "GameConstants.cpp"
+#include "GameConstants.h"
 
 /**
  * counts score based on how many viruses survive through the wall

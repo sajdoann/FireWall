@@ -5,9 +5,10 @@
 
 #include <cfloat>
 #include <cmath>
+#include <dirent.h>
 
 #include "Interface.h"
-#include "Interface_Constants.cpp"
+#include "Interface_Constants.h"
 
 string Interface::PromptCommand() {
     string command;
@@ -132,7 +133,7 @@ string Interface::PromptSaveFolder() {
 }
 
 string Interface::chooseFile(vector<string> filenames) {
-    os << "Saved games:" << endl;
+    os << "games: " << endl;
     for (unsigned int i = 1; i <= filenames.size(); ++i) {
         os << i << setw(15) << " " << filenames[i - 1] << endl;
     }
@@ -223,4 +224,30 @@ void Interface::PrintClock(int time) const {
 void Interface::PrintLvl(int lvl) const {
     Print("lvl: " + to_string(lvl));
 }
+
+vector<string> Interface::getFilenames(const char *PATH) {
+    vector<string> fileNames;
+    struct dirent *entry;
+    DIR *dir = opendir(PATH);
+    if (dir != nullptr) {
+        while ((entry = readdir(dir))) {                         //loads all files in dir
+            if (entry->d_type != DT_DIR) continue;                // not directory -> continue
+
+            bool isReadable = true;                              //contains only allowed chars
+            for (auto i: entry->d_name) {
+                if (!isdigit(i) && !isalpha(i) && i != '\0') {
+                    isReadable = false;
+                    break;
+                }
+                if (i == '\0') break;
+            }
+
+            if (isReadable)
+                fileNames.push_back(entry->d_name);
+        }
+    }
+    closedir(dir);
+    return fileNames;
+}
+
 

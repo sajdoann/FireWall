@@ -10,8 +10,8 @@
 
 
 /** board limit measures */
-const static int MAX_BOARD_MEASURE = 100;
-const static int MIN_BOARD_MEASURE = 1;
+const static int MAX_BOARD_MEASURE = 80;
+const static int MIN_BOARD_MEASURE = 5;
 
 /** how many viruses can espace firewall, hence come through wall */
 const static int RAM_CONSTANT = 20;

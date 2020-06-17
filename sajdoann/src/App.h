@@ -25,6 +25,13 @@ class App {
     Commands commands;
 
 
+    /** menu switcher - new goes to default files*/
+    const char *NEW = "new";
+    /** menu switcher - new goes to saved files*/
+    const char *LOAD = "load";
+    /** menu switcher - exits the game */
+    const char *EXIT = "exit";
+
     /**
      *  menu mode switches bteweeen new game, load game and exit
      * @return true if exit the game, false stay in game

@@ -3,6 +3,7 @@
 * @date 6/13/2020
 */
 
+#include <cstring>
 #include "Reader.h"
 
 
@@ -10,8 +11,12 @@
 
 Reader::Reader(const string &filename) : filename(filename) {
     in.open(filename);
-    if (!in)
-        throw runtime_error(filename + ERR_FILE_NOT_FOUND);
+    if (!in) {
+        string filNotFound = filename;
+        filNotFound += ERR_FILE_NOT_FOUND;
+        throw runtime_error(filNotFound);
+
+    }
 }
 
 map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
@@ -33,14 +38,14 @@ map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
         Coords coord(x, y);
 
         if (coord.X() >= mx || coord.Y() >= my || coord.X() < 0 || coord.Y() < 0)
-            throw invalid_argument(ERR_BOARD_COORDS_OUT + coord.toStr());
+            throw invalid_argument(coord.toStr().append(ERR_BOARD_COORDS_OUT));
 
         if (coords.find(coord) == coords.end()) {
             if (isalpha(c)) c = toupper(c);
             coords.insert({coord, c});
             continue;
         }
-        throw invalid_argument(ERR_BOARDS_COORDS_DUPLICATE + coord.toStr());
+        throw invalid_argument(coord.toStr().append(ERR_BOARDS_COORDS_DUPLICATE));
     }
 
     if (!in.eof())
@@ -49,6 +54,7 @@ map<Coords, char> Reader::ReadBoard(int &mx, int &my) {
 }
 
 void Reader::EofError() {
-    const string str = ERR_WRONG_FILE_FORMAT + filename;
+    string str = ERR_WRONG_FILE_FORMAT;
+    str += filename;
     throw invalid_argument(str);
 }

@@ -6,7 +6,7 @@
 #include "Empty.h"
 #include "../Board/Board.h"
 
-ostream &Empty::SaveObject(ostream &os) { os << *this; }
+ostream &Empty::SaveObject(ostream &os) { return os << *this; }
 
 int Empty::Attack(Board *newBoard, Board &oldBoard, Coords startCoords) {
     return 0;
@@ -15,4 +15,5 @@ int Empty::Attack(Board *newBoard, Board &oldBoard, Coords startCoords) {
 Empty &Empty::operator=(Empty &empty) {
     if (this == &empty) return *this;
     name = empty.name;
+    return *this;
 }

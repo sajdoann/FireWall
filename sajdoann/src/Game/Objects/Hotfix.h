@@ -57,9 +57,9 @@ public:
 
     ostream &SaveObject(ostream &out) override;
 
-    istream &LoadObject(istream &is) override;
+    istream &LoadObject(istream &in) override;
 
-    ostream &PrintInfo(ostream &os) const override;
+    ostream &PrintInfo(ostream &out) const override;
 
 
 };

@@ -7,7 +7,6 @@
 #include <regex>
 #include "App.h"
 
-
 int App::Run() {
     Greet();
     while (true) {
@@ -33,7 +32,6 @@ int App::Run() {
                 interface.ClearScreen();
                 AttackLoop();
 
-
                 //if user looses then go to MENU
                 if (game.GameResult() == LOSE) {
                     game.GameState(State::MENU);
@@ -58,7 +56,14 @@ int App::PrepLoop() {
         string command = interface.PromptCommand();
 
 
-        CommandEndType endType = FindAndExecCommand(command);
+        CommandEndType endType;
+        try {
+            endType = FindAndExecCommand(command);
+        }
+        catch (system_error &systemError) {
+            cerr << systemError.what() << endl;
+        }
+
         if (endType == CommandEndType::ENDGAME)
             return 0;
         else if (endType == CommandEndType::INVALID) {
@@ -95,15 +100,15 @@ bool App::MenuSwitcher() {
                 command.push_back(tolower(recievedString[i]));
 
         }
-        if (command == "new") {
-            game.LoadGame(DEFAULT_PATH);
+        if (command == NEW) {
+            commands.New().Exec(command, game, interface);
             return false;
         }
-        if (command == "load") {
+        if (command == LOAD) {
             commands.Load().Exec(command, game, interface);
             return false;
         }
-        if (command == "exit") {
+        if (command == EXIT) {
             commands.Exit().Exec(command, game, interface);
             return true;
         }

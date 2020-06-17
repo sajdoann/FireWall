@@ -30,18 +30,19 @@ Hotfix &Hotfix::operator=(const Hotfix &other) {
     return *this;
 }
 
-istream &Hotfix::LoadObject(istream &is) {
-    is >> name;
-    if (is.eof()) return is;
-    MovementFromIn(is, movementType);
-    DirectionFromIn(is, movementDirection);
+istream &Hotfix::LoadObject(istream &in) {
+    in >> name;
+    if (in.eof()) return in;
+    MovementFromIn(in, movementType);
+    DirectionFromIn(in, movementDirection);
     setStrategy();
-
+    return in;
 }
 
-ostream &Hotfix::PrintInfo(ostream &os) const {
-    os << "hotfix :" << name << "movement: ";
-    MovementToOut(os, movementType);
-    os << " direction: ";
-    DirectionsToOut(os, movementDirection);
+ostream &Hotfix::PrintInfo(ostream &out) const {
+    out << "hotfix :" << name << "movement: ";
+    MovementToOut(out, movementType);
+    out << " direction: ";
+    DirectionsToOut(out, movementDirection);
+    return out;
 }

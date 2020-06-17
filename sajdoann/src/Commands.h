@@ -67,11 +67,15 @@ public:
      */
     function<CommandEndType(string, Game &g, Interface &)> loadFunction();
 
+    function<CommandEndType(string, Game &g, Interface &)> newFunction();
+
     /**
      * prints all saved game and user picks the game to load
      * @return
      */
     Command Load();
+
+    Command New();
 
     /** shows patches */
     Command Patches();

@@ -37,10 +37,10 @@ void Game::free_patches_and_viruses() {
 void Game::read_patches_and_viruses(const string &directoryPath) {
     //TODO: invalid inputs
     Reader patchReader(directoryPath + "/patches.txt");
-    patches = patchReader.ReadStillObjects<Patch>();
+    patches = patchReader.ReadObjects<Patch>();
 
     Reader virusReader(directoryPath + "/viruses.txt");
-    viruses = virusReader.ReadStillObjects<Virus>();
+    viruses = virusReader.ReadObjects<Virus>();
 }
 
 void Game::read_gameBoard(const string &directoryPath) {

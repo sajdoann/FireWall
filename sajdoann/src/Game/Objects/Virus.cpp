@@ -60,11 +60,11 @@ istream &operator>>(istream &in, Virus &v) {
     if (v.check_input_state(!(in.good()) || liv <= 0, in)) return in;
     v.lives = liv;
 
-    MovementType mt;
+    MovementType mt = MovementType::SHORTEST;
     v.MovementFromIn(in, mt);
     if (v.check_input_state(!(in.good()), in)) return in;
 
-    MovementDirection md;
+    MovementDirection md = MovementDirection::LEFT;
     v.DirectionFromIn(in, md);
     if (v.check_input_state(!(in.good()), in)) return in;
 

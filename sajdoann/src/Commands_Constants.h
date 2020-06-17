@@ -52,5 +52,3 @@ const static char *INVALID_NOT_A_PATCH_OR_OUT_OF_BOARD = "Not a patch or coords 
 const static char *INVALID_NOT_ENOUGH_MONEY = "Not enough money to buy patch.";
 
 const static char *MKDIR = "mkdir ";
-
-const static char *NEW_NAME = "new";

@@ -4,7 +4,7 @@
 */
 
 #include "Commands.h"
-#include "Commands_Constants.cpp"
+#include "Commands_Constants.h"
 
 void Commands::CreateCommands() {
     Command exit = Exit();
@@ -140,7 +140,9 @@ function<CommandEndType(string, Game &, Interface &)> Commands::saveFunction() {
 
         DIR *dir = opendir(name.c_str());
         if (dir == nullptr) {
-            system((MKDIR + name).c_str());
+            int err = system((MKDIR + name).c_str());
+            if (err == -1)
+                throw runtime_error("File cannot be created");
         }
         closedir(dir);
 
@@ -152,41 +154,34 @@ function<CommandEndType(string, Game &, Interface &)> Commands::saveFunction() {
 
 function<CommandEndType(string, Game &g, Interface &)> Commands::loadFunction() {
     return [](const string &, Game &g, Interface &anInterface) {
-        vector<string> fileNames;                                   //will contain filenames from save directory
-        struct dirent *entry;
-        DIR *dir = opendir(SAVES_PATH);
-        if (dir != nullptr) {
-            while ((entry = readdir(dir))) {                         //loads all files in dir
-                if (entry->d_type != DT_DIR) continue;                // not directory -> continue
-
-                bool isReadable = true;                              //contains only allowed chars
-                for (auto i: entry->d_name) {
-                    if (!isdigit(i) && !isalpha(i) && i != '\0') {
-                        isReadable = false;
-                        break;
-                    }
-                    if (i == '\0') break;
-                }
-
-                if (isReadable)
-                    fileNames.push_back(entry->d_name);
-            }
-        }
-
-        closedir(dir);
-
+        vector<string> fileNames = anInterface.getFilenames(
+                SAVES_PATH);                        //will contain filenames from save directory
         string s = SAVES_PATH;
         s = s + "/" + anInterface.chooseFile(fileNames);
         g.LoadGame(s);
-
         return CommandEndType::VALID;
+    };
+}
 
+function<CommandEndType(string, Game &g, Interface &)> Commands::newFunction() {
+    return [](const string &, Game &g, Interface &anInterface) {
+        vector<string> fileNames = anInterface.getFilenames(
+                DEFAULT_PATH);                        //will contain filenames from save directory
+        string s = DEFAULT_PATH;
+        s = s + "/" + anInterface.chooseFile(fileNames);
+        g.LoadGame(s);
+        return CommandEndType::VALID;
     };
 }
 
 Command Commands::Load() {
     return Command(LOAD_NAME, LOAD_HELP, loadFunction());
 }
+
+Command Commands::New() {
+    return Command(LOAD_NAME, LOAD_HELP, newFunction());
+}
+
 
 Command Commands::Patches() {
     return Command(PATCHES_NAME, PATCHES_HELP,
@@ -236,3 +231,7 @@ Command Commands::Explain() {
                    }
     );
 }
+
+
+
+

@@ -95,7 +95,13 @@ public:
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {
         //in clion term variable not found -> not functioning (on other sys should not be a prob)
-        system("clear");
+        int err = system("clear");
+        if (err == -1) {
+            for (int i = 0; i < 10; ++i) {
+                Print("\n");
+            }
+            //todo: throw logic error
+        }
     }
 
     /** tells the story of FireWall game */
@@ -148,5 +154,7 @@ public:
     void PrintClock(int time) const;
 
     void PrintLvl(int lvl) const;
+
+    vector<string> getFilenames(const char *PATH);
 };
 

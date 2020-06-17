@@ -48,11 +48,11 @@ public:
 
     virtual ~Reader() = default;
 
-    template<typename StillObj>
-    std::map<char, StillObj *> ReadStillObjects() {
-        std::map<char, StillObj *> objects;
+    template<typename RObject>
+    std::map<char, RObject *> ReadObjects() {
+        std::map<char, RObject *> objects;
 
-        StillObj *object = new StillObj();
+        RObject *object = new RObject();
         while (in >> (*object)) {
 
             bool found = objects.find(object->Name()) != objects.end();
@@ -62,11 +62,12 @@ public:
                 char name = object->Name();
                 delete object;
                 freeObjects(objects);
-                throw invalid_argument("Object already exists. Name: " + name);
+                string message = name + "";
+                message += " object already exists.";
+                throw invalid_argument(message);
             }
 
-            object = nullptr;
-            object = new StillObj();
+            object = new RObject();
 
         }
 
@@ -77,8 +78,11 @@ public:
             EofError();
         }
 
-        if (objects.empty())
-            throw invalid_argument("File corrupted: no/wrong object input " + filename);
+        if (objects.empty()) {
+            string mess = filename;
+            mess += "File corrupted: no/wrong object input ";
+            throw invalid_argument(mess);
+        }
         return objects;
     }
 
@@ -90,8 +94,11 @@ public:
         getline(in, input);
         stringstream ss(input);
         ss >> ram >> startRam >> lvl >> money;
-        if (ram <= 0 || startRam <= 0 || lvl < 0 || money < 0)
-            throw logic_error("Invalid input. Arguments missing/negative in " + filename);
+        if (ram <= 0 || startRam <= 0 || lvl < 0 || money < 0) {
+            string mess = filename;
+            mess += "File corrupted: no/wrong object input ";
+            throw logic_error(mess);
+        }
 
         if (!ss.good() && !ss.eof())
             EofError();
@@ -108,7 +115,6 @@ public:
         if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)
             throw logic_error("One of arguments exceeded max allowed constant.");
         if (!in.eof()) {
-            //cout << in.eof() << in.good() << in.bad() << endl;
             EofError();
         }
 
