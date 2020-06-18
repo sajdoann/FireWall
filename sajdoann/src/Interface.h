@@ -150,10 +150,18 @@ public:
      */
     void PrintGamePane(const State &gameState, Counter scoreCounter, const Board &board) const;
 
+    /** prints time left during attack */
     void PrintClock(int time) const;
 
+    /** prints lvl */
     void PrintLvl(int lvl) const;
 
+    /**
+     * prints all filenames in given folder
+     * @param PATH folder location
+     * @return
+     */
     vector<string> getFilenames(const char *PATH);
+
 };
 

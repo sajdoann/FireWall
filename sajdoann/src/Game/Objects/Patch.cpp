@@ -20,7 +20,6 @@ int Patch::Attack(Board *oldBoard, Board &newBoard, Coords startCoords) {
 
     Coords *targetCoords = h.getStrategy()->getMovedCoords(startCoords);
     h.getStrategy()->execMove(&h, newBoard, oldBoard, startCoords, *targetCoords);
-    h.setInserted(true);
     delete targetCoords;
     return 0;
 }
@@ -83,7 +82,4 @@ ostream &Patch::SaveObject(ostream &os) {
     return os;
 }
 
-ostream &Patch::Heading(ostream &os) {
-    return os << "NAME" << setw(15) << "PRICE" << setw(15) << "MOVEMENT" << setw(15)
-              << "DIRECTION" << endl;
-}
+

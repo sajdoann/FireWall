@@ -35,13 +35,11 @@ public:
     virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
 
-    int Lives() { return lives; }
-
-    bool isVirus() const { return true; };
+    bool isVirus() const override { return true; };
 
     ostream &SaveObject(ostream &out) override;
 
-    istream &LoadObject(istream &in) {
+    istream &LoadObject(istream &in) override {
         return in >> *this;
     }
 
@@ -63,18 +61,6 @@ public:
         if (name != virus.name)
             return (name < virus.name) ? -1 : 1;
         return 0;
-    }
-
-    /** compare function by name */
-    struct cmp {
-        int operator()(const Virus &a, const Virus &b) {
-            return a < b;
-        }
-    };
-
-    static ostream &Heading(ostream &os) {
-        return os << "NAME" << setw(10) << "LIVES" << setw(10) << "MOVEMENT"
-                  << setw(10) << "DIRECTION" << endl;
     }
 
 };

@@ -44,13 +44,13 @@ public:
     bool isMovingObject() const override { return false; }
 
     /** returns false because patch is not empty object */
-    bool isEmpty() const { return false; }
+    bool isEmpty() const override { return false; }
 
     /** returns false because patch is not a virus*/
-    virtual bool isVirus() const { return false; };
+    virtual bool isVirus() const override { return false; };
 
     /** returns true because it is a patch*/
-    virtual bool isPatch() const { return true; };
+    virtual bool isPatch() const override { return true; };
 
     /** returns true if patch can shoot, if movement none -> false */
     virtual bool canShoot() const { return movementType != MovementType::NONE; }
@@ -69,7 +69,7 @@ public:
     /** gets patch atributes from istream */
     friend istream &operator>>(istream &in, Patch &patch);
 
-
+    /** loads patch */
     istream &LoadObject(istream &is) override;
 
     /** prints all available information for patches */
@@ -78,9 +78,6 @@ public:
 
     /** prints just the name representation of object */
     ostream &SaveObject(ostream &os) override;
-
-    static ostream &Heading(ostream &os);
-
 
 };
 

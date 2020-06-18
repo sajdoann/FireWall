@@ -1,0 +1,4 @@
+%         8  SHORTEST      LEFT
+&         5      RAND      LEFT
+=         4  SHORTEST      LEFT
+@         4  SHORTEST      LEFT

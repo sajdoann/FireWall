@@ -7,10 +7,10 @@
 /**
  * class that has constants for paths in filesystem
  */
+namespace pathConstants {
+    /** path where defaut games are stored */
+    const static char *DEFAULT_PATH = "../sajdoann/data/Default";
 
-/** path where defaut games are stored */
-const static char *DEFAULT_PATH = "../sajdoann/data/Default";
-
-/** path where saved games are stored */
-const static char *SAVES_PATH = "../sajdoann/data/Saves";
-
+    /** path where saved games are stored */
+    const static char *SAVES_PATH = "../sajdoann/data/Saves";
+}

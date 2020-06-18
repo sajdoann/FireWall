@@ -23,7 +23,7 @@ private:
     map<Color, const char *> colors;
 
 
-    const char *RED_ANSI = "\u001b[31m";
+    const char *RED_ANSI = "\u001b[31;1m";
     const char *BLUE_ANSI = "\u001b[1m\u001b[34m";
     const char *CYAN_ANSI = "\u001b[38;5;51m"; //"\u001b[36m";
     const char *GREY_ANSI = "\u001b[37;1m";

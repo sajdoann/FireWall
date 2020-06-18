@@ -21,8 +21,6 @@ using namespace std;
  */
 class Hotfix : public MovingObject {
 
-    mutable bool just_inserted = false;
-
 public:
     Hotfix() = default;
 
@@ -39,26 +37,28 @@ public:
 
     Hotfix &operator=(const Hotfix &other);
 
-
+    /**
+     * clones hotfix
+     * @return new hotfix
+     */
     Object *Clone() const override { return new Hotfix(name, movementType, movementDirection); }
 
-
+    /** hotfix is not a virus -> returns false */
     bool isVirus() const override { return false; };
 
-    bool JustInserted() { return just_inserted; }
-
-    void setInserted(bool w) {
-        just_inserted = w;
-    }
-
+    /** hotfix attack - moves by one */
     int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override;
 
+    /** gets strategy of hotfix */
     Strategy *getStrategy() { return strategy; }
 
+    /** saves object */
     ostream &SaveObject(ostream &out) override;
 
+    /** loads object */
     istream &LoadObject(istream &in) override;
 
+    /** prints info about object */
     ostream &PrintInfo(ostream &out) const override;
 
 

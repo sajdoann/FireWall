@@ -13,7 +13,7 @@
 
 string Interface::PromptCommand() {
     string command;
-    os << IntrConstants::ENTER_COMMAND << endl;
+    os << interfConstants::ENTER_COMMAND << endl;
     ClearBuffers();
     while (command.empty())
         getline(in, command);
@@ -22,7 +22,7 @@ string Interface::PromptCommand() {
 }
 
 void Interface::HelpAdvertiser() {
-    os << IntrConstants::HELP_ADVERTISE << endl;
+    os << interfConstants::HELP_ADVERTISE << endl;
 }
 
 void Interface::PrintHelp(const string &name, const string &help) {
@@ -44,7 +44,7 @@ void Interface::Greet() {
     ClearScreen();
     os << colorClass.Color(ColorClass::BLUE) << "FireWall" << endl;
     ResetClr();
-    PrintMessageWaitForEnter(IntrConstants::GREETING);
+    PrintMessageWaitForEnter(interfConstants::GREETING);
     ClearScreen();
 }
 
@@ -97,17 +97,17 @@ void Interface::PrintBoard(const Board &board) const {
 }
 
 void Interface::InvalidMove() const {
-    os << IntrConstants::INVALID_MOVE << endl;
+    os << interfConstants::INVALID_MOVE << endl;
 }
 
 void Interface::ExplainPrepState() {
-    PrintMessageWaitForEnter(IntrConstants::EXPLANATION);
+    PrintMessageWaitForEnter(interfConstants::EXPLANATION);
 }
 
 void Interface::PrintResult(ResultEnum gameResult) {
     if (gameResult == ResultEnum::LOSE)
-        PrintInColor(colorClass.Color(ColorClass::RED), IntrConstants::LOST_MESSAGE);
-    else PrintInColor(colorClass.Color(ColorClass::GREEN), IntrConstants::WIN_MESSAGE);
+        PrintInColor(colorClass.Color(ColorClass::RED), interfConstants::LOST_MESSAGE);
+    else PrintInColor(colorClass.Color(ColorClass::GREEN), interfConstants::WIN_MESSAGE);
     PrintMessageWaitForEnter("To continue press enter.");
     ClearScreen();
 }
@@ -167,7 +167,7 @@ void Interface::PrintRam(int ram, int startRam) const {
     int poc = 11;
     double skok = poc / (double) ram;
     for (double i = skok; i - poc <= DBL_EPSILON * fabs(i + poc) * 10000; i += skok) {
-        cout << IntrConstants::RAM_COLOR_START + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
+        cout << interfConstants::RAM_COLOR_START + to_string(7 * 16 + (int) i) + "m " << " " << "\u001b[0m" << flush;
     }
     PrintGreyRam(startRam - ram);
     os << " " << ram << "/" << startRam << endl;
@@ -186,7 +186,7 @@ void Interface::Print(const string &message) const {
 }
 
 string Interface::AskWhichGame() {
-    Print(IntrConstants::LOAD_OR_NEW);
+    Print(interfConstants::LOAD_OR_NEW);
     string s;
     getline(in, s);
     ClearScreen();
@@ -195,7 +195,7 @@ string Interface::AskWhichGame() {
 
 void Interface::PrintGreyRam(int ram) const {
     for (int j = ram; j > 0; --j) {
-        os << IntrConstants::RAM_COLOR_START + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
+        os << interfConstants::RAM_COLOR_START + to_string(15 * 16 + 12) + "m " << ' ' << "\u001b[0m";
     }
 }
 

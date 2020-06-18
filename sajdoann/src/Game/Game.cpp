@@ -24,18 +24,21 @@ void Game::LoadGame(const string &directoryPath) {
 
 
 void Game::free_patches_and_viruses() {
-    for (auto p : patches) {
-        delete p.second;
-        p.second = nullptr;
+    if (!patches.empty()) {
+        for (auto p : patches) {
+            delete p.second;
+            p.second = nullptr;
+        }
     }
-    for (auto v : viruses) {
-        delete v.second;
-        v.second = nullptr;
+    if (!viruses.empty()) {
+        for (auto v : viruses) {
+            delete v.second;
+            v.second = nullptr;
+        }
     }
 }
 
 void Game::read_patches_and_viruses(const string &directoryPath) {
-    //TODO: invalid inputs
     Reader patchReader(directoryPath + "/patches.txt");
     patches = patchReader.ReadObjects<Patch>();
 
@@ -122,10 +125,7 @@ void Game::MoveLoop(Interface &anInterface) {
         anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
         anInterface.PrintClock(loopMax - i - 1);
 
-        anInterface.ClearBuffers();
-
-
-        this_thread::sleep_for(0.1s);
+        this_thread::sleep_for(0.2s);
     }
 }
 
@@ -173,6 +173,5 @@ int Game::MoveAll() {
     gameBoard = newBoard;
     return virusPoints;
 }
-
 
 

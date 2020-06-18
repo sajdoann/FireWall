@@ -5,7 +5,7 @@
 /**
  * constants for interaction with user
  */
-namespace IntrConstants {
+namespace interfConstants {
     const static char *ENTER_COMMAND = "Enter command: ";
     const static char *HELP_ADVERTISE = "Unknown command. \n To see help type \"help\"";
 

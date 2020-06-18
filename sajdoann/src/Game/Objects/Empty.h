@@ -35,7 +35,7 @@ public:
 
     ostream &SaveObject(ostream &os) override;
 
-    ostream &PrintInfo(ostream &os) const { return os << "empty"; }
+    ostream &PrintInfo(ostream &os) const override { return os << "empty"; }
 
     bool isMovingObject() const override { return false; }
 

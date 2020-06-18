@@ -7,7 +7,6 @@
 
 #include <string>
 #include <dirent.h>
-//#include <filesystem>          //TODO: -lstdc++fs to flags
 #include "Command.h"
 #include "Game/IOLoaders/Writer.h"
 

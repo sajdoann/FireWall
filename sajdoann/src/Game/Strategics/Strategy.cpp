@@ -21,7 +21,7 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
     Object *objectTarget = newBoard.At(targetCoords);
 
     //there is patch on target position
-    if (!objectTarget->isEmpty() && !objectTarget->isMovingObject()) {
+    if (objectTarget->isPatch()) {
         return 0;
     }
 

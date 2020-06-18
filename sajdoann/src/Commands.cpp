@@ -137,7 +137,7 @@ Command Commands::Save() {
 
 function<CommandEndType(string, Game &, Interface &)> Commands::saveFunction() {
     return [](const string &, Game &g, Interface &i) {
-        string name = SAVES_PATH + i.PromptSaveFolder();
+        string name = pathConstants::SAVES_PATH + i.PromptSaveFolder();
 
         DIR *dir = opendir(name.c_str());
         if (dir == nullptr) {
@@ -156,8 +156,8 @@ function<CommandEndType(string, Game &, Interface &)> Commands::saveFunction() {
 function<CommandEndType(string, Game &g, Interface &)> Commands::loadFunction() {
     return [](const string &, Game &g, Interface &anInterface) {
         vector<string> fileNames = anInterface.getFilenames(
-                SAVES_PATH);                        //will contain filenames from save directory
-        string s = SAVES_PATH;
+                pathConstants::SAVES_PATH);                        //will contain filenames from save directory
+        string s = pathConstants::SAVES_PATH;
         s = s + "/" + anInterface.chooseFile(fileNames);
         g.LoadGame(s);
         return CommandEndType::VALID;
@@ -167,8 +167,8 @@ function<CommandEndType(string, Game &g, Interface &)> Commands::loadFunction() 
 function<CommandEndType(string, Game &g, Interface &)> Commands::newFunction() {
     return [](const string &, Game &g, Interface &anInterface) {
         vector<string> fileNames = anInterface.getFilenames(
-                DEFAULT_PATH);                        //will contain filenames from save directory
-        string s = DEFAULT_PATH;
+                pathConstants::DEFAULT_PATH);                        //will contain filenames from save directory
+        string s = pathConstants::DEFAULT_PATH;
         s = s + "/" + anInterface.chooseFile(fileNames);
         g.LoadGame(s);
         return CommandEndType::VALID;

@@ -30,10 +30,19 @@ protected:
     const char *ERR_BOARD_COORDS_OUT = "Coords are out of board ";
     const char *ERR_BOARDS_COORDS_DUPLICATE = "Coordinations already taken on this board";
     const char *ERR_WRONG_FILE_FORMAT = "Error loading input from this file. Wrong file format. ";
+    const char *ERR_OBJECT_EXISTS = " object already exists.";
+    const char *ERR_FILE_CORRUPTED = "File corrupted: no/wrong object input ";
+    const char *ERR_RAM = "Ram cannot be bigger than start ram.";
+    const char *ERR_EXCEEDS_MAX_ALLOWED_CONSTANT = "One of arguments exceeded max allowed constant.";
 
     /** throws invalid argument exception */
     void EofError();
 
+    /**
+     * frees localy allocated still objects
+     * @tparam StillObj - object structure
+     * @param objects - map key(name) + object
+     */
     template<typename StillObj>
     void freeObjects(std::map<char, StillObj *> &objects) {
         for (auto &obj : objects) {
@@ -48,6 +57,25 @@ public:
 
     virtual ~Reader() = default;
 
+    /**
+     * reads board
+     * @param mx - x board max io param
+     * @param my - y board max io param
+     * @return map (coords, name of patch)
+     */
+    map<Coords, char> ReadBoard(int &mx, int &my);
+
+    /**
+     * reads score from file
+     * @return counter that has the score
+     */
+    Counter ReadScore();
+
+    /**
+    * reads viruses or patches
+    * @tparam RObject - virus/patch
+    * @return map (name,object)
+    */
     template<typename RObject>
     std::map<char, RObject *> ReadObjects() {
         std::map<char, RObject *> objects;
@@ -59,12 +87,9 @@ public:
             if (!found)
                 objects.insert({object->Name(), object});
             else {
-                char name = object->Name();
                 delete object;
                 freeObjects(objects);
-                string message = name + "";
-                message += " object already exists.";
-                throw invalid_argument(message);
+                throw invalid_argument(ERR_OBJECT_EXISTS);
             }
 
             object = new RObject();
@@ -80,46 +105,10 @@ public:
 
         if (objects.empty()) {
             string mess = filename;
-            mess += "File corrupted: no/wrong object input ";
+            mess += ERR_FILE_CORRUPTED;
             throw invalid_argument(mess);
         }
         return objects;
     }
 
-    map<Coords, char> ReadBoard(int &mx, int &my);
-
-    Counter ReadScore() {
-        int ram = -1, startRam = -1, lvl = -1, money = -1;
-        string input;
-        getline(in, input);
-        stringstream ss(input);
-        ss >> ram >> startRam >> lvl >> money;
-        if (ram <= 0 || startRam <= 0 || lvl < 0 || money < 0) {
-            string mess = filename;
-            mess += "File corrupted: no/wrong object input ";
-            throw logic_error(mess);
-        }
-
-        if (!ss.good() && !ss.eof())
-            EofError();
-
-        getline(in, input);
-        if (input.size() > 1)
-            EofError();
-        getline(in, input);
-        if (input.size() > 1)
-            EofError();
-
-        if (ram > startRam)
-            throw logic_error("Ram cannot be bigger than start ram.");
-        if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)
-            throw logic_error("One of arguments exceeded max allowed constant.");
-        if (!in.eof()) {
-            EofError();
-        }
-
-
-        Counter ctr(ram, startRam, lvl, money);
-        return ctr;
-    }
 };

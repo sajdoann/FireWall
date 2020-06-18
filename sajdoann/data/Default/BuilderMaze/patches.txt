@@ -1,0 +1,7 @@
+A             15          FRONT           DOWN
+D             12          FRONT          RIGHT
+R             50           RAND           LEFT
+W             15           NONE
+X             12          FRONT      DIAGONALD
+Y              0          FRONT      DIAGONALU
+Z              5          FRONT           LEFT

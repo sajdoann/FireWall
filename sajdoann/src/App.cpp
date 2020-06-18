@@ -149,6 +149,7 @@ CommandEndType App::FindAndExecCommand(string &command) {
     return CommandEndType::VALID;
 }
 
+
 int App::to_menu_Switch() {
     CommandEndType end;
     try {
@@ -167,5 +168,6 @@ int App::to_menu_Switch() {
         return 1;
     return 0;
 }
+
 
 

@@ -58,3 +58,38 @@ void Reader::EofError() {
     str += filename;
     throw invalid_argument(str);
 }
+
+Counter Reader::ReadScore() {
+    int ram = -1, startRam = -1, lvl = -1, money = -1;
+    string input;
+    getline(in, input);
+    stringstream ss(input);
+    ss >> ram >> startRam >> lvl >> money;
+    if (ram <= 0 || startRam <= 0 || lvl < 0 || money < 0) {
+        string mess = filename;
+        mess += ERR_FILE_CORRUPTED;
+        throw logic_error(mess);
+    }
+
+    if (!ss.good() && !ss.eof())
+        EofError();
+
+    getline(in, input);
+    if (input.size() > 1)
+        EofError();
+    getline(in, input);
+    if (input.size() > 1)
+        EofError();
+
+    if (ram > startRam)
+        throw logic_error(ERR_RAM);
+    if (startRam > MAX_RAM_CONSTANT || lvl > MAX_LVL_CONSTANT)
+        throw logic_error(ERR_EXCEEDS_MAX_ALLOWED_CONSTANT);
+    if (!in.eof()) {
+        EofError();
+    }
+
+
+    Counter ctr(ram, startRam, lvl, money);
+    return ctr;
+}

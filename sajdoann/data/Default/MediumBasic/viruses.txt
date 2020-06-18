@@ -1,0 +1,6 @@
+%         1  SHORTEST      LEFT
+&         1  RAND             LEFT
+=         1  SHORTEST      LEFT
+@         1  FRONT      LEFT
+^         1  SHORTEST      LEFT
+(         1  FRONT      LEFT

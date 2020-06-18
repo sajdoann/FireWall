@@ -19,7 +19,8 @@
 using namespace std;
 
 /**
- * class that roofs moving objects, it remembers movement type and direction
+ * class that roofs moving objects
+ * It remembers movement type, direction and strategy the moving object moves with.
  */
 class MovingObject : public ObjectWithMoveAttributes {
 protected:
@@ -38,17 +39,18 @@ public:
 
     virtual Object *Clone() const override = 0;
 
+    /** virtual method for attack - object attack by this method */
     virtual int Attack(Board *oldBoard, Board &newBoard, Coords startCoords) override = 0;
 
-
+    /** moving object is not emty -> false */
     bool isEmpty() const override { return false; }
 
+    /** moving object cannot be a patch */
     virtual bool isPatch() const override { return false; };
 
-    MovementType MovementTypeObject() const { return movementType; }
-
-    MovementDirection MovementDirectionObject() const { return movementDirection; }
-
+    /**
+     * sets strategy for object
+     */
     void setStrategy() {
         if (strategy != nullptr) {
             delete strategy;
@@ -65,9 +67,7 @@ public:
 
     virtual ostream &SaveObject(ostream &out) override = 0;
     virtual ostream &PrintInfo(ostream &out) const override = 0;
-
     bool isMovingObject() const override { return true; }
-
     virtual bool isVirus() const override = 0;
 };
 

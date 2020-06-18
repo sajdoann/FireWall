@@ -83,7 +83,7 @@ ostream &Virus::PrintInfo(ostream &out) const {
 }
 
 bool Virus::Hitted() {
-    if (lives) {
+    if (lives > 1) {
         --lives;
         return true;
     }
