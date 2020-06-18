@@ -8,19 +8,18 @@
 
 int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const Coords &startCoords,
                        const Coords &targetCoords) {
-    if (!targetCoords.isOnBoard(&newBoard)) {
+    //if target is out of board
+    if (!targetCoords.isOnBoard(&newBoard)) {       //object is not inserted to newboard
         if (!object->isVirus()) return 0;
-        //virus sucessfully gone
         if (object->isVirus() && startCoords.Y() == 0) {
-            return 1;
+            return 1;       //virus sucessfully on y=0 position -> plus point
         }
         return 0;
-
     }
 
     Object *objectTarget = newBoard.At(targetCoords);
 
-    //there is patch on target position
+    //there is patch on target position -> cannot step not copied
     if (objectTarget->isPatch()) {
         return 0;
     }
@@ -28,14 +27,15 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
 
     //target position is not empty -> deal with collisions
     if (!objectTarget->isEmpty()) {
-
+        // object target cannot be patch - upper consition
         //virus steps on hotfix -> if not virus alive after hitted destroy
         if (object->isVirus() && !objectTarget->isVirus()) {
             bool isAlive = ((Virus *) object)->Hitted();
             if (!isAlive) {
                 oldBoard->setEmpty(startCoords);
-                return 0;
             }
+            oldBoard->setEmpty(targetCoords);
+            return 0;
         }
 
         // hotfix steps on virus
@@ -43,7 +43,6 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
             bool isAlive = ((Virus *) objectTarget)->Hitted();
             if (!isAlive) {
                 oldBoard->setEmpty(targetCoords);
-                return 0;
             }
             return 0;
         }
@@ -51,10 +50,9 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
 
     }
 
-    //abstract method needs exact type
-    if (!object->isEmpty() && object->isMovingObject() && !object->isVirus())
+    if (object->isMovingObject() && !object->isVirus())    //hotfix
         newBoard.InsertObject(*((Hotfix *) object), targetCoords);
-    else if (object->isMovingObject() && object->isVirus())
+    else if (object->isVirus())
         newBoard.InsertObject(*((Virus *) object), targetCoords);
 
     return 0;
