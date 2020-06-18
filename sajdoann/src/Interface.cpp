@@ -177,6 +177,7 @@ void Interface::PrintMessageWaitForEnter(const string &message) {
     Print(message);
     string s;
     getline(in, s);
+    ClearBuffers();
 }
 
 void Interface::Print(const string &message) const {
@@ -254,5 +255,3 @@ vector<string> Interface::getFilenames(const char *PATH) {
 void Interface::ClearBuffers() {
     in.clear();
 }
-
-

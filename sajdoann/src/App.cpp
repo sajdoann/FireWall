@@ -97,6 +97,7 @@ void App::AttackLoop() {
 CommandEndType App::MenuSwitcher() {
     while (true) {
         string recievedString = interface.AskWhichGame();
+        if (recievedString.empty()) continue;
         string command;
         for (unsigned int i = 0; i < recievedString.size(); i++) {
             if (isalpha(recievedString[i]))

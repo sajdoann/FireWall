@@ -32,9 +32,9 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
         if (object->isVirus() && !objectTarget->isVirus()) {
             bool isAlive = ((Virus *) object)->Hitted();
             if (!isAlive) {
-                oldBoard->setEmpty(startCoords);
+                newBoard.setEmpty(startCoords);
             }
-            oldBoard->setEmpty(targetCoords);
+            newBoard.setEmpty(targetCoords);
             return 0;
         }
 
@@ -42,7 +42,7 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
         if (!object->isVirus() && objectTarget->isVirus()) {
             bool isAlive = ((Virus *) objectTarget)->Hitted();
             if (!isAlive) {
-                oldBoard->setEmpty(targetCoords);
+                newBoard.setEmpty(targetCoords);
             }
             return 0;
         }

@@ -13,7 +13,6 @@
 #include "ResultEnum.h"
 #include "StateEnum.h"
 #include "ScoreCounter.h"
-#include "Movement/Movement.h"
 #include "VirusWave.h"
 class Interface;
 
@@ -26,7 +25,6 @@ class Game {
     ResultEnum gameResult = ResultEnum::UNKNOWN;
 
     Board gameBoard;
-    Movement movement;
     map<char, Patch *> patches;
     map<char, Virus *> viruses;
 

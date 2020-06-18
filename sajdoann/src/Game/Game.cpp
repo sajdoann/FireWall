@@ -4,10 +4,13 @@
 */
 
 #include "Game.h"
+#include "../Interface.h"
 #include "IOLoaders/Writer.h"
 #include <iostream>
+#include <thread>
 
-Game::Game() : gameBoard(), movement(&gameBoard), scoreCounter() {
+
+Game::Game() : gameBoard(), scoreCounter() {
 }
 
 Game::~Game() {
@@ -125,7 +128,7 @@ void Game::MoveLoop(Interface &anInterface) {
         anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
         anInterface.PrintClock(loopMax - i - 1);
 
-        this_thread::sleep_for(0.2s);
+        this_thread::sleep_for(0.3s);
     }
 }
 

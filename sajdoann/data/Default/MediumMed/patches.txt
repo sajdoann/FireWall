@@ -1,0 +1,8 @@
+A             15          FRONT           DOWN
+D             20          FRONT          RIGHT
+R             45           RAND           LEFT
+U             45          FRONT             UP
+W             35           NONE
+Y              15          FRONT      DIAGONALU
+Z              8          FRONT           LEFT
+X             13          FRONT      DIAGONALD

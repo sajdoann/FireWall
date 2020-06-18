@@ -21,8 +21,8 @@ objects:
 	mkdir objects
 
 # get all .o files: cat tmp.txt | grep -o '^.*\.o' > jmena.txt
-compile: objects/App.o objects/Commands.o  objects/Interface.o  objects/main.o objects/Game.o objects/ScoreCounter.o objects/Board.o objects/Reader.o objects/Writer.o objects/Movement.o objects/Coords.o objects/Empty.o objects/Hotfix.o objects/Patch.o objects/Virus.o objects/BfsStrategy.o objects/FrontStrategy.o objects/RandomStrategy.o objects/Strategy.o
-	$(LD) $(LDFLAGS) objects/App.o objects/Commands.o  objects/Interface.o  objects/main.o objects/Game.o objects/ScoreCounter.o objects/Board.o objects/Reader.o objects/Writer.o objects/Movement.o objects/Coords.o objects/Empty.o objects/Hotfix.o objects/Patch.o objects/Virus.o objects/BfsStrategy.o objects/FrontStrategy.o objects/RandomStrategy.o objects/Strategy.o   -o $(EXECUTABLE)
+compile: objects/App.o objects/Commands.o  objects/Interface.o  objects/main.o objects/Game.o objects/ScoreCounter.o objects/Board.o objects/Reader.o objects/Writer.o objects/Coords.o objects/Empty.o objects/Hotfix.o objects/Patch.o objects/Virus.o objects/BfsStrategy.o objects/FrontStrategy.o objects/RandomStrategy.o objects/Strategy.o
+	$(LD) $(LDFLAGS) objects/App.o objects/Commands.o  objects/Interface.o  objects/main.o objects/Game.o objects/ScoreCounter.o objects/Board.o objects/Reader.o objects/Writer.o objects/Coords.o objects/Empty.o objects/Hotfix.o objects/Patch.o objects/Virus.o objects/BfsStrategy.o objects/FrontStrategy.o objects/RandomStrategy.o objects/Strategy.o   -o $(EXECUTABLE)
 
 #command make run
 run: compile
@@ -71,10 +71,9 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h src/Game/Movement/Movement.h \
- src/Game/Movement/../../Interface.h src/Game/Movement/../../Color.h \
- src/Game/VirusWave.h src/Command.h src/CommandEndType.h src/Commands.h \
- src/Game/IOLoaders/Writer.h | objects
+ src/Game/Board/../IOLoaders/../StateEnum.h src/Game/VirusWave.h \
+ src/Interface.h src/Color.h src/Command.h src/CommandEndType.h \
+ src/Commands.h src/Game/IOLoaders/Writer.h | objects
  objects/Commands.o: src/Commands.cpp src/Commands.h src/Command.h src/Game/Game.h \
  src/Game/Board/Board.h src/Game/Board/../Objects/Object.h \
  src/Game/Board/../Objects/Coords.h src/Game/Board/../Objects/Empty.h \
@@ -93,10 +92,9 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h src/Game/Movement/Movement.h \
- src/Game/Movement/../../Interface.h src/Game/Movement/../../Color.h \
- src/Game/VirusWave.h src/CommandEndType.h src/Game/IOLoaders/Writer.h \
- src/CommandsConstants.h src/PathsConstants.h | objects
+ src/Game/Board/../IOLoaders/../StateEnum.h src/Game/VirusWave.h \
+ src/CommandEndType.h src/Interface.h src/Color.h \
+ src/Game/IOLoaders/Writer.h src/CommandsConstants.h src/PathsConstants.h | objects
  objects/Interface.o: src/Interface.cpp src/Interface.h src/Game/Objects/Coords.h \
  src/Game/Board/Board.h src/Game/Board/../Objects/Object.h \
  src/Game/Board/../Objects/Empty.h src/Game/Board/../Objects/Patch.h \
@@ -114,7 +112,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h src/Color.h \
+ src/Game/Board/../IOLoaders/../StateEnum.h src/Color.h \
  src/InterfaceConstants.h | objects
  objects/main.o: src/main.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../Objects/Object.h src/Game/Board/../Objects/Coords.h \
@@ -133,10 +131,9 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h src/Game/Movement/Movement.h \
- src/Game/Movement/../../Interface.h src/Game/Movement/../../Color.h \
- src/Game/VirusWave.h src/Command.h src/CommandEndType.h src/Commands.h \
- src/Game/IOLoaders/Writer.h | objects
+ src/Game/Board/../IOLoaders/../StateEnum.h src/Game/VirusWave.h \
+ src/Interface.h src/Color.h src/Command.h src/CommandEndType.h \
+ src/Commands.h src/Game/IOLoaders/Writer.h | objects
  objects/Game.o: src/Game/Game.cpp src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../Objects/Object.h src/Game/Board/../Objects/Coords.h \
  src/Game/Board/../Objects/Empty.h src/Game/Board/../Objects/Patch.h \
@@ -154,9 +151,8 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h src/Game/Movement/Movement.h \
- src/Game/Movement/../../Interface.h src/Game/Movement/../../Color.h \
- src/Game/VirusWave.h src/Game/IOLoaders/Writer.h | objects
+ src/Game/Board/../IOLoaders/../StateEnum.h src/Game/VirusWave.h \
+ src/Game/../Interface.h src/Game/../Color.h src/Game/IOLoaders/Writer.h | objects
  objects/ScoreCounter.o: src/Game/ScoreCounter.cpp src/Game/ScoreCounter.h \
  src/Game/ResultEnum.h src/Game/GameConstants.h | objects
  objects/Board.o: src/Game/Board/Board.cpp src/Game/Board/Board.h \
@@ -176,7 +172,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Board/../IOLoaders/../ResultEnum.h \
  src/Game/Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Board/../IOLoaders/../StateEnum.h | objects
  objects/Reader.o: src/Game/IOLoaders/Reader.cpp src/Game/IOLoaders/Reader.h \
  src/Game/IOLoaders/../Objects/Patch.h \
  src/Game/IOLoaders/../Objects/ObjectWithMoveAttributes.h \
@@ -192,7 +188,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/IOLoaders/../Objects/../Strategics/BfsStrategy.h \
  src/Game/IOLoaders/../Objects/Virus.h \
  src/Game/IOLoaders/../ScoreCounter.h src/Game/IOLoaders/../ResultEnum.h \
- src/Game/IOLoaders/../GameConstants.h src/Game/StateEnum.h | objects
+ src/Game/IOLoaders/../GameConstants.h src/Game/IOLoaders/../StateEnum.h | objects
  objects/Writer.o: src/Game/IOLoaders/Writer.cpp src/Game/IOLoaders/Writer.h \
  src/Game/IOLoaders/../ScoreCounter.h src/Game/IOLoaders/../ResultEnum.h \
  src/Game/IOLoaders/../GameConstants.h \
@@ -212,29 +208,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/IOLoaders/../Board/../Objects/../Strategics/BfsStrategy.h \
  src/Game/IOLoaders/../Board/../IOLoaders/Reader.h \
  src/Game/IOLoaders/../Board/../IOLoaders/../Objects/Virus.h \
- src/Game/StateEnum.h | objects
- objects/Movement.o: src/Game/Movement/Movement.cpp src/Game/Movement/Movement.h \
- src/Game/Movement/../Board/Board.h \
- src/Game/Movement/../Board/../Objects/Object.h \
- src/Game/Movement/../Board/../Objects/Coords.h \
- src/Game/Movement/../Board/../Objects/Empty.h \
- src/Game/Movement/../Board/../Objects/Patch.h \
- src/Game/Movement/../Board/../Objects/ObjectWithMoveAttributes.h \
- src/Game/Movement/../Board/../Objects/../Movement/MovementType.h \
- src/Game/Movement/../Board/../Objects/../Movement/MovementDirection.h \
- src/Game/Movement/../Board/../Objects/Hotfix.h \
- src/Game/Movement/../Board/../Objects/MovingObject.h \
- src/Game/Movement/../Board/../Objects/../Strategics/Strategy.h \
- src/Game/Movement/../Board/../Objects/../Strategics/FrontStrategy.h \
- src/Game/Movement/../Board/../Objects/../Strategics/RandomStrategy.h \
- src/Game/Movement/../Board/../Objects/../Strategics/BfsStrategy.h \
- src/Game/Movement/../Board/../IOLoaders/Reader.h \
- src/Game/Movement/../Board/../IOLoaders/../Objects/Virus.h \
- src/Game/Movement/../Board/../IOLoaders/../ScoreCounter.h \
- src/Game/Movement/../Board/../IOLoaders/../ResultEnum.h \
- src/Game/Movement/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h \
- src/Game/Movement/../../Interface.h src/Game/Movement/../../Color.h | objects
+ src/Game/IOLoaders/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Coords.o: src/Game/Objects/Coords.cpp src/Game/Objects/Coords.h \
  src/Game/Objects/../Board/Board.h \
  src/Game/Objects/../Board/../Objects/Object.h \
@@ -254,7 +228,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Objects/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Objects/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Objects/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Objects/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Empty.o: src/Game/Objects/Empty.cpp src/Game/Objects/Empty.h \
  src/Game/Objects/Object.h src/Game/Objects/Coords.h \
  src/Game/Objects/../Board/Board.h \
@@ -273,7 +247,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Objects/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Objects/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Objects/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Objects/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Hotfix.o: src/Game/Objects/Hotfix.cpp src/Game/Objects/Hotfix.h \
  src/Game/Objects/Object.h src/Game/Objects/Coords.h \
  src/Game/Objects/MovingObject.h \
@@ -292,7 +266,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Objects/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Objects/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Objects/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Objects/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Patch.o: src/Game/Objects/Patch.cpp src/Game/Objects/Patch.h \
  src/Game/Objects/ObjectWithMoveAttributes.h \
  src/Game/Objects/../Movement/MovementType.h \
@@ -310,7 +284,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Objects/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Objects/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Objects/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Objects/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Virus.o: src/Game/Objects/Virus.cpp src/Game/Objects/Virus.h \
  src/Game/Objects/MovingObject.h src/Game/Objects/Object.h \
  src/Game/Objects/Coords.h src/Game/Objects/ObjectWithMoveAttributes.h \
@@ -328,7 +302,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Objects/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Objects/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Objects/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Objects/../Board/../IOLoaders/../StateEnum.h | objects
  objects/BfsStrategy.o: src/Game/Strategics/BfsStrategy.cpp \
  src/Game/Strategics/BfsStrategy.h src/Game/Strategics/Strategy.h \
  src/Game/Strategics/../Movement/MovementDirection.h \
@@ -348,7 +322,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Strategics/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Strategics/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Strategics/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Strategics/../Board/../IOLoaders/../StateEnum.h | objects
  objects/FrontStrategy.o: src/Game/Strategics/FrontStrategy.cpp \
  src/Game/Strategics/FrontStrategy.h src/Game/Strategics/Strategy.h \
  src/Game/Strategics/../Movement/MovementDirection.h \
@@ -368,7 +342,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Strategics/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Strategics/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Strategics/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Strategics/../Board/../IOLoaders/../StateEnum.h | objects
  objects/RandomStrategy.o: src/Game/Strategics/RandomStrategy.cpp \
  src/Game/Strategics/RandomStrategy.h src/Game/Strategics/Strategy.h \
  src/Game/Strategics/../Movement/MovementDirection.h \
@@ -388,7 +362,7 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Strategics/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Strategics/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Strategics/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Strategics/../Board/../IOLoaders/../StateEnum.h | objects
  objects/Strategy.o: src/Game/Strategics/Strategy.cpp \
  src/Game/Strategics/Strategy.h \
  src/Game/Strategics/../Movement/MovementDirection.h \
@@ -409,4 +383,5 @@ objects/App.o: src/App.cpp src/App.h src/Game/Game.h src/Game/Board/Board.h \
  src/Game/Strategics/../Board/../IOLoaders/../ScoreCounter.h \
  src/Game/Strategics/../Board/../IOLoaders/../ResultEnum.h \
  src/Game/Strategics/../Board/../IOLoaders/../GameConstants.h \
- src/Game/StateEnum.h | objects
+ src/Game/Strategics/../Board/../IOLoaders/../StateEnum.h | objects
+
