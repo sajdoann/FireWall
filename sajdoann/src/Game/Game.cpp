@@ -109,7 +109,7 @@ void Game::MoveLoop(Interface &anInterface) {
             virusWave.pop();
         }
 
-        virusPoints += movement.MoveAll();
+        virusPoints += MoveAll();
         scoreCounter.takeRam(virusPoints);
 
         if (scoreCounter.Ram() < 0) {
@@ -121,6 +121,9 @@ void Game::MoveLoop(Interface &anInterface) {
         anInterface.ClearScreen();
         anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
         anInterface.PrintClock(loopMax - i - 1);
+
+        anInterface.ClearBuffers();
+
 
         this_thread::sleep_for(0.1s);
     }
@@ -152,6 +155,23 @@ void Game::save_ctr(const string &directoryPath) {
     Writer ctrWriter(directoryPath + "/score.txt");
     ctrWriter.writeCounter(scoreCounter);
     ctrWriter.Close();
+}
+
+int Game::MoveAll() {
+    Board newBoard(gameBoard.MaxX(), gameBoard.MaxY());
+    newBoard.AddAllPatches(&gameBoard);
+
+    int virusPoints = 0;
+    for (int i = 0; i < gameBoard.MaxX(); ++i) {
+        for (int j = 0; j < gameBoard.MaxY(); ++j) {
+            Object *object = (gameBoard)(i, j);
+            Coords coords(i, j);
+            virusPoints += object->Attack(&gameBoard, newBoard, coords);
+        }
+    }
+
+    gameBoard = newBoard;
+    return virusPoints;
 }
 
 

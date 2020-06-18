@@ -14,10 +14,9 @@
  */
 class Movement {
     Board *board;
-    Interface interface;
 
 public:
-    Movement(Board *board) : board(board), interface(cin, cout) {}
+    Movement(Board *board) : board(board) {}
 
     ~Movement() {}
 

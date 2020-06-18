@@ -28,8 +28,6 @@ private:
     const char *CYAN_ANSI = "\u001b[38;5;51m"; //"\u001b[36m";
     const char *GREY_ANSI = "\u001b[37;1m";
     const char *GREEN_ANSI = "\u001b[32m";
-    const char *PURPLE_LIGHT_ANSI = "\u001b[38;5;141m";
-    const char *YELLOW = "\u001b[38;5;84m";
     const char *VIRUS_ANSI = "\u001b[1m";
     const char *HOTFIX_ANSI = "\u001b[36m";
     const char *RESET_ANSI = "\u001b[0m";

@@ -6,9 +6,10 @@
 #include <cfloat>
 #include <cmath>
 #include <dirent.h>
+#include <limits>
 
 #include "Interface.h"
-#include "Interface_Constants.h"
+#include "InterfaceConstants.h"
 
 string Interface::PromptCommand() {
     string command;
@@ -248,6 +249,10 @@ vector<string> Interface::getFilenames(const char *PATH) {
     }
     closedir(dir);
     return fileNames;
+}
+
+void Interface::ClearBuffers() {
+    in.clear();
 }
 
 

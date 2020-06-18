@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cstdlib>
+#include <climits>
 #include "Game/Objects/Coords.h"
 #include "Game/Board/Board.h"
 #include "Game/ResultEnum.h"
@@ -88,9 +89,7 @@ public:
     void GetPatchInfo(const string &s, char &patchName, Coords &coords);
 
     /** clears in buffer */
-    void ClearBuffers() {
-        in.clear();
-    }
+    void ClearBuffers();
 
     /** clears the screen by printing 100 new lines */
     void ClearScreen() {

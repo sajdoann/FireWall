@@ -2,7 +2,9 @@
 * @author Anna Sajdokova <sajdoann@fit.cvut.cz>
 * @date 5/27/2020
 */
-
+/**
+ * constants for interaction with user
+ */
 namespace IntrConstants {
     const static char *ENTER_COMMAND = "Enter command: ";
     const static char *HELP_ADVERTISE = "Unknown command. \n To see help type \"help\"";
@@ -29,8 +31,8 @@ namespace IntrConstants {
     const static char *LOST_MESSAGE = "You lost!";
     const static char *WIN_MESSAGE = "Congrats! You won!";
 
-    const static char *LOAD_OR_NEW = "To load game from existing sources type \'load\'\n"
-                                     "to start new game type \'new\'\n"
+    const static char *LOAD_OR_NEW = "to start new game type \'new\'\n"
+                                     "To load game from existing sources type \'load\'\n"
                                      "to exit type \'exit\'";
 
     const static char *RAM_COLOR_START = "\u001b[48;5;";

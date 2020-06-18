@@ -17,7 +17,7 @@ int App::Run() {
 
                 int error = to_menu_Switch();
                 if (error == 1) return 0;
-                else if (error) return error;
+                else if (error > 0) return error;
 
                 game.GameState(State::PREPARATION);
                 interface.ClearScreen();
@@ -52,6 +52,7 @@ void App::Greet() {
 }
 
 int App::PrepLoop() {
+    interface.ClearBuffers();
     while (game.GameState() == State::PREPARATION) {
         string command = interface.PromptCommand();
 
@@ -77,11 +78,13 @@ int App::PrepLoop() {
 
 
 void App::AttackLoop() {
+
     game.MoveLoop(interface);
 
     interface.ClearScreen();
     interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
     interface.PrintResult(game.GameResult());
+    interface.ClearBuffers();
 
     game.GameBoard().ClearButPatches();
     if (game.GameResult() != LOSE) {
@@ -91,7 +94,7 @@ void App::AttackLoop() {
 
 }
 
-bool App::MenuSwitcher() {
+CommandEndType App::MenuSwitcher() {
     while (true) {
         string recievedString = interface.AskWhichGame();
         string command;
@@ -102,15 +105,15 @@ bool App::MenuSwitcher() {
         }
         if (command == NEW) {
             commands.New().Exec(command, game, interface);
-            return false;
+            return CommandEndType::VALID;
         }
         if (command == LOAD) {
             commands.Load().Exec(command, game, interface);
-            return false;
+            return CommandEndType::VALID;
         }
         if (command == EXIT) {
             commands.Exit().Exec(command, game, interface);
-            return true;
+            return CommandEndType::ENDGAME;
         }
     }
 
@@ -147,7 +150,7 @@ CommandEndType App::FindAndExecCommand(string &command) {
 }
 
 int App::to_menu_Switch() {
-    int end;
+    CommandEndType end;
     try {
         end = MenuSwitcher();
     } catch (invalid_argument &invalid_argument) {
@@ -160,7 +163,7 @@ int App::to_menu_Switch() {
         cerr << logic_error.what() << endl;
         return 4;
     }
-    if (end)
+    if (end == CommandEndType::ENDGAME)
         return 1;
     return 0;
 }

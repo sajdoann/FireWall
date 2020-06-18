@@ -11,7 +11,7 @@
 #include "Objects/Patch.h"
 #include "IOLoaders/Reader.h"
 #include "ResultEnum.h"
-#include "State_Enum.h"
+#include "StateEnum.h"
 #include "ScoreCounter.h"
 #include "Movement/Movement.h"
 #include "VirusWave.h"
@@ -64,6 +64,14 @@ class Game {
      * @param directoryPath
      */
     void save_ctr(const string &directoryPath);
+
+    /**
+     * moves all objects on the board by one step
+     * creates new board, adds all patches, interates and adds all objects on moved(target) position
+     * assigns board new board
+     * @return how many viruses broke through the wall
+     */
+    int MoveAll();
 
 
 public:

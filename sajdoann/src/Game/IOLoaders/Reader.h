@@ -12,7 +12,7 @@
 #include "../Objects/Patch.h"
 #include "../Objects/Virus.h"
 #include "../ScoreCounter.h"
-#include "../State_Enum.h"
+#include "../StateEnum.h"
 
 using namespace std;
 

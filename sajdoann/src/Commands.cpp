@@ -4,7 +4,8 @@
 */
 
 #include "Commands.h"
-#include "Commands_Constants.h"
+#include "CommandsConstants.h"
+#include "PathsConstants.h"
 
 void Commands::CreateCommands() {
     Command exit = Exit();

@@ -36,7 +36,7 @@ class App {
      *  menu mode switches bteweeen new game, load game and exit
      * @return true if exit the game, false stay in game
      */
-    bool MenuSwitcher();
+    CommandEndType MenuSwitcher();
 
     /**
      * help function to go to menu switcher
