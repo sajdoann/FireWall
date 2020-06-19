@@ -50,6 +50,7 @@ public:
 
     /**
      * saves the game when called
+     * if file cannot be created throws runtime error
      * @return command to save the game
      */
     Command Save();

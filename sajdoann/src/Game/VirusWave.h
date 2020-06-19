@@ -31,8 +31,8 @@ private:
     }
 
     int CountMax() {
-        if (level < 3) return 1;
-        return 1;
+        if (level < 3) return 3;
+        return 2;
     }
 
     default_random_engine CreateDevice() {

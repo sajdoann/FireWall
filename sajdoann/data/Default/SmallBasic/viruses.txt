@@ -3,4 +3,4 @@
 =         4  SHORTEST      LEFT
 @         4  FRONT      LEFT
 ^         2  SHORTEST      LEFT
-/         2  SHORTEST      LEFT
+/         3  SHORTEST      LEFT

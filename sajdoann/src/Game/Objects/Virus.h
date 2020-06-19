@@ -45,7 +45,6 @@ public:
 
     ostream &PrintInfo(ostream &out) const override;
 
-
     friend ostream &operator<<(ostream &out, const Virus &virus);
 
     friend istream &operator>>(istream &in, Virus &v);

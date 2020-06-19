@@ -2,10 +2,10 @@
 ### Informace:
  FireWall je tower defense hra. 
  
- Počítači se rozbil firewall, a tak je úkolem hráče udělat **patche**, tak aby skrz firewall proniklo co nejméně zákeřných virů.
- 
+ Počítači se rozbil firewall, a tak je úkolem hráče udělat **patche**, tak aby skrz firewall proniklo co nejméně zákeřných virů. 
+
 Hráč má ale omezené prostředky - nemůže si koupit kolik patchů chce. A tak hráč rozmisťuje různé druhy patchů na hrací pole a musí si
-vystačit s herními penězmi co má.
+vystačit s herními penězmi co má. Patche je možné upgradovat (na místo kde už patch je dát lepší).
 
 Poté přichází na řadu simulace útoku. Hráč pozoruje, jak **viry** cestují z levého okraje a snaží se proniknout přes firewall. Viry se
 pohybují různým stylem (zleva-doprava, nejkratší možná cesta) z levé strany a chtejí proniknout doprava.

@@ -111,4 +111,6 @@ public:
         return objects;
     }
 
+    void checkPaths() const;
+
 };

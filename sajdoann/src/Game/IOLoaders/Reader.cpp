@@ -93,3 +93,7 @@ Counter Reader::ReadScore() {
     Counter ctr(ram, startRam, lvl, money);
     return ctr;
 }
+
+void Reader::checkPaths() const {
+
+}
