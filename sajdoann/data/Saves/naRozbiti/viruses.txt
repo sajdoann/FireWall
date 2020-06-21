@@ -1,4 +1,0 @@
-&         5      SHORTEST      LEFT
-%         1  SHORTEST      LEFT
-=         4  SHORTEST       LEFT
-@         4  SHORTEST      LEFT

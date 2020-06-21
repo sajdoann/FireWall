@@ -31,9 +31,9 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
         //virus steps on hotfix -> if not virus alive after hitted destroy
         if (object->isVirus() && !objectTarget->isVirus()) {
             bool isAlive = ((Virus *) object)->Hitted();
+            //oldBoard->setEmpty(targetCoords);
             if (!isAlive) {
                 newBoard.setEmpty(startCoords);
-                oldBoard->setEmpty(targetCoords);
                 newBoard.setEmpty(targetCoords);
                 return 0;
             }
@@ -52,6 +52,7 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
 
 
     }
+
 
     if (object->isMovingObject() && !object->isVirus())    //hotfix
         newBoard.InsertObject(*((Hotfix *) object), targetCoords);

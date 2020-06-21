@@ -6,7 +6,6 @@
 #include <cfloat>
 #include <cmath>
 #include <dirent.h>
-#include <limits>
 
 #include "Interface.h"
 #include "InterfaceConstants.h"
@@ -117,16 +116,22 @@ string Interface::PromptSaveFolder() {
     string s;
     while (true) {
         os << "Enter name to save the game: " << endl;
-        in >> s;
+        getline(in, s);
         ClearBuffers();
         bool isOK = true;
         if (s.empty()) continue;
+
+        if (s[s.size() - 1] == '\n') {
+            s = s.substr(s.size() - 1);
+        }
+
         for (unsigned int i = 0; i < s.size(); ++i) {
             if (!isdigit(s[i]) && !isalpha(s[i])) {
                 isOK = false;
                 break;
             }
         }
+
         if (isOK) break;
     }
     s = '/' + s;
