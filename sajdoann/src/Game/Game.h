@@ -29,6 +29,7 @@ class Game {
     map<char, Virus *> viruses;
 
     Counter scoreCounter;
+    VirusWave virusGenerator;
 
     /** free patches and viruses */
     void free_patches_and_viruses();
@@ -63,14 +64,6 @@ class Game {
      */
     void save_ctr(const string &directoryPath);
 
-    /**
-     * moves all objects on the board by one step
-     * creates new board, adds all patches, interates and adds all objects on moved(target) position
-     * assigns board new board
-     * @return how many viruses broke through the wall
-     */
-    int MoveAll();
-
 
 public:
     Game();
@@ -85,6 +78,8 @@ public:
 
     /** returns game result  */
     ResultEnum GameResult() const { return gameResult; }
+
+    VirusWave VirusGenerator() const { return virusGenerator; }
 
     /** gets score counter */
     Counter &getScoreCounter() { return scoreCounter; }
@@ -160,10 +155,18 @@ public:
     Virus &getVirus(const char c) const;
 
     /**
-     * creates wave of viruses for the attack, moves with the objects on board for certain amount of time
-     * @param anInterface
+     * moves all objects on the board by one step
+     * creates new board, adds all patches, interates and adds all objects on moved(target) position
+     * assigns board new board
+     * @return how many viruses broke through the wall
      */
-    void MoveLoop(Interface &anInterface);
+    int MoveAll();
+
+    /**
+     * generates and places viruses on board
+     * during attack stage
+     */
+    void GenerateAndPlaceViruses();
 
 };
 

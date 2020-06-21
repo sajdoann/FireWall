@@ -33,8 +33,11 @@ int Strategy::execMove(Object *object, Board &newBoard, Board *oldBoard, const C
             bool isAlive = ((Virus *) object)->Hitted();
             if (!isAlive) {
                 newBoard.setEmpty(startCoords);
+                oldBoard->setEmpty(targetCoords);
+                newBoard.setEmpty(targetCoords);
+                return 0;
             }
-            newBoard.setEmpty(targetCoords);
+            newBoard.InsertObject(*((Virus *) object), targetCoords);
             return 0;
         }
 

@@ -7,10 +7,8 @@
 #include "../Interface.h"
 #include "IOLoaders/Writer.h"
 #include <iostream>
-#include <thread>
 
-
-Game::Game() : gameBoard(), scoreCounter() {
+Game::Game() : gameBoard(), scoreCounter(), virusGenerator() {
 }
 
 Game::~Game() {
@@ -22,6 +20,7 @@ void Game::LoadGame(const string &directoryPath) {
     read_patches_and_viruses(directoryPath);
     read_gameBoard(directoryPath);
     read_score(directoryPath);
+    virusGenerator = VirusWave(scoreCounter.Level(), viruses);
 
 }
 
@@ -97,40 +96,6 @@ Patch &Game::getPatch(const char c) const { return *patches.at(c); }
 Virus &Game::getVirus(const char c) const { return *viruses.at(c); }
 
 
-void Game::MoveLoop(Interface &anInterface) {
-    VirusWave virusGenerator(scoreCounter.Level(), viruses);
-
-    int virusPoints = 0;
-    int loopMax = (gameBoard.MaxY() + gameBoard.MaxY() / 2) + (2 * scoreCounter.Level() + 2) * 2;
-    for (int i = 0; i < loopMax; ++i) {
-        virusPoints = 0;
-
-        //Generate_Viruses();
-        queue<pair<Virus *, Coords>> virusWave = virusGenerator.GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
-        while (!virusWave.empty()) {
-            pair<Virus *, Coords> a = virusWave.front();
-            if (gameBoard.At(a.second)->isEmpty()) {
-                gameBoard.InsertObject(*(a.first), a.second);
-            }
-            virusWave.pop();
-        }
-
-        virusPoints += MoveAll();
-        scoreCounter.takeRam(virusPoints);
-
-        if (scoreCounter.Ram() < 0) {
-            GameResult(LOSE);
-            gameState = State::MENU;
-            break;
-        }
-
-        anInterface.ClearScreen();
-        anInterface.PrintGamePane(gameState, scoreCounter, gameBoard);
-        anInterface.PrintClock(loopMax - i - 1);
-
-        this_thread::sleep_for(0.3s);
-    }
-}
 
 void Game::SaveGame(const string &directoryPath) {
     save_patches_and_viruses(directoryPath);
@@ -175,6 +140,17 @@ int Game::MoveAll() {
 
     gameBoard = newBoard;
     return virusPoints;
+}
+
+void Game::GenerateAndPlaceViruses() {
+    queue<pair<Virus *, Coords>> virusWave = virusGenerator.GeneateWave(gameBoard.MaxX(), gameBoard.MaxY());
+    while (!virusWave.empty()) {
+        pair<Virus *, Coords> a = virusWave.front();
+        if (gameBoard.At(a.second)->isEmpty()) {
+            gameBoard.InsertObject(*(a.first), a.second);
+        }
+        virusWave.pop();
+    }
 }
 
 

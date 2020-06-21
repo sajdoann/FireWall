@@ -52,11 +52,17 @@ class App {
      */
     CommandEndType FindAndExecCommand(string &command);
 
+    /**
+     * during Attack loop
+     * creates wave of viruses for the attack, moves with the objects on board,
+     * sleeps for certain amount of time
+     */
+    void MoveLoop();
+
 public:
     App() :
             game(),
             interface(cin, cout) {
-
         commands.CreateCommands();
     }
 
@@ -82,7 +88,7 @@ public:
     void AttackLoop();
 
     /**
-     * game loop
+     * game loop, goes through game states
      * @return no errors 0 / app errors nonzero number
      */
     int Run();

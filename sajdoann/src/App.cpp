@@ -5,6 +5,7 @@
 
 #include <string>
 #include <regex>
+#include <thread>
 #include "App.h"
 
 int App::Run() {
@@ -79,7 +80,7 @@ int App::PrepLoop() {
 
 void App::AttackLoop() {
 
-    game.MoveLoop(interface);
+    MoveLoop();
 
     interface.ClearScreen();
     interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
@@ -168,6 +169,32 @@ int App::to_menu_Switch() {
     if (end == CommandEndType::ENDGAME)
         return 1;
     return 0;
+}
+
+void App::MoveLoop() {
+    int virusPoints = 0;
+    int loopMax =
+            (game.GameBoard().MaxY() + game.GameBoard().MaxY() / 2) + (2 * game.getScoreCounter().Level() + 2) * 2;
+    for (int i = 0; i < loopMax; ++i) {
+        virusPoints = 0;
+
+        game.GenerateAndPlaceViruses();
+
+        virusPoints += game.MoveAll();
+        game.getScoreCounter().takeRam(virusPoints);
+
+        if (game.getScoreCounter().Ram() < 0) {
+            game.GameResult(LOSE);
+            game.GameState(State::MENU);
+            break;
+        }
+
+        interface.ClearScreen();
+        interface.PrintGamePane(game.GameState(), game.getScoreCounter(), game.GameBoard());
+        interface.PrintClock(loopMax - i - 1);
+
+        this_thread::sleep_for(0.3s);
+    }
 }
 
 

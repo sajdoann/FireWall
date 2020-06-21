@@ -30,11 +30,6 @@ private:
         return dist(e1);
     }
 
-    int CountMax() {
-        if (level < 3) return 3;
-        return 2;
-    }
-
     default_random_engine CreateDevice() {
         random_device r;
         default_random_engine e1(r());
@@ -51,6 +46,14 @@ public:
         for (auto i = viruses.begin(); i != viruses.end(); ++i) {
             virusQueue.push_back(i->second);
         }
+    }
+
+    VirusWave &operator=(const VirusWave &other) {
+        if (this == &other) return *this;
+        level = other.level;
+        virusQueue = other.virusQueue;
+        e1 = other.e1;
+        return *this;
     }
 
     /**
