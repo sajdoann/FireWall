@@ -70,10 +70,10 @@ například:
 - `viruses`      -   describes all viruses
 
 ### Ukázka 
-stav preparation - náhled 
 
 ![image](https://user-images.githubusercontent.com/49040694/114088306-2e67f700-98b5-11eb-8879-0c7ff6f0a0e4.png)
 
+při náhledu:
 ```
 patches:
    0  1  2  3  4  5  6  7  8  9
@@ -91,6 +91,7 @@ Enter command:
 
 W(4,4)
 ``` 
+W(4,4) ... umistí patch W na souřadnice 4,4.
 
 
  
