@@ -93,6 +93,8 @@ W(4,4)
 ``` 
 W(4,4) ... umistí patch W na souřadnice 4,4.
 
+disclaimer: spoustu věcí to ještě neumí a byla to prvotina :D. nejsou ošetřené ctl + d,...
+
 
  
 
