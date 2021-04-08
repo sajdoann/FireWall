@@ -71,7 +71,7 @@ například:
 
 ### Ukázka 
 
-![image](https://user-images.githubusercontent.com/49040694/114088306-2e67f700-98b5-11eb-8879-0c7ff6f0a0e4.png)
+![image](https://user-images.githubusercontent.com/49040694/114090252-7ab43680-98b7-11eb-8e2f-db4a47b2aed4.png)
 
 při náhledu:
 ```
